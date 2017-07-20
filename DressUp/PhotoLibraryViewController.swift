@@ -10,7 +10,7 @@ import FirebaseDatabase
 import Kingfisher
 
 class PhotoLibraryViewController: UIViewController {
-  //user that represents the current user displayed in the view controller
+
   var user: User!
   var photoCollection = [Photos]()
   
@@ -46,6 +46,12 @@ class PhotoLibraryViewController: UIViewController {
       }
     }
   }
+  override func viewWillAppear(_ animated: Bool) {
+    UserService.photos(for: user) { (Photos) in
+      self.photoCollection = Photos
+      self.collectionView.reloadData()
+    }
+  }
   deinit {
     profileRef?.removeObserver(withHandle: profileHandle)
   }
@@ -62,7 +68,6 @@ extension PhotoLibraryViewController: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCollectionCell", for: indexPath) as! PhotoCollectionCell
-    print(cell)
     let photo = photoCollection[indexPath.row]
     let imageURL = URL(string: photo.imageURL)
     cell.thumbImageView.kf.setImage(with: imageURL)

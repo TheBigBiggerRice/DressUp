@@ -11,8 +11,6 @@ import FirebaseAuth.FIRUser
 import FirebaseDatabase
 
 struct UserService {
-    //keeps out code clean and decoupled by removing networking code from our view controllers
-    //allows us to reuse the method in our service classes from all view controllers
     static func create(_ firUser: FIRUser, username: String, completion: @escaping (User?) -> Void) {
         let userAttrs = ["username": username]
         
@@ -49,8 +47,6 @@ struct UserService {
       let dispatchGroup = DispatchGroup()
       var photos: [Photos] = []
       
-
-      
       for snap in snapshot {
         dispatchGroup.enter()
 
@@ -65,8 +61,10 @@ struct UserService {
     })
   }
   
+  
   static func observeProfile(for user: User, completion: @escaping (DatabaseReference, User?, [Photos]) -> Void) -> DatabaseHandle {
     let userRef = Database.database().reference().child("users").child(user.uid)
+    //let userRef = DatabaseReference.MGLocation.users.child(user.uid)
     return userRef.observe(.value, with: { snapshot in
       
       guard let user = User(snapshot: snapshot) else {

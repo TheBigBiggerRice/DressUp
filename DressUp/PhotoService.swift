@@ -30,7 +30,7 @@ struct PhotoService {
     }
   
     private static func create(forURLString urlString: String, aspectHeight: CGFloat) {
-        //create new post in database
+        
         let currentUser = User.current
         let post = Photos(imageURL: urlString, imageHeight: aspectHeight)
         let dict = post.dictValue

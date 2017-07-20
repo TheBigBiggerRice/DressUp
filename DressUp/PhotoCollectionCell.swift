@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PhotoCollectionCell: UICollectionViewCell {// < yoyu're subclassing
+class PhotoCollectionCell: UICollectionViewCell {
   
   let thumbImageView: UIImageView = {
     let view = UIImageView()

@@ -179,6 +179,7 @@ final class TagsPageViewController: UIViewController  {
         }
       )
     }
+    //when the save button is tapped, display the uploaded picture in photo library immediately??
   }
   
   fileprivate func displaySaveButton() {
