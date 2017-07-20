@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>150686226607-c30ehqb6jc36hem37pufnuvp0l71b6fe.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.150686226607-c30ehqb6jc36hem37pufnuvp0l71b6fe</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCCe6i2BVjHbM9sRvGS_e58TdVpvzclsaM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>150686226607</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.makeschool.DressUp</string>
+	<key>PROJECT_ID</key>
+	<string>dressup-36a69</string>
+	<key>STORAGE_BUCKET</key>
+	<string>dressup-36a69.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:150686226607:ios:ec7cd4a096a11718</string>
+	<key>DATABASE_URL</key>
+	<string>https://dressup-36a69.firebaseio.com</string>
+</dict>
+</plist>

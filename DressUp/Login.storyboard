@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="th9-VW-p9l">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="7iK-kI-hIT">
+            <objects>
+                <viewController id="Prq-ho-lDE" customClass="LoginViewController" customModule="DressUp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="oz2-ZV-Wcl"/>
+                        <viewControllerLayoutGuide type="bottom" id="kCm-ap-amU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="FlA-NR-28I">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J5H-8V-877">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="227"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="Xgv-Ya-aRu">
+                                        <rect key="frame" x="68" y="67" width="240" height="93.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dress Up" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PON-Ro-6fh">
+                                                <rect key="frame" x="40" y="0.0" width="160" height="48"/>
+                                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="40"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your personal fashion manager" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sNB-xj-93j">
+                                                <rect key="frame" x="0.0" y="73" width="240" height="20.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="240" id="EbX-ZY-icR"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.10622261889168505" green="0.053182377960764415" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="Xgv-Ya-aRu" firstAttribute="centerX" secondItem="J5H-8V-877" secondAttribute="centerX" id="gvI-iF-xBC"/>
+                                    <constraint firstItem="Xgv-Ya-aRu" firstAttribute="centerY" secondItem="J5H-8V-877" secondAttribute="centerY" id="lzP-ak-lZ9"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sgx-3J-OjH">
+                                <rect key="frame" x="126" y="278" width="125" height="70"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="17"/>
+                                <state key="normal" title="Login or Register">
+                                    <color key="titleColor" red="0.074509803921568626" green="0.039215686274509803" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginButtonTapped:" destination="Prq-ho-lDE" eventType="touchUpInside" id="8Lc-lS-F4d"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="sgx-3J-OjH" firstAttribute="top" secondItem="J5H-8V-877" secondAttribute="bottom" constant="51" id="4wm-vB-CFu"/>
+                            <constraint firstItem="J5H-8V-877" firstAttribute="top" secondItem="FlA-NR-28I" secondAttribute="top" id="FlE-8n-74M"/>
+                            <constraint firstItem="sgx-3J-OjH" firstAttribute="leading" secondItem="FlA-NR-28I" secondAttribute="leading" constant="126" id="I9n-Ec-jeU"/>
+                            <constraint firstAttribute="bottom" secondItem="J5H-8V-877" secondAttribute="bottom" constant="440" id="KYP-34-MAe"/>
+                            <constraint firstItem="J5H-8V-877" firstAttribute="leading" secondItem="FlA-NR-28I" secondAttribute="leading" id="LjG-D3-vup"/>
+                            <constraint firstAttribute="trailing" secondItem="J5H-8V-877" secondAttribute="trailing" id="OC9-gs-oai"/>
+                            <constraint firstItem="kCm-ap-amU" firstAttribute="top" secondItem="sgx-3J-OjH" secondAttribute="bottom" constant="319" id="Wnl-iX-yeq"/>
+                            <constraint firstAttribute="trailing" secondItem="sgx-3J-OjH" secondAttribute="trailing" constant="124" id="rJr-JT-V80"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Ks6-0W-H0Z"/>
+                    <connections>
+                        <outlet property="loginButton" destination="sgx-3J-OjH" id="UzS-oU-ehu"/>
+                        <segue destination="eLr-xo-fb2" kind="show" identifier="toCreateUsername" id="EZa-dT-5x9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CJp-rv-tzf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="712.79999999999995" y="168.6656671664168"/>
+        </scene>
+        <!--Create Username View Controller-->
+        <scene sceneID="w0Z-Xy-XVl">
+            <objects>
+                <viewController id="eLr-xo-fb2" customClass="CreateUsernameViewController" customModule="DressUp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HFB-qf-ZS3"/>
+                        <viewControllerLayoutGuide type="bottom" id="gvc-h1-RuR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9up-BP-dre">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="olF-47-gTq">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="227"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="gii-hX-FML">
+                                        <rect key="frame" x="71.5" y="76.5" width="232.5" height="74.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create Username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ix8-ty-2ZC">
+                                                <rect key="frame" x="28" y="0.0" width="177" height="29"/>
+                                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="24"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Find friends and show your style" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yuv-0U-eKd">
+                                                <rect key="frame" x="0.0" y="54" width="232.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.074509803921568626" green="0.039215686274509803" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="gii-hX-FML" firstAttribute="centerY" secondItem="olF-47-gTq" secondAttribute="centerY" id="G3E-TO-gUc"/>
+                                    <constraint firstItem="gii-hX-FML" firstAttribute="centerX" secondItem="olF-47-gTq" secondAttribute="centerX" id="jrX-Dm-D4d"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="qOn-MY-qlo">
+                                <rect key="frame" x="20" y="278" width="335" height="73"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cgk-L2-MOP">
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="30"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="icq-2G-RuG">
+                                        <rect key="frame" x="139" y="40" width="57" height="33"/>
+                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                        <state key="normal" title="Confirm">
+                                            <color key="titleColor" red="0.074509803921568626" green="0.039215686274509803" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="confirmButtonTapped:" destination="eLr-xo-fb2" eventType="touchUpInside" id="q9X-da-mjP"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="cgk-L2-MOP" secondAttribute="trailing" id="NpC-ak-4hr"/>
+                                    <constraint firstItem="cgk-L2-MOP" firstAttribute="leading" secondItem="qOn-MY-qlo" secondAttribute="leading" id="TDp-oh-1pe"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="qOn-MY-qlo" secondAttribute="trailing" constant="20" id="0i5-mp-ffI"/>
+                            <constraint firstItem="olF-47-gTq" firstAttribute="top" secondItem="9up-BP-dre" secondAttribute="top" id="2rQ-mu-Hao"/>
+                            <constraint firstItem="qOn-MY-qlo" firstAttribute="top" secondItem="olF-47-gTq" secondAttribute="bottom" constant="51" id="3FP-od-b14"/>
+                            <constraint firstAttribute="bottom" secondItem="olF-47-gTq" secondAttribute="bottom" constant="440" id="8lj-Lb-69X"/>
+                            <constraint firstAttribute="trailing" secondItem="olF-47-gTq" secondAttribute="trailing" id="LQE-ry-deB"/>
+                            <constraint firstItem="olF-47-gTq" firstAttribute="leading" secondItem="9up-BP-dre" secondAttribute="leading" id="lsV-ps-Zjz"/>
+                            <constraint firstItem="qOn-MY-qlo" firstAttribute="leading" secondItem="9up-BP-dre" secondAttribute="leading" constant="20" id="tgq-iu-U77"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="confirmButton" destination="icq-2G-RuG" id="YDF-hC-ecx"/>
+                        <outlet property="usernameTextField" destination="cgk-L2-MOP" id="xN5-EE-Lsc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wmj-ef-uc3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1524" y="168.6656671664168"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="C9x-Wi-bbz">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="th9-VW-p9l" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Z9R-dl-jeL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Prq-ho-lDE" kind="relationship" relationship="rootViewController" id="wy8-Jj-HqP"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="q5T-Ld-d8X" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-226.40000000000001" y="168.6656671664168"/>
+        </scene>
+    </scenes>
+</document>
