@@ -35,15 +35,6 @@ final class TagsPageViewController: UIViewController  {
     return label
   }()
   
-  fileprivate let brandLabel: UILabel = {
-    let label = UILabel()
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.numberOfLines = 0
-    label.text = "Brands: "
-    label.lineBreakMode = .byWordWrapping
-    return label
-  }()
-  
   fileprivate let saveButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -69,25 +60,19 @@ final class TagsPageViewController: UIViewController  {
     button.backgroundColor = .orange
     return button
   }()
-
-  var saveButtonHeightConstraint: NSLayoutConstraint = NSLayoutConstraint()
   
+  var saveButtonHeightConstraint: NSLayoutConstraint = NSLayoutConstraint()
   var app:ClarifaiApp?
   let picker = UIImagePickerController()
-  
   var pendingImage: UIImage?
   
   override func viewDidLoad() {
     super.viewDidLoad()
     app = ClarifaiApp(apiKey: "eeace7a446b74adda719b9b8cd62b7a1")
     initialize()
-
     let tagsPageTabBar = UITabBarItem(title: "Camera", image: #imageLiteral(resourceName: "camera"), selectedImage: nil)
     tabBarItem = tagsPageTabBar
-    
     self.navigationItem.title = "Camera"
-    
-
   }
   
   deinit {
@@ -100,7 +85,6 @@ final class TagsPageViewController: UIViewController  {
     view.addSubview(imageView)
     view.addSubview(categoriesLabel)
     view.addSubview(colorLabel)
-    view.addSubview(brandLabel)
     view.addSubview(saveButton)
     view.addSubview(takePhotoButton)
     view.addSubview(chooseButton)
@@ -108,7 +92,7 @@ final class TagsPageViewController: UIViewController  {
     takePhotoButton.addTarget(self, action: #selector(TagsPageViewController.takePhotoButtonTapped), for: .touchUpInside)
     chooseButton.addTarget(self, action: #selector(TagsPageViewController.chooseButtonTapped), for: .touchUpInside)
     saveButton.addTarget(self, action: #selector(TagsPageViewController.saveButtonTapped), for: .touchUpInside)
-  
+    
     let screenWidth = UIScreen.main.bounds.size.width
     
     // imageview
@@ -121,17 +105,13 @@ final class TagsPageViewController: UIViewController  {
     view.addConstraint(NSLayoutConstraint(item: categoriesLabel, attribute: .top, relatedBy: .equal, toItem: imageView, attribute: .bottom, multiplier: 1.0, constant: 10))
     view.addConstraint(NSLayoutConstraint(item: categoriesLabel, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 10))
     view.addConstraint(NSLayoutConstraint(item: imageView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 10))
-
+    
     // color label
     view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .top, relatedBy: .equal, toItem: categoriesLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
     view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .left, relatedBy: .equal, toItem: categoriesLabel, attribute: .left, multiplier: 1.0, constant: 0))
     view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .right, relatedBy: .equal, toItem: categoriesLabel, attribute: .right, multiplier: 1.0, constant: 0))
     
-    //brand label
-    view.addConstraint(NSLayoutConstraint(item: brandLabel, attribute: .top, relatedBy: .equal, toItem: colorLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
-    view.addConstraint(NSLayoutConstraint(item: brandLabel, attribute: .left, relatedBy: .equal, toItem: colorLabel, attribute: .left, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: brandLabel, attribute: .right, relatedBy: .equal, toItem: colorLabel, attribute: .right, multiplier: 1.0, constant: 0))
-    
+
     // save button
     view.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0))
     view.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0))
@@ -179,7 +159,6 @@ final class TagsPageViewController: UIViewController  {
         }
       )
     }
-    //when the save button is tapped, display the uploaded picture in photo library immediately??
   }
   
   fileprivate func displaySaveButton() {
@@ -195,8 +174,6 @@ extension TagsPageViewController: UIImagePickerControllerDelegate {
       imageView.image = image
       recognizeImage(image: image, modelID: Constants.ModelIDs.categoryID, modelName: Constants.ModelNames.categoryName)
       recognizeImage(image: image, modelID: Constants.ModelIDs.colorID, modelName: Constants.ModelNames.colorName)
-      recognizeImage(image: image, modelID: Constants.ModelIDs.brandID, modelName: Constants.ModelNames.brandName)
-
       takePhotoButton.isEnabled = false
       chooseButton.isEnabled = false
       pendingImage = image
@@ -210,7 +187,7 @@ extension TagsPageViewController: UIImagePickerControllerDelegate {
         let caiImage = ClarifaiImage(image: image)!
         model?.predict(on: [caiImage], completion: { (outputs, error) in
           guard let caiOutputs = outputs
-          else { return }
+            else { return }
           if let caiOutput = caiOutputs.first {
             let tags = NSMutableArray()
             if modelName == Constants.ModelNames.categoryName {
@@ -226,20 +203,12 @@ extension TagsPageViewController: UIImagePickerControllerDelegate {
                 tags.add(concept.conceptName)
               }
             }
-            if modelName == Constants.ModelNames.brandName {
-              for concept in caiOutput.concepts {
-                tags.add(concept.conceptName)
-              }
-            }
             DispatchQueue.main.async {
               if modelName == Constants.ModelNames.categoryName {
                 self.categoriesLabel.text = String(format: modelName, tags.componentsJoined(by: ", "))
               }
               if modelName == Constants.ModelNames.colorName {
                 self.colorLabel.text = String(format: modelName, tags.componentsJoined(by: ", "))
-              }
-              if modelName == Constants.ModelNames.brandName {
-                self.brandLabel.text = String(format: modelName, tags.componentsJoined(by: ", "))
               }
             }
           }

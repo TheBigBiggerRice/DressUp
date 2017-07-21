@@ -9,6 +9,10 @@
 import UIKit
 import FirebaseDatabase.FIRDataSnapshot
 
+protocol DUKeyed{
+  var key: String? { get set }
+}
+
 class Photos: DUKeyed {
   //properties and initializers
   var key: String?

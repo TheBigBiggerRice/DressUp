@@ -7,9 +7,4 @@
 //
 
 
-import Foundation
 
-protocol DUKeyed{
-  var key: String? { get set }
-  
-}

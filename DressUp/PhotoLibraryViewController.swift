@@ -13,10 +13,8 @@ class PhotoLibraryViewController: UIViewController {
 
   var user: User!
   var photoCollection = [Photos]()
-  
   var profileHandle: DatabaseHandle = 0
   var profileRef: DatabaseReference?
-  
   let flowLayout = UICollectionViewFlowLayout()
   var collectionView: UICollectionView!
   
@@ -39,25 +37,40 @@ class PhotoLibraryViewController: UIViewController {
     profileHandle = UserService.observeProfile(for: user) { [unowned self] (ref, user, photos) in
       self.profileRef = ref
       self.user = user
-      self.photoCollection = photos
-
+      self.photoCollection = photos.sorted(by: {$0.creationDate > $1.creationDate})
       DispatchQueue.main.async {
         self.collectionView.reloadData()
       }
     }
   }
+  
   override func viewWillAppear(_ animated: Bool) {
     UserService.photos(for: user) { (Photos) in
-      self.photoCollection = Photos
+      self.photoCollection = Photos.sorted(by: {$0.creationDate > $1.creationDate})
       self.collectionView.reloadData()
     }
   }
+  
   deinit {
     profileRef?.removeObserver(withHandle: profileHandle)
   }
 }
 
 extension PhotoLibraryViewController: UICollectionViewDelegate {
+  
+  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    
+    let vc = ExpandedPhotoViewController()
+    let indexPaths = self.collectionView.indexPathsForSelectedItems
+    let indexPath = indexPaths![0]
+    let photo = photoCollection[indexPath.row]
+    let imageURL = URL(string: photo.imageURL)
+    vc.photoImageView.kf.setImage(with: imageURL)
+    
+    let nc = UINavigationController(rootViewController: vc)
+    self.present(nc, animated: true, completion: nil)
+  }
 }
 
 extension PhotoLibraryViewController: UICollectionViewDataSource {

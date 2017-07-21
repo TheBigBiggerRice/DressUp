@@ -25,6 +25,5 @@ struct Constants{
     struct ModelNames {
         static let categoryName = "Categories:\n%@"
         static let colorName = "Colors:\n%@"
-        static let brandName = "Brands:\n%@"
     }
 }

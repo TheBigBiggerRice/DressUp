@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		08A702FC580823E4F3EBD20B /* Pods_DressUp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1AC77BA1F61AA31A9F2FA1B /* Pods_DressUp.framework */; };
+		990734DF1F212D0A0090E7CC /* ExpandedPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990734DE1F212D0A0090E7CC /* ExpandedPhotoViewController.swift */; };
 		994E30AA1F1B000400F0C53A /* Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994E30A91F1B000400F0C53A /* Photos.swift */; };
 		994E30AC1F1BE64500F0C53A /* UIImage+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994E30AB1F1BE64500F0C53A /* UIImage+Size.swift */; };
 		994E30AE1F1BE7E000F0C53A /* StorageReference+Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994E30AD1F1BE7E000F0C53A /* StorageReference+Post.swift */; };
@@ -39,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		6952B97E4EAD711A4164BB61 /* Pods-DressUp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DressUp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DressUp/Pods-DressUp.debug.xcconfig"; sourceTree = "<group>"; };
+		990734DE1F212D0A0090E7CC /* ExpandedPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpandedPhotoViewController.swift; sourceTree = "<group>"; };
 		994E30A91F1B000400F0C53A /* Photos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photos.swift; sourceTree = "<group>"; };
 		994E30AB1F1BE64500F0C53A /* UIImage+Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Size.swift"; sourceTree = "<group>"; };
 		994E30AD1F1BE7E000F0C53A /* StorageReference+Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StorageReference+Post.swift"; sourceTree = "<group>"; };
@@ -99,6 +101,34 @@
 				CBBF58DFFA69E0007F1EA230 /* Pods-DressUp.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		990734E01F212D1C0090E7CC /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				999655341F1834D600A9E1DB /* LoginViewController.swift */,
+				999655391F184C3400A9E1DB /* CreateUsernameViewController.swift */,
+			);
+			name = Login;
+			sourceTree = "<group>";
+		};
+		990734E11F212D380090E7CC /* Pending  */ = {
+			isa = PBXGroup;
+			children = (
+				999655451F18A1E700A9E1DB /* HomeViewController.swift */,
+				999655471F18A21400A9E1DB /* TimelineViewController.swift */,
+				999655491F18A21F00A9E1DB /* FindFriendsViewController.swift */,
+			);
+			name = "Pending ";
+			sourceTree = "<group>";
+		};
+		990734E21F212D610090E7CC /* Overview */ = {
+			isa = PBXGroup;
+			children = (
+				9996554B1F18BBA900A9E1DB /* MainTabBarController.swift */,
+				994E30AF1F1C76A200F0C53A /* DUNavigationController.swift */,
+			);
+			name = Overview;
 			sourceTree = "<group>";
 		};
 		994E30B11F1D285200F0C53A /* Views */ = {
@@ -167,15 +197,12 @@
 		999655311F18341000A9E1DB /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				999655341F1834D600A9E1DB /* LoginViewController.swift */,
-				999655391F184C3400A9E1DB /* CreateUsernameViewController.swift */,
-				999655451F18A1E700A9E1DB /* HomeViewController.swift */,
-				999655471F18A21400A9E1DB /* TimelineViewController.swift */,
-				999655491F18A21F00A9E1DB /* FindFriendsViewController.swift */,
-				9996554B1F18BBA900A9E1DB /* MainTabBarController.swift */,
+				990734E21F212D610090E7CC /* Overview */,
+				990734E11F212D380090E7CC /* Pending  */,
+				990734E01F212D1C0090E7CC /* Login */,
 				999655521F1937FC00A9E1DB /* TagsPageViewController.swift */,
+				990734DE1F212D0A0090E7CC /* ExpandedPhotoViewController.swift */,
 				999655581F19891700A9E1DB /* PhotoLibraryViewController.swift */,
-				994E30AF1F1C76A200F0C53A /* DUNavigationController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -344,6 +371,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				990734DF1F212D0A0090E7CC /* ExpandedPhotoViewController.swift in Sources */,
 				994E30AC1F1BE64500F0C53A /* UIImage+Size.swift in Sources */,
 				999655381F184A2300A9E1DB /* User.swift in Sources */,
 				999655351F1834D600A9E1DB /* LoginViewController.swift in Sources */,
