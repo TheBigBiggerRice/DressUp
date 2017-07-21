@@ -13,13 +13,17 @@ class PhotoLibraryViewController: UIViewController {
 
   var user: User!
   var photoCollection = [Photos]()
+  var photoIndexed: [String] = []
+  var urlString: URL?
   var profileHandle: DatabaseHandle = 0
   var profileRef: DatabaseReference?
   let flowLayout = UICollectionViewFlowLayout()
   var collectionView: UICollectionView!
   
   override func viewDidLoad() {
+    
     super.viewDidLoad()
+    
     let photoLibraryTabBar = UITabBarItem(title: "Library", image: #imageLiteral(resourceName: "pictures"), selectedImage: nil)
     tabBarItem = photoLibraryTabBar
     self.navigationItem.title = "Library"
@@ -38,6 +42,14 @@ class PhotoLibraryViewController: UIViewController {
       self.profileRef = ref
       self.user = user
       self.photoCollection = photos.sorted(by: {$0.creationDate > $1.creationDate})
+      
+      //put all the image urls into an array of image urls
+      for stuff in self.photoCollection {
+        self.photoIndexed.append(stuff.imageURL)
+      }
+      
+      print(self.photoIndexed)
+      
       DispatchQueue.main.async {
         self.collectionView.reloadData()
       }
@@ -47,6 +59,10 @@ class PhotoLibraryViewController: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     UserService.photos(for: user) { (Photos) in
       self.photoCollection = Photos.sorted(by: {$0.creationDate > $1.creationDate})
+//      for stuff in self.photoCollection {
+//        self.photoIndexed.append(stuff.imageURL)
+//      }
+
       self.collectionView.reloadData()
     }
   }
@@ -66,9 +82,16 @@ extension PhotoLibraryViewController: UICollectionViewDelegate {
     let indexPath = indexPaths![0]
     let photo = photoCollection[indexPath.row]
     let imageURL = URL(string: photo.imageURL)
+    
+    //get the url of the image that was selected 
+    self.urlString = imageURL
+    
     vc.photoImageView.kf.setImage(with: imageURL)
     
     let nc = UINavigationController(rootViewController: vc)
+    vc.photoIndexxed = self.photoIndexed
+    vc.urls = self.urlString
+    vc.numImages = self.photoCollection.count
     self.present(nc, animated: true, completion: nil)
   }
 }

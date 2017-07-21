@@ -32,7 +32,6 @@
 		999655481F18A21400A9E1DB /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655471F18A21400A9E1DB /* TimelineViewController.swift */; };
 		9996554A1F18A21F00A9E1DB /* FindFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655491F18A21F00A9E1DB /* FindFriendsViewController.swift */; };
 		9996554C1F18BBA900A9E1DB /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9996554B1F18BBA900A9E1DB /* MainTabBarController.swift */; };
-		999655511F18BF6400A9E1DB /* DUPhotoHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655501F18BF6400A9E1DB /* DUPhotoHelper.swift */; };
 		999655531F1937FC00A9E1DB /* TagsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655521F1937FC00A9E1DB /* TagsPageViewController.swift */; };
 		999655551F193EF800A9E1DB /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655541F193EF800A9E1DB /* StorageService.swift */; };
 		999655591F19891700A9E1DB /* PhotoLibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655581F19891700A9E1DB /* PhotoLibraryViewController.swift */; };
@@ -66,7 +65,6 @@
 		999655471F18A21400A9E1DB /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		999655491F18A21F00A9E1DB /* FindFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindFriendsViewController.swift; sourceTree = "<group>"; };
 		9996554B1F18BBA900A9E1DB /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
-		999655501F18BF6400A9E1DB /* DUPhotoHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DUPhotoHelper.swift; sourceTree = "<group>"; };
 		999655521F1937FC00A9E1DB /* TagsPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagsPageViewController.swift; sourceTree = "<group>"; };
 		999655541F193EF800A9E1DB /* StorageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		999655581F19891700A9E1DB /* PhotoLibraryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoLibraryViewController.swift; sourceTree = "<group>"; };
@@ -166,7 +164,6 @@
 				999655311F18341000A9E1DB /* View Controllers */,
 				999655301F18340700A9E1DB /* Storyboards */,
 				999655361F184A1500A9E1DB /* Models */,
-				9996554D1F18BF2100A9E1DB /* Helpers */,
 				999655421F18860B00A9E1DB /* Extensions */,
 				9996552F1F1833FE00A9E1DB /* Supporting */,
 				996B759B1F182D6000E835AA /* Assets.xcassets */,
@@ -198,8 +195,8 @@
 			isa = PBXGroup;
 			children = (
 				990734E21F212D610090E7CC /* Overview */,
-				990734E11F212D380090E7CC /* Pending  */,
 				990734E01F212D1C0090E7CC /* Login */,
+				990734E11F212D380090E7CC /* Pending  */,
 				999655521F1937FC00A9E1DB /* TagsPageViewController.swift */,
 				990734DE1F212D0A0090E7CC /* ExpandedPhotoViewController.swift */,
 				999655581F19891700A9E1DB /* PhotoLibraryViewController.swift */,
@@ -235,14 +232,6 @@
 				994E30B61F1D6CAD00F0C53A /* DatabaseReference+Extenstion.swift */,
 			);
 			name = Extensions;
-			sourceTree = "<group>";
-		};
-		9996554D1F18BF2100A9E1DB /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				999655501F18BF6400A9E1DB /* DUPhotoHelper.swift */,
-			);
-			name = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -386,7 +375,6 @@
 				995035481F19A7E7009453E1 /* PhotoService.swift in Sources */,
 				999655481F18A21400A9E1DB /* TimelineViewController.swift in Sources */,
 				999655411F18857F00A9E1DB /* Constants.swift in Sources */,
-				999655511F18BF6400A9E1DB /* DUPhotoHelper.swift in Sources */,
 				994E30B71F1D6CAD00F0C53A /* DatabaseReference+Extenstion.swift in Sources */,
 				994E30AA1F1B000400F0C53A /* Photos.swift in Sources */,
 				9996553A1F184C3400A9E1DB /* CreateUsernameViewController.swift in Sources */,
