@@ -8,13 +8,13 @@
 
 import UIKit
 
-final class ExpandedPhotoViewController: UIViewController {
+final class PhotoViewController: UIViewController {
   
-  var imageIndex = 0
   var urls: URL?
+  var newPhotoURLs: [String] = []
+  var imageIndex = 0
   var numImages = 0
-  var photoIndexxed: [String] = []
-
+  
   //set image view
   let photoImageView: UIImageView = {
     let view = UIImageView()
@@ -32,7 +32,7 @@ final class ExpandedPhotoViewController: UIViewController {
     self.navigationItem.title = "Photo"
     self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped(sender:)))
     self.navigationItem.rightBarButtonItem?.tintColor = .white
-    self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Tags", style: .plain, target: self, action: nil)
+    self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(deleteButtonTapped(sender:)))
     self.navigationItem.leftBarButtonItem?.tintColor = .white
     
     //swiping between photos
@@ -49,48 +49,37 @@ final class ExpandedPhotoViewController: UIViewController {
   func cancelButtonTapped(sender: UIBarButtonItem) {
     dismiss(animated: true, completion: nil)
   }
-  //find the index of a url for the image
-  //increase/decrease the index
-  //match the index with new image url
-  //we now have urlString and photoIndexed, find the index of urlString within photoIndexed
-
+  //delete button tapped
+  func deleteButtonTapped(sender: UIBarButtonItem) {
+    dismiss(animated: true, completion: nil)
+  }
+  
+  //handle swipe right and left
   func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
-    //now I have the index of the image url of the current image
-    for urll in photoIndexxed {
-      //print(urll)
-      //this line is errorneous
-      //if I do this, the image index is always going to be the same, because self.urls remains the same
-      //corrected
-      if URL(string: urll) == self.urls {
-        imageIndex = photoIndexxed.index(of: urll)!
+    for url in newPhotoURLs {
+      if URL(string: url) == self.urls {
+        imageIndex = newPhotoURLs.index(of: url)!
       }
-      //depending on left or right, decrease or increase the index, and match the index to the image url
     }
-    
     switch gesture.direction {
     case UISwipeGestureRecognizerDirection.right:
-      print("swipe right")
       imageIndex -= 1
-      //this should solve index out of range problem? APPARENTLY NOT.
       if imageIndex < 0 {
         imageIndex = numImages - 1
       }
-      self.urls = URL(string: photoIndexxed[imageIndex])
+      self.urls = URL(string: newPhotoURLs[imageIndex])
       self.photoImageView.kf.setImage(with: self.urls)
     case UISwipeGestureRecognizerDirection.left:
-      print("swipe left")
       imageIndex += 1
       if imageIndex > (numImages - 1) {
         imageIndex = 0
       }
-      self.urls = URL(string: photoIndexxed[imageIndex])
+      self.urls = URL(string: newPhotoURLs[imageIndex])
       self.photoImageView.kf.setImage(with: self.urls)
     default:
       break
     }
   }
-  //remaining bugs: does not function properlly when additional photos are added in the same run
-  
   
   private func initialize() {
     view.addSubview(photoImageView)

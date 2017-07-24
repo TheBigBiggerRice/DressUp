@@ -20,7 +20,7 @@ class Photos: DUKeyed {
   let imageHeight: CGFloat
   let poster: User
   let creationDate: Date
-
+  
   
   
   var dictValue: [String : Any] {
@@ -42,7 +42,7 @@ class Photos: DUKeyed {
       let imageURL = dict["image_url"] as? String,
       let imageHeight = dict["image_height"] as? CGFloat,
       let createdAgo = dict["created_at"] as? TimeInterval,
-
+      
       let userDict = dict["poster"] as? [String : Any],
       let uid = userDict["uid"] as? String,
       let username = userDict["username"] as? String else {
@@ -59,7 +59,7 @@ class Photos: DUKeyed {
     self.imageURL = imageURL
     self.imageHeight = imageHeight
     self.creationDate = Date()
-
+    
     self.poster = User.current
   }
 }

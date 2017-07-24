@@ -9,12 +9,10 @@ import UIKit
 import FirebaseDatabase
 import Kingfisher
 
-class PhotoLibraryViewController: UIViewController {
-
+class LibraryViewController: UIViewController {
+  
   var user: User!
   var photoCollection = [Photos]()
-  var photoIndexed: [String] = []
-  var urlString: URL?
   var profileHandle: DatabaseHandle = 0
   var profileRef: DatabaseReference?
   let flowLayout = UICollectionViewFlowLayout()
@@ -26,10 +24,12 @@ class PhotoLibraryViewController: UIViewController {
     
     let photoLibraryTabBar = UITabBarItem(title: "Library", image: #imageLiteral(resourceName: "pictures"), selectedImage: nil)
     tabBarItem = photoLibraryTabBar
+    
     self.navigationItem.title = "Library"
+    self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(selectButtonTapped(sender:)))
+    self.navigationItem.rightBarButtonItem?.tintColor = .white
     
     collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: flowLayout)
-    
     collectionView.register(PhotoCollectionCell.self, forCellWithReuseIdentifier: "PhotoCollectionCell")
     collectionView.delegate = self
     collectionView.dataSource = self
@@ -43,26 +43,20 @@ class PhotoLibraryViewController: UIViewController {
       self.user = user
       self.photoCollection = photos.sorted(by: {$0.creationDate > $1.creationDate})
       
-      //put all the image urls into an array of image urls
-      for stuff in self.photoCollection {
-        self.photoIndexed.append(stuff.imageURL)
-      }
-      
-      print(self.photoIndexed)
-      
       DispatchQueue.main.async {
         self.collectionView.reloadData()
       }
     }
   }
+  func selectButtonTapped(sender: UIBarButtonItem) {
+    print("select photos")
+  }
+  
   
   override func viewWillAppear(_ animated: Bool) {
     UserService.photos(for: user) { (Photos) in
       self.photoCollection = Photos.sorted(by: {$0.creationDate > $1.creationDate})
-//      for stuff in self.photoCollection {
-//        self.photoIndexed.append(stuff.imageURL)
-//      }
-
+      
       self.collectionView.reloadData()
     }
   }
@@ -72,31 +66,30 @@ class PhotoLibraryViewController: UIViewController {
   }
 }
 
-extension PhotoLibraryViewController: UICollectionViewDelegate {
+extension LibraryViewController: UICollectionViewDelegate {
   
-  
+  //tapping on a cell and displaying the image
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     
-    let vc = ExpandedPhotoViewController()
+    let vc = PhotoViewController()
     let indexPaths = self.collectionView.indexPathsForSelectedItems
     let indexPath = indexPaths![0]
     let photo = photoCollection[indexPath.row]
     let imageURL = URL(string: photo.imageURL)
     
-    //get the url of the image that was selected 
-    self.urlString = imageURL
-    
     vc.photoImageView.kf.setImage(with: imageURL)
     
     let nc = UINavigationController(rootViewController: vc)
-    vc.photoIndexxed = self.photoIndexed
-    vc.urls = self.urlString
+    let photoURLs: [String]  = photoCollection.map {$0.imageURL}
+    
+    vc.urls = imageURL
+    vc.newPhotoURLs = photoURLs
     vc.numImages = self.photoCollection.count
     self.present(nc, animated: true, completion: nil)
   }
 }
 
-extension PhotoLibraryViewController: UICollectionViewDataSource {
+extension LibraryViewController: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return photoCollection.count
@@ -111,7 +104,7 @@ extension PhotoLibraryViewController: UICollectionViewDataSource {
   }
 }
 
-extension PhotoLibraryViewController: UICollectionViewDelegateFlowLayout {
+extension LibraryViewController: UICollectionViewDelegateFlowLayout {
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     let columns: CGFloat = 3

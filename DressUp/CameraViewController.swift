@@ -8,7 +8,7 @@
 import UIKit
 import Clarifai
 
-final class TagsPageViewController: UIViewController  {
+final class CameraViewController: UIViewController  {
   
   fileprivate let imageView: UIImageView = {
     let view = UIImageView()
@@ -89,9 +89,9 @@ final class TagsPageViewController: UIViewController  {
     view.addSubview(takePhotoButton)
     view.addSubview(chooseButton)
     
-    takePhotoButton.addTarget(self, action: #selector(TagsPageViewController.takePhotoButtonTapped), for: .touchUpInside)
-    chooseButton.addTarget(self, action: #selector(TagsPageViewController.chooseButtonTapped), for: .touchUpInside)
-    saveButton.addTarget(self, action: #selector(TagsPageViewController.saveButtonTapped), for: .touchUpInside)
+    takePhotoButton.addTarget(self, action: #selector(CameraViewController.takePhotoButtonTapped), for: .touchUpInside)
+    chooseButton.addTarget(self, action: #selector(CameraViewController.chooseButtonTapped), for: .touchUpInside)
+    saveButton.addTarget(self, action: #selector(CameraViewController.saveButtonTapped), for: .touchUpInside)
     
     let screenWidth = UIScreen.main.bounds.size.width
     
@@ -111,7 +111,7 @@ final class TagsPageViewController: UIViewController  {
     view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .left, relatedBy: .equal, toItem: categoriesLabel, attribute: .left, multiplier: 1.0, constant: 0))
     view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .right, relatedBy: .equal, toItem: categoriesLabel, attribute: .right, multiplier: 1.0, constant: 0))
     
-
+    
     // save button
     view.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0))
     view.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0))
@@ -166,7 +166,7 @@ final class TagsPageViewController: UIViewController  {
   }
 }
 
-extension TagsPageViewController: UIImagePickerControllerDelegate {
+extension CameraViewController: UIImagePickerControllerDelegate {
   
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
     dismiss(animated: true, completion: nil)
@@ -222,6 +222,6 @@ extension TagsPageViewController: UIImagePickerControllerDelegate {
   }
 }
 
-extension TagsPageViewController: UINavigationControllerDelegate {
+extension CameraViewController: UINavigationControllerDelegate {
   
 }
