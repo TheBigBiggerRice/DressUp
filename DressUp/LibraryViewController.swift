@@ -10,13 +10,17 @@ import FirebaseDatabase
 import Kingfisher
 
 class LibraryViewController: UIViewController {
-  
+  //firebase stuff
   var user: User!
   var photoCollection = [Photos]()
   var profileHandle: DatabaseHandle = 0
   var profileRef: DatabaseReference?
   let flowLayout = UICollectionViewFlowLayout()
   var collectionView: UICollectionView!
+  //for select and delete photo
+  var selectButtonOn = false
+  var selectedPhotos = [String]()
+  
   
   override func viewDidLoad() {
     
@@ -26,8 +30,14 @@ class LibraryViewController: UIViewController {
     tabBarItem = photoLibraryTabBar
     
     self.navigationItem.title = "Library"
+    
+    //select button
     self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(selectButtonTapped(sender:)))
     self.navigationItem.rightBarButtonItem?.tintColor = .white
+    
+    //deletebutton
+    self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(deleteButtonTapped(sender:)))
+    self.navigationItem.leftBarButtonItem?.tintColor = .clear
     
     collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: flowLayout)
     collectionView.register(PhotoCollectionCell.self, forCellWithReuseIdentifier: "PhotoCollectionCell")
@@ -49,14 +59,41 @@ class LibraryViewController: UIViewController {
     }
   }
   func selectButtonTapped(sender: UIBarButtonItem) {
+    selectButtonOn = true
+    collectionView.allowsMultipleSelection = true
+    
+    self.navigationItem.rightBarButtonItem?.tintColor = .clear
+    self.navigationItem.leftBarButtonItem?.tintColor = .white
     print("select photos")
   }
   
+  func deleteButtonTapped(sender: UIBarButtonItem) {
+    print(selectedPhotos)
+    for imageUID in selectedPhotos {
+      PhotoService.delete(deletePhoto: imageUID)
+    
+    }
+    self.navigationItem.rightBarButtonItem?.tintColor = .white
+    self.navigationItem.leftBarButtonItem?.tintColor = .clear
+    
+    selectButtonOn = false
+    selectedPhotos.removeAll()
+  
+    user = user ?? User.current
+    profileHandle = UserService.observeProfile(for: user) { [unowned self] (ref, user, photos) in
+      self.profileRef = ref
+      self.user = user
+      self.photoCollection = photos.sorted(by: {$0.creationDate > $1.creationDate})
+      
+      DispatchQueue.main.async {
+        self.collectionView.reloadData()
+      }
+    }
+  }
   
   override func viewWillAppear(_ animated: Bool) {
     UserService.photos(for: user) { (Photos) in
       self.photoCollection = Photos.sorted(by: {$0.creationDate > $1.creationDate})
-      
       self.collectionView.reloadData()
     }
   }
@@ -71,26 +108,51 @@ extension LibraryViewController: UICollectionViewDelegate {
   //tapping on a cell and displaying the image
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     
-    let vc = PhotoViewController()
-    let indexPaths = self.collectionView.indexPathsForSelectedItems
-    let indexPath = indexPaths![0]
-    let photo = photoCollection[indexPath.row]
-    let imageURL = URL(string: photo.imageURL)
     
-    vc.photoImageView.kf.setImage(with: imageURL)
-    
-    let nc = UINavigationController(rootViewController: vc)
-    let photoURLs: [String]  = photoCollection.map {$0.imageURL}
-    
-    vc.urls = imageURL
-    vc.newPhotoURLs = photoURLs
-    vc.numImages = self.photoCollection.count
-    self.present(nc, animated: true, completion: nil)
+    if selectButtonOn == false {
+      
+      let indexPaths = self.collectionView.indexPathsForSelectedItems
+      let indexPath = indexPaths![0]
+      let photo = photoCollection[indexPath.row]
+      
+      let vc = PhotoViewController()
+      let imageURL = URL(string: photo.imageURL)
+      vc.photoImageView.kf.setImage(with: imageURL)
+      let nc = UINavigationController(rootViewController: vc)
+      let photoURLs: [String]  = photoCollection.map {$0.imageURL}
+      vc.urls = imageURL
+      vc.newPhotoURLs = photoURLs
+      vc.numImages = self.photoCollection.count
+      
+      //get the image uid, prepare for deletion
+      vc.imageUID = photo.imageUID
+      self.present(nc, animated: true, completion: nil)
+    }
+      
+    else{
+      //get the indexpaths of the selected items, prepare for deletion
+      //when a cell is selected, make the background a bit blurry
+      
+      let indexPaths = self.collectionView.indexPathsForSelectedItems
+      
+      for indexPath in indexPaths! {
+        let photo = photoCollection[indexPath.row]
+        if !selectedPhotos.contains(photo.imageUID) {
+          selectedPhotos.append(photo.imageUID)
+        }
+      }
+    }
+  }
+  func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+    if selectButtonOn == true {
+    //Deselect code here
+      
+    }
   }
 }
 
 extension LibraryViewController: UICollectionViewDataSource {
-  
+  //the whole collection view is one big section
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return photoCollection.count
   }
@@ -100,6 +162,11 @@ extension LibraryViewController: UICollectionViewDataSource {
     let photo = photoCollection[indexPath.row]
     let imageURL = URL(string: photo.imageURL)
     cell.thumbImageView.kf.setImage(with: imageURL)
+    
+    let backgroundView = UIView()
+    backgroundView.backgroundColor = .black
+    cell.selectedBackgroundView = backgroundView
+    
     return cell
   }
 }

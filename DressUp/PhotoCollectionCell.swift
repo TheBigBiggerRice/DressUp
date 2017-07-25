@@ -13,7 +13,7 @@ class PhotoCollectionCell: UICollectionViewCell {
   let thumbImageView: UIImageView = {
     let view = UIImageView()
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.contentMode = .scaleToFill
+    view.contentMode = .scaleAspectFit
     return view
   }()
   
@@ -47,6 +47,7 @@ class PhotoCollectionCell: UICollectionViewCell {
     
   }
 }
+
 
 
 

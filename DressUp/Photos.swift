@@ -20,6 +20,7 @@ class Photos: DUKeyed {
   let imageHeight: CGFloat
   let poster: User
   let creationDate: Date
+  let imageUID: String
   
   
   
@@ -31,17 +32,19 @@ class Photos: DUKeyed {
     return ["image_url" : imageURL,
             "image_height" : imageHeight,
             "created_at" : createdAgo,
-            "poster" : userDict]    }
+            "image_uid" : imageUID,
+            "poster" : userDict]
+  }
   
   
   
   init?(snapshot: DataSnapshot) {
     guard let dict = snapshot.value as? [String : Any],
       
-      
       let imageURL = dict["image_url"] as? String,
       let imageHeight = dict["image_height"] as? CGFloat,
       let createdAgo = dict["created_at"] as? TimeInterval,
+      let imageUID = dict["image_uid"] as? String,
       
       let userDict = dict["poster"] as? [String : Any],
       let uid = userDict["uid"] as? String,
@@ -54,12 +57,13 @@ class Photos: DUKeyed {
     self.imageURL = imageURL
     self.imageHeight = imageHeight
     self.creationDate = Date(timeIntervalSince1970: createdAgo)
+    self.imageUID = imageUID
   }
-  init(imageURL: String, imageHeight: CGFloat) {
+  init(imageURL: String, imageHeight: CGFloat, imageUID: String) {
     self.imageURL = imageURL
     self.imageHeight = imageHeight
     self.creationDate = Date()
-    
+    self.imageUID = imageUID
     self.poster = User.current
   }
 }

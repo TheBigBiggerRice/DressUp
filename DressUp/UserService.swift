@@ -64,7 +64,6 @@ struct UserService {
   
   static func observeProfile(for user: User, completion: @escaping (DatabaseReference, User?, [Photos]) -> Void) -> DatabaseHandle {
     let userRef = Database.database().reference().child("users").child(user.uid)
-    //let userRef = DatabaseReference.MGLocation.users.child(user.uid)
     return userRef.observe(.value, with: { snapshot in
       
       guard let user = User(snapshot: snapshot) else {

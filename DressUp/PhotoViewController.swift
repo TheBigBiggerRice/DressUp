@@ -14,6 +14,7 @@ final class PhotoViewController: UIViewController {
   var newPhotoURLs: [String] = []
   var imageIndex = 0
   var numImages = 0
+  var imageUID: String = ""
   
   //set image view
   let photoImageView: UIImageView = {
@@ -51,7 +52,9 @@ final class PhotoViewController: UIViewController {
   }
   //delete button tapped
   func deleteButtonTapped(sender: UIBarButtonItem) {
+    PhotoService.delete(deletePhoto: imageUID)
     dismiss(animated: true, completion: nil)
+    //CODE HERE
   }
   
   //handle swipe right and left

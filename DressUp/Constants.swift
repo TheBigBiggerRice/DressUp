@@ -20,7 +20,6 @@ struct Constants{
     struct ModelIDs {
         static let categoryID = "e0be3b9d6a454f0493ac3a30784001ff"
         static let colorID = "eeed0b6733a644cea07cf4c60f87ebb7"
-        static let brandID = "c443119bf2ed4da98487520d01a0b1e3"
     }
     struct ModelNames {
         static let categoryName = "Categories:\n%@"

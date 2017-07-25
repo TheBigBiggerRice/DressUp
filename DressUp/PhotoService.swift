@@ -15,7 +15,7 @@ struct PhotoService {
   
   static func create(for image: UIImage) {
     DispatchQueue.main.async {
-      let imageRef = StorageReference.newPostImageReference()
+      let imageRef = StorageReference.newPhotoImageReference()
       StorageService.uploadImage(image, at: imageRef) { (downloadURL) in
         guard let downloadURL = downloadURL else {
           return
@@ -30,16 +30,19 @@ struct PhotoService {
   private static func create(forURLString urlString: String, aspectHeight: CGFloat) {
     
     let currentUser = User.current
-    let photo = Photos(imageURL: urlString, imageHeight: aspectHeight)
-    let dict = photo.dictValue
     let photoRef = Database.database().reference().child("photos").child(currentUser.uid).childByAutoId()
+    let uidValue = photoRef.key
+    let photo = Photos(imageURL: urlString, imageHeight: aspectHeight, imageUID: uidValue)
+    let dict = photo.dictValue
+    
+
     photoRef.updateChildValues(dict)
   }
   
-  //delete a photo from library and database
-//  static func delete(deletePhoto: Photos) {
-//    let currentUser = User.current
-//    Database.database().reference().child("photos").child(currentUser.uid).child
-//  }
+  //delete a photo from firebase
+  static func delete(deletePhoto: String) {
+    let currentUser = User.current
+    Database.database().reference().child("photos").child(currentUser.uid).child(deletePhoto).removeValue()
+  }
 }
 

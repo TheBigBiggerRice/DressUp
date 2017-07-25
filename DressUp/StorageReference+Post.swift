@@ -13,11 +13,11 @@ extension StorageReference {
   
   static let dataFormatter = ISO8601DateFormatter()
   
-  static func newPostImageReference() -> StorageReference {
+  static func newPhotoImageReference() -> StorageReference {
     
     let uid = User.current.uid
     let timestamp = dataFormatter.string(from: Date())
     
-    return Storage.storage().reference().child("images/posts/\(uid)/\(timestamp).jpg")
+    return Storage.storage().reference().child("images/photos/\(uid)/\(timestamp).jpg")
   }
 }
