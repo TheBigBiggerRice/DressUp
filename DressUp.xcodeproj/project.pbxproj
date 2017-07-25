@@ -15,6 +15,7 @@
 		994E30B31F1D287400F0C53A /* PhotoCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994E30B21F1D287400F0C53A /* PhotoCollectionCell.swift */; };
 		994E30B71F1D6CAD00F0C53A /* DatabaseReference+Extenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994E30B61F1D6CAD00F0C53A /* DatabaseReference+Extenstion.swift */; };
 		995035481F19A7E7009453E1 /* PhotoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995035471F19A7E7009453E1 /* PhotoService.swift */; };
+		9958169F1F27D83900DD4D02 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9958169E1F27D83900DD4D02 /* FilterViewController.swift */; };
 		996B75951F182D6000E835AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996B75941F182D6000E835AA /* AppDelegate.swift */; };
 		996B759C1F182D6000E835AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 996B759B1F182D6000E835AA /* Assets.xcassets */; };
 		9991BB9E1F22C41A0074A6DC /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9991BB9D1F22C41A0074A6DC /* PhotoViewController.swift */; };
@@ -46,6 +47,7 @@
 		994E30B21F1D287400F0C53A /* PhotoCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionCell.swift; sourceTree = "<group>"; };
 		994E30B61F1D6CAD00F0C53A /* DatabaseReference+Extenstion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DatabaseReference+Extenstion.swift"; sourceTree = "<group>"; };
 		995035471F19A7E7009453E1 /* PhotoService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoService.swift; sourceTree = "<group>"; };
+		9958169E1F27D83900DD4D02 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		996B75911F182D6000E835AA /* DressUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DressUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		996B75941F182D6000E835AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		996B759B1F182D6000E835AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -113,7 +115,6 @@
 		990734E11F212D380090E7CC /* Pending  */ = {
 			isa = PBXGroup;
 			children = (
-				999655451F18A1E700A9E1DB /* HomeViewController.swift */,
 				999655471F18A21400A9E1DB /* TimelineViewController.swift */,
 				999655491F18A21F00A9E1DB /* FindFriendsViewController.swift */,
 			);
@@ -200,6 +201,8 @@
 				9991BB9D1F22C41A0074A6DC /* PhotoViewController.swift */,
 				9991BB9F1F22C4250074A6DC /* LibraryViewController.swift */,
 				9991BBA11F22C4320074A6DC /* CameraViewController.swift */,
+				999655451F18A1E700A9E1DB /* HomeViewController.swift */,
+				9958169E1F27D83900DD4D02 /* FilterViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -367,6 +370,7 @@
 				994E30AE1F1BE7E000F0C53A /* StorageReference+Post.swift in Sources */,
 				9996554C1F18BBA900A9E1DB /* MainTabBarController.swift in Sources */,
 				994E30B31F1D287400F0C53A /* PhotoCollectionCell.swift in Sources */,
+				9958169F1F27D83900DD4D02 /* FilterViewController.swift in Sources */,
 				9996553F1F18594300A9E1DB /* UserService.swift in Sources */,
 				9991BBA01F22C4250074A6DC /* LibraryViewController.swift in Sources */,
 				999655461F18A1E700A9E1DB /* HomeViewController.swift in Sources */,

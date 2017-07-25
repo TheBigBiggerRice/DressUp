@@ -71,14 +71,14 @@ class LibraryViewController: UIViewController {
     print(selectedPhotos)
     for imageUID in selectedPhotos {
       PhotoService.delete(deletePhoto: imageUID)
-    
     }
+    
     self.navigationItem.rightBarButtonItem?.tintColor = .white
     self.navigationItem.leftBarButtonItem?.tintColor = .clear
     
     selectButtonOn = false
     selectedPhotos.removeAll()
-  
+    
     user = user ?? User.current
     profileHandle = UserService.observeProfile(for: user) { [unowned self] (ref, user, photos) in
       self.profileRef = ref
@@ -108,7 +108,6 @@ extension LibraryViewController: UICollectionViewDelegate {
   //tapping on a cell and displaying the image
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     
-    
     if selectButtonOn == false {
       
       let indexPaths = self.collectionView.indexPathsForSelectedItems
@@ -126,13 +125,13 @@ extension LibraryViewController: UICollectionViewDelegate {
       
       //get the image uid, prepare for deletion
       vc.imageUID = photo.imageUID
-      self.present(nc, animated: true, completion: nil)
+      present(nc, animated: true, completion: nil)
     }
       
     else{
       //get the indexpaths of the selected items, prepare for deletion
       //when a cell is selected, make the background a bit blurry
-      
+      print("select item")
       let indexPaths = self.collectionView.indexPathsForSelectedItems
       
       for indexPath in indexPaths! {
@@ -140,13 +139,21 @@ extension LibraryViewController: UICollectionViewDelegate {
         if !selectedPhotos.contains(photo.imageUID) {
           selectedPhotos.append(photo.imageUID)
         }
+        //need to remove deselected item from selectedPhotos
       }
+      
+      (collectionView.cellForItem(at: indexPath) as? PhotoCollectionCell)?.fadeInAlphaView()
     }
   }
   func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
     if selectButtonOn == true {
     //Deselect code here
-      
+      print("deselect item")
+      let photo = photoCollection[indexPath.row]
+      if selectedPhotos.contains(photo.imageUID) {
+        selectedPhotos.remove(at: selectedPhotos.index(of: photo.imageUID)!)
+      }
+      (collectionView.cellForItem(at: indexPath) as? PhotoCollectionCell)?.fadeOutAlphaView()
     }
   }
 }
@@ -162,11 +169,7 @@ extension LibraryViewController: UICollectionViewDataSource {
     let photo = photoCollection[indexPath.row]
     let imageURL = URL(string: photo.imageURL)
     cell.thumbImageView.kf.setImage(with: imageURL)
-    
-    let backgroundView = UIView()
-    backgroundView.backgroundColor = .black
-    cell.selectedBackgroundView = backgroundView
-    
+    cell.reloadAlpha()
     return cell
   }
 }
