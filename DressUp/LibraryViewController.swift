@@ -21,6 +21,9 @@ class LibraryViewController: UIViewController {
   var selectButtonOn = false
   var selectedPhotos = [String]()
   
+  var selectedRows: [Int] = []
+  
+  
   
   override func viewDidLoad() {
     
@@ -32,11 +35,11 @@ class LibraryViewController: UIViewController {
     self.navigationItem.title = "Library"
     
     //select button
-    self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(selectButtonTapped(sender:)))
+    self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(LibraryViewController.selectButtonTapped(sender:)))
     self.navigationItem.rightBarButtonItem?.tintColor = .white
     
     //deletebutton
-    self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(deleteButtonTapped(sender:)))
+    self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(LibraryViewController.deleteButtonTapped(sender:)))
     self.navigationItem.leftBarButtonItem?.tintColor = .clear
     
     collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: flowLayout)
@@ -58,7 +61,8 @@ class LibraryViewController: UIViewController {
       }
     }
   }
-  func selectButtonTapped(sender: UIBarButtonItem) {
+  
+  private dynamic func selectButtonTapped(sender: UIBarButtonItem) {
     selectButtonOn = true
     collectionView.allowsMultipleSelection = true
     
@@ -67,7 +71,7 @@ class LibraryViewController: UIViewController {
     print("select photos")
   }
   
-  func deleteButtonTapped(sender: UIBarButtonItem) {
+  private dynamic func deleteButtonTapped(sender: UIBarButtonItem) {
     print(selectedPhotos)
     for imageUID in selectedPhotos {
       PhotoService.delete(deletePhoto: imageUID)
@@ -83,12 +87,21 @@ class LibraryViewController: UIViewController {
     profileHandle = UserService.observeProfile(for: user) { [unowned self] (ref, user, photos) in
       self.profileRef = ref
       self.user = user
-      self.photoCollection = photos.sorted(by: {$0.creationDate > $1.creationDate})
-      
-      DispatchQueue.main.async {
-        self.collectionView.reloadData()
+      self.collectionView.performBatchUpdates( { _ in
+        var itemsToDelete: [IndexPath] = []
+        self.photoCollection = photos.sorted(by: {$0.creationDate > $1.creationDate})
+        for row in self.selectedRows {
+          itemsToDelete.append(IndexPath(row: row, section: 0))
+        }
+        self.collectionView.deleteItems(at: itemsToDelete)
+      }, completion: { finished in
+        self.selectedRows.removeAll()
       }
+      )
     }
+//      DispatchQueue.main.async {
+//        self.collectionView.reloadData()
+//      }
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -101,6 +114,7 @@ class LibraryViewController: UIViewController {
   deinit {
     profileRef?.removeObserver(withHandle: profileHandle)
   }
+  
 }
 
 extension LibraryViewController: UICollectionViewDelegate {
@@ -126,11 +140,11 @@ extension LibraryViewController: UICollectionViewDelegate {
       //get the image uid, prepare for deletion
       vc.imageUID = photo.imageUID
       present(nc, animated: true, completion: nil)
+
     }
       
     else{
-      //get the indexpaths of the selected items, prepare for deletion
-      //when a cell is selected, make the background a bit blurry
+
       print("select item")
       let indexPaths = self.collectionView.indexPathsForSelectedItems
       
@@ -141,10 +155,11 @@ extension LibraryViewController: UICollectionViewDelegate {
         }
         //need to remove deselected item from selectedPhotos
       }
-      
       (collectionView.cellForItem(at: indexPath) as? PhotoCollectionCell)?.fadeInAlphaView()
+      selectedRows.append(indexPath.row)
     }
   }
+  
   func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
     if selectButtonOn == true {
     //Deselect code here
@@ -154,6 +169,7 @@ extension LibraryViewController: UICollectionViewDelegate {
         selectedPhotos.remove(at: selectedPhotos.index(of: photo.imageUID)!)
       }
       (collectionView.cellForItem(at: indexPath) as? PhotoCollectionCell)?.fadeOutAlphaView()
+      selectedRows = selectedRows.filter { $0 != indexPath.row }
     }
   }
 }

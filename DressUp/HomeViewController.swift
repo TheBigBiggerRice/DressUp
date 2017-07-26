@@ -13,6 +13,17 @@ import UIKit
 //
 class HomeViewController: UIViewController {
   
+//  fileprivate let filterLabel: UILabel = {
+//    let label = UILabel()
+//    label.translatesAutoresizingMaskIntoConstraints = false
+//    label.text = "Filters"
+//    return label
+  
+ // }()
+  
+  
+  
+  
   
   
   override func viewDidLoad() {
@@ -37,7 +48,7 @@ class HomeViewController: UIViewController {
     
     present(nc, animated: true, completion: nil)
   }
-  
+//
 //  fileprivate let filterLabel: UILabel = {
 //    let label = UILabel()
 //    label.translatesAutoresizingMaskIntoConstraints = false

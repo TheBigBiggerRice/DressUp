@@ -8,7 +8,7 @@
 import UIKit
 import Clarifai
 
-final class CameraViewController: UIViewController  {
+final class CameraViewController: UIViewController {
   
   fileprivate let imageView: UIImageView = {
     let view = UIImageView()
@@ -39,7 +39,6 @@ final class CameraViewController: UIViewController  {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     button.backgroundColor = .blue
-    button.titleLabel?.textColor = .black
     button.setTitle("Save", for: .normal)
     return button
   }()
@@ -48,7 +47,6 @@ final class CameraViewController: UIViewController  {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitle("Take Photo", for: .normal)
-    button.titleLabel?.textColor = .black
     button.backgroundColor = .brown
     return button
   }()
@@ -104,18 +102,17 @@ final class CameraViewController: UIViewController  {
     // categories label
     view.addConstraint(NSLayoutConstraint(item: categoriesLabel, attribute: .top, relatedBy: .equal, toItem: imageView, attribute: .bottom, multiplier: 1.0, constant: 10))
     view.addConstraint(NSLayoutConstraint(item: categoriesLabel, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 10))
-    view.addConstraint(NSLayoutConstraint(item: imageView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 10))
+    view.addConstraint(NSLayoutConstraint(item: categoriesLabel, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 10))
     
     // color label
     view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .top, relatedBy: .equal, toItem: categoriesLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
     view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .left, relatedBy: .equal, toItem: categoriesLabel, attribute: .left, multiplier: 1.0, constant: 0))
     view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .right, relatedBy: .equal, toItem: categoriesLabel, attribute: .right, multiplier: 1.0, constant: 0))
     
-    
     // save button
     view.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0))
     view.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: -45))
+    view.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: -50))
     saveButtonHeightConstraint = NSLayoutConstraint(item: saveButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0)
     view.addConstraint(saveButtonHeightConstraint)
     
@@ -151,7 +148,7 @@ final class CameraViewController: UIViewController  {
       PhotoService.create(for: image)
       saveButtonHeightConstraint.constant = 0
       UIView.animate(
-        withDuration: 0.5,
+        withDuration: 0.2,
         delay: 0,
         options: .curveEaseIn,
         animations: { [weak self] _ in

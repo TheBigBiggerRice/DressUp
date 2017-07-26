@@ -36,6 +36,7 @@
 		9996554A1F18A21F00A9E1DB /* FindFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655491F18A21F00A9E1DB /* FindFriendsViewController.swift */; };
 		9996554C1F18BBA900A9E1DB /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9996554B1F18BBA900A9E1DB /* MainTabBarController.swift */; };
 		999655551F193EF800A9E1DB /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655541F193EF800A9E1DB /* StorageService.swift */; };
+		99FE58041F2881EC0067A6C3 /* DUTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE58031F2881EC0067A6C3 /* DUTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,7 @@
 		999655491F18A21F00A9E1DB /* FindFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindFriendsViewController.swift; sourceTree = "<group>"; };
 		9996554B1F18BBA900A9E1DB /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		999655541F193EF800A9E1DB /* StorageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		99FE58031F2881EC0067A6C3 /* DUTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DUTextField.swift; path = Extensions/DUTextField.swift; sourceTree = "<group>"; };
 		CBBF58DFFA69E0007F1EA230 /* Pods-DressUp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DressUp.release.xcconfig"; path = "Pods/Target Support Files/Pods-DressUp/Pods-DressUp.release.xcconfig"; sourceTree = "<group>"; };
 		E1AC77BA1F61AA31A9F2FA1B /* Pods_DressUp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DressUp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -231,6 +233,7 @@
 			children = (
 				999655431F18861F00A9E1DB /* Storyboard+Utility.swift */,
 				994E30AB1F1BE64500F0C53A /* UIImage+Size.swift */,
+				99FE58031F2881EC0067A6C3 /* DUTextField.swift */,
 				994E30AD1F1BE7E000F0C53A /* StorageReference+Post.swift */,
 				994E30B61F1D6CAD00F0C53A /* DatabaseReference+Extenstion.swift */,
 			);
@@ -377,6 +380,7 @@
 				999655441F18861F00A9E1DB /* Storyboard+Utility.swift in Sources */,
 				9996554A1F18A21F00A9E1DB /* FindFriendsViewController.swift in Sources */,
 				995035481F19A7E7009453E1 /* PhotoService.swift in Sources */,
+				99FE58041F2881EC0067A6C3 /* DUTextField.swift in Sources */,
 				999655481F18A21400A9E1DB /* TimelineViewController.swift in Sources */,
 				9991BBA21F22C4320074A6DC /* CameraViewController.swift in Sources */,
 				999655411F18857F00A9E1DB /* Constants.swift in Sources */,
