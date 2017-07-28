@@ -8,11 +8,22 @@
 
 import UIKit
 
+protocol FilterViewControllerDelegete: class {
+  func passData(passOccasionText: String, passApparelText: String, passColorText: String)
+}
+
 final class FilterViewController: UIViewController {
   
+  //store the text inputs of the text fields
+  var occasionText: String = ""
+  var apparelText: String = ""
+  var colorText: String = ""
+  weak var delegate: FilterViewControllerDelegete?
+  
+
   //choose which filters to enable
-  fileprivate let occasionLabel: UILabel = {
-    let label = UILabel()
+  fileprivate let occasionLabel: DULabel = {
+    let label = DULabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Occasion"
@@ -22,8 +33,8 @@ final class FilterViewController: UIViewController {
     return label
   }()
   
-  fileprivate let apparelLabel: UILabel = {
-    let label = UILabel()
+  fileprivate let apparelLabel: DULabel = {
+    let label = DULabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Apparel"
@@ -33,8 +44,8 @@ final class FilterViewController: UIViewController {
     return label
   }()
   
-  fileprivate let colorLabel: UILabel = {
-    let label = UILabel()
+  fileprivate let colorLabel: DULabel = {
+    let label = DULabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Colors"
@@ -72,7 +83,7 @@ final class FilterViewController: UIViewController {
   }()
   
   //text fields
-  fileprivate let occasionText: DUTextField = {
+  fileprivate let occasionTextField: DUTextField = {
     let textField = DUTextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.placeholder = "What is the occasion?"
@@ -80,7 +91,7 @@ final class FilterViewController: UIViewController {
     return textField
   }()
   
-  fileprivate let apparelText: DUTextField = {
+  fileprivate let apparelTextField: DUTextField = {
     let textField = DUTextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.placeholder = "What is the apparel?"
@@ -88,7 +99,7 @@ final class FilterViewController: UIViewController {
     return textField
   }()
   
-  fileprivate let colorText: DUTextField = {
+  fileprivate let colorTextField: DUTextField = {
     let textField = DUTextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.placeholder = "What is the color?"
@@ -105,9 +116,9 @@ final class FilterViewController: UIViewController {
     return button
   }()
   
-  var occasionTextHeightConstraint: NSLayoutConstraint = NSLayoutConstraint()
-  var apparelTextHeightConstraints: NSLayoutConstraint = NSLayoutConstraint()
-  var colorTextHeightConstraints: NSLayoutConstraint = NSLayoutConstraint()
+  var occasionTextFieldHeightConstraint: NSLayoutConstraint = NSLayoutConstraint()
+  var apparelTextFieldHeightConstraints: NSLayoutConstraint = NSLayoutConstraint()
+  var colorTextFieldHeightConstraints: NSLayoutConstraint = NSLayoutConstraint()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -119,23 +130,23 @@ final class FilterViewController: UIViewController {
     self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped(sender:)))
     self.navigationItem.rightBarButtonItem?.tintColor = .white
     
-    occasionText.delegate = self
-    apparelText.delegate = self
-    colorText.delegate = self
+    occasionTextField.delegate = self
+    apparelTextField.delegate = self
+    colorTextField.delegate = self
   }
   
   //cancel button
-  func cancelButtonTapped(sender: UIBarButtonItem) {
+  private dynamic func cancelButtonTapped(sender: UIBarButtonItem) {
     print("cancel tapped")
     dismiss(animated: true, completion: nil)
   }
   
   //occasion switch
-  func switchOccasionValueDidChange(sender: UISwitch) {
+  private dynamic func switchOccasionValueDidChange(sender: UISwitch) {
     print("switch occasion tapped")
     if switchOccasion.isOn == true {
-      occasionTextHeightConstraint.constant = 50
-      occasionText.alpha = 1
+      occasionTextFieldHeightConstraint.constant = 50
+      occasionTextField.alpha = 1
       UIView.animate(
         withDuration: 0.2,
         delay: 0,
@@ -146,8 +157,8 @@ final class FilterViewController: UIViewController {
       )
       
     } else {
-      occasionTextHeightConstraint.constant = 0
-      occasionText.alpha = 0
+      occasionTextFieldHeightConstraint.constant = 0
+      occasionTextField.alpha = 0
       UIView.animate(
         withDuration: 0.2,
         delay: 0,
@@ -160,11 +171,11 @@ final class FilterViewController: UIViewController {
   }
   
   //apparel switch
-  func switchApparelValueDidChange(sender: UISwitch) {
+  private dynamic func switchApparelValueDidChange(sender: UISwitch) {
     print("switch apparel tapped")
     if switchApparel.isOn == true {
-      apparelTextHeightConstraints.constant = 50
-      apparelText.alpha = 1
+      apparelTextFieldHeightConstraints.constant = 50
+      apparelTextField.alpha = 1
       UIView.animate(
         withDuration: 0.2,
         delay: 0,
@@ -174,8 +185,8 @@ final class FilterViewController: UIViewController {
         }
       )
     } else {
-      apparelTextHeightConstraints.constant = 0
-      apparelText.alpha = 0
+      apparelTextFieldHeightConstraints.constant = 0
+      apparelTextField.alpha = 0
       UIView.animate(
         withDuration: 0.2,
         delay: 0,
@@ -188,11 +199,11 @@ final class FilterViewController: UIViewController {
   }
   
   //color switch
-  func switchColorValueDidChange(sender: UISwitch) {
+  private dynamic func switchColorValueDidChange(sender: UISwitch) {
     print("switch color tapped")
     if switchColor.isOn == true {
-      colorTextHeightConstraints.constant = 50
-      colorText.alpha = 1
+      colorTextFieldHeightConstraints.constant = 50
+      colorTextField.alpha = 1
       UIView.animate(
         withDuration: 0.2,
         delay: 0,
@@ -202,8 +213,8 @@ final class FilterViewController: UIViewController {
         }
       )
     } else {
-      colorTextHeightConstraints.constant = 0
-      colorText.alpha = 0
+      colorTextFieldHeightConstraints.constant = 0
+      colorTextField.alpha = 0
       UIView.animate(
         withDuration: 0.2,
         delay: 0,
@@ -215,24 +226,31 @@ final class FilterViewController: UIViewController {
     }
   }
   
+  deinit {
+    confirmButton.removeTarget(self, action: nil, for: .allEvents)
+  }
+  
   private func initialize() {
     //occasion filter
     view.addSubview(occasionLabel)
-    view.addSubview(occasionText)
+    view.addSubview(occasionTextField)
     view.addSubview(switchOccasion)
     
     //apparel filter
     view.addSubview(apparelLabel)
-    view.addSubview(apparelText)
+    view.addSubview(apparelTextField)
     view.addSubview(switchApparel)
     
     //color filter
     view.addSubview(colorLabel)
-    view.addSubview(colorText)
+    view.addSubview(colorTextField)
     view.addSubview(switchColor)
     
     //confirm button
     view.addSubview(confirmButton)
+    
+    
+    confirmButton.addTarget(self, action: #selector(FilterViewController.confirmButtonTapped), for: .touchUpInside)
     
     //screen width
     let screenWidth = UIScreen.main.bounds.size.width
@@ -244,11 +262,11 @@ final class FilterViewController: UIViewController {
     view.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     
     //occasion text field
-    view.addConstraint(NSLayoutConstraint(item: occasionText, attribute: .top, relatedBy: .equal, toItem: occasionLabel, attribute: .bottom, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: occasionText, attribute: .left, relatedBy: .equal, toItem: occasionLabel, attribute: .left, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: occasionText, attribute: .right, relatedBy: .equal, toItem: occasionLabel, attribute: .right, multiplier: 1.0, constant: 0))
-    occasionTextHeightConstraint = NSLayoutConstraint(item: occasionText, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0)
-    view.addConstraint(occasionTextHeightConstraint)
+    view.addConstraint(NSLayoutConstraint(item: occasionTextField, attribute: .top, relatedBy: .equal, toItem: occasionLabel, attribute: .bottom, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: occasionTextField, attribute: .left, relatedBy: .equal, toItem: occasionLabel, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: occasionTextField, attribute: .right, relatedBy: .equal, toItem: occasionLabel, attribute: .right, multiplier: 1.0, constant: 0))
+    occasionTextFieldHeightConstraint = NSLayoutConstraint(item: occasionTextField, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0)
+    view.addConstraint(occasionTextFieldHeightConstraint)
     
     //switch occasion
     view.addConstraint(NSLayoutConstraint(item: switchOccasion, attribute: .top, relatedBy: .equal, toItem: occasionLabel, attribute: .top, multiplier: 1.0, constant: 10))
@@ -256,47 +274,54 @@ final class FilterViewController: UIViewController {
     
     
     //apparel label
-    view.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .top, relatedBy: .equal, toItem: occasionText, attribute: .bottom, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .left, relatedBy: .equal, toItem: occasionText, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .top, relatedBy: .equal, toItem: occasionTextField, attribute: .bottom, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .left, relatedBy: .equal, toItem: occasionTextField, attribute: .left, multiplier: 1.0, constant: 0))
     view.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth))
     view.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     
     //apparel text field
-    view.addConstraint(NSLayoutConstraint(item: apparelText, attribute: .top, relatedBy: .equal, toItem: apparelLabel, attribute: .bottom, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: apparelText, attribute: .left, relatedBy: .equal, toItem: apparelLabel, attribute: .left, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: apparelText, attribute: .right, relatedBy: .equal, toItem: apparelLabel, attribute: .right, multiplier: 1.0, constant: 0))
-    apparelTextHeightConstraints = NSLayoutConstraint(item: apparelText, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0)
-    view.addConstraint(apparelTextHeightConstraints)
+    view.addConstraint(NSLayoutConstraint(item: apparelTextField, attribute: .top, relatedBy: .equal, toItem: apparelLabel, attribute: .bottom, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: apparelTextField, attribute: .left, relatedBy: .equal, toItem: apparelLabel, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: apparelTextField, attribute: .right, relatedBy: .equal, toItem: apparelLabel, attribute: .right, multiplier: 1.0, constant: 0))
+    apparelTextFieldHeightConstraints = NSLayoutConstraint(item: apparelTextField, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0)
+    view.addConstraint(apparelTextFieldHeightConstraints)
     
     //switch apparel
     view.addConstraint(NSLayoutConstraint(item: switchApparel, attribute: .top, relatedBy: .equal, toItem: apparelLabel, attribute: .top, multiplier: 1.0, constant: 10))
     view.addConstraint(NSLayoutConstraint(item: switchApparel, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: -10))
     
     //color label
-    view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .top, relatedBy: .equal, toItem: apparelText, attribute: .bottom, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .left, relatedBy: .equal, toItem: apparelText, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .top, relatedBy: .equal, toItem: apparelTextField, attribute: .bottom, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .left, relatedBy: .equal, toItem: apparelTextField, attribute: .left, multiplier: 1.0, constant: 0))
     view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth))
     view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     
     //color text field
-    view.addConstraint(NSLayoutConstraint(item: colorText, attribute: .top, relatedBy: .equal, toItem: colorLabel, attribute: .bottom, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: colorText, attribute: .left, relatedBy: .equal, toItem: colorLabel, attribute: .left, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: colorText, attribute: .right, relatedBy: .equal, toItem: colorLabel, attribute: .right, multiplier: 1.0, constant: 0))
-    colorTextHeightConstraints = NSLayoutConstraint(item: colorText, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0)
-    view.addConstraint(colorTextHeightConstraints)
+    view.addConstraint(NSLayoutConstraint(item: colorTextField, attribute: .top, relatedBy: .equal, toItem: colorLabel, attribute: .bottom, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: colorTextField, attribute: .left, relatedBy: .equal, toItem: colorLabel, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: colorTextField, attribute: .right, relatedBy: .equal, toItem: colorLabel, attribute: .right, multiplier: 1.0, constant: 0))
+    colorTextFieldHeightConstraints = NSLayoutConstraint(item: colorTextField, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0)
+    view.addConstraint(colorTextFieldHeightConstraints)
     
     //switch color
     view.addConstraint(NSLayoutConstraint(item: switchColor, attribute: .top, relatedBy: .equal, toItem: colorLabel, attribute: .top, multiplier: 1.0, constant: 10))
     view.addConstraint(NSLayoutConstraint(item: switchColor, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: -10))
     
-    view.addConstraint(NSLayoutConstraint(item: confirmButton, attribute: .top, relatedBy: .equal, toItem: colorLabel, attribute: .bottom, multiplier: 1.0, constant: 100))
+    view.addConstraint(NSLayoutConstraint(item: confirmButton, attribute: .top, relatedBy: .equal, toItem: colorTextField, attribute: .bottom, multiplier: 1.0, constant: 100))
     view.addConstraint(NSLayoutConstraint(item: confirmButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 200))
     view.addConstraint(NSLayoutConstraint(item: confirmButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     view.addConstraint(NSLayoutConstraint(item: confirmButton, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0))
-
-    
   }
   
+  private dynamic func confirmButtonTapped() {
+    occasionText = occasionTextField.text ?? ""
+    apparelText = apparelTextField.text ?? ""
+    colorText = colorTextField.text ?? ""
+    
+    delegate?.passData(passOccasionText: occasionText, passApparelText: apparelText, passColorText: colorText)
+    
+    dismiss(animated: true, completion: nil)
+  }
   
 }
 

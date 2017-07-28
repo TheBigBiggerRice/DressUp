@@ -14,6 +14,7 @@ protocol DUKeyed{
 }
 
 class Photos: DUKeyed {
+  
   //properties and initializers
   var key: String?
   let imageURL: String
@@ -21,9 +22,9 @@ class Photos: DUKeyed {
   let poster: User
   let creationDate: Date
   let imageUID: String
-  
-  
-  
+  let imageApparel: [String]
+  let imageColor: [String]
+
   var dictValue: [String : Any] {
     let createdAgo = creationDate.timeIntervalSince1970
     let userDict = ["uid" : poster.uid,
@@ -33,10 +34,10 @@ class Photos: DUKeyed {
             "image_height" : imageHeight,
             "created_at" : createdAgo,
             "image_uid" : imageUID,
+            "image_apparel": imageApparel,
+            "image_color": imageColor,
             "poster" : userDict]
   }
-  
-  
   
   init?(snapshot: DataSnapshot) {
     guard let dict = snapshot.value as? [String : Any],
@@ -45,7 +46,9 @@ class Photos: DUKeyed {
       let imageHeight = dict["image_height"] as? CGFloat,
       let createdAgo = dict["created_at"] as? TimeInterval,
       let imageUID = dict["image_uid"] as? String,
-      
+      let imageApparel = dict["image_apparel"] as? [String],
+      let imageColor = dict["image_color"] as? [String],
+    
       let userDict = dict["poster"] as? [String : Any],
       let uid = userDict["uid"] as? String,
       let username = userDict["username"] as? String else {
@@ -58,12 +61,18 @@ class Photos: DUKeyed {
     self.imageHeight = imageHeight
     self.creationDate = Date(timeIntervalSince1970: createdAgo)
     self.imageUID = imageUID
+    self.imageApparel = imageApparel
+    self.imageColor = imageColor
   }
-  init(imageURL: String, imageHeight: CGFloat, imageUID: String) {
+  
+  init(imageURL: String, imageHeight: CGFloat, imageUID: String, imageApparel: [String], imageColor: [String]) {
     self.imageURL = imageURL
     self.imageHeight = imageHeight
     self.creationDate = Date()
     self.imageUID = imageUID
+    self.imageApparel = imageApparel
+    self.imageColor = imageColor
     self.poster = User.current
   }
+  
 }

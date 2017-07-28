@@ -10,6 +10,7 @@ import FirebaseDatabase
 import Kingfisher
 
 class LibraryViewController: UIViewController {
+  
   //firebase stuff
   var user: User!
   var photoCollection = [Photos]()
@@ -17,13 +18,11 @@ class LibraryViewController: UIViewController {
   var profileRef: DatabaseReference?
   let flowLayout = UICollectionViewFlowLayout()
   var collectionView: UICollectionView!
+  
   //for select and delete photo
   var selectButtonOn = false
   var selectedPhotos = [String]()
-  
   var selectedRows: [Int] = []
-  
-  
   
   override func viewDidLoad() {
     
@@ -99,9 +98,6 @@ class LibraryViewController: UIViewController {
       }
       )
     }
-//      DispatchQueue.main.async {
-//        self.collectionView.reloadData()
-//      }
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -140,11 +136,11 @@ extension LibraryViewController: UICollectionViewDelegate {
       //get the image uid, prepare for deletion
       vc.imageUID = photo.imageUID
       present(nc, animated: true, completion: nil)
-
+      
     }
       
     else{
-
+      
       print("select item")
       let indexPaths = self.collectionView.indexPathsForSelectedItems
       
@@ -162,7 +158,7 @@ extension LibraryViewController: UICollectionViewDelegate {
   
   func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
     if selectButtonOn == true {
-    //Deselect code here
+      //Deselect code here
       print("deselect item")
       let photo = photoCollection[indexPath.row]
       if selectedPhotos.contains(photo.imageUID) {

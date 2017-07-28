@@ -10,6 +10,9 @@ import Clarifai
 
 final class CameraViewController: UIViewController {
   
+  var apparelTags = [String]()
+  var colorTags = [String]()
+
   fileprivate let imageView: UIImageView = {
     let view = UIImageView()
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -145,7 +148,7 @@ final class CameraViewController: UIViewController {
   
   private dynamic func saveButtonTapped() {
     if let image = pendingImage {
-      PhotoService.create(for: image)
+      PhotoService.create(for: image, imageApparel: apparelTags, imageColor: colorTags)
       saveButtonHeightConstraint.constant = 0
       UIView.animate(
         withDuration: 0.2,
@@ -186,26 +189,29 @@ extension CameraViewController: UIImagePickerControllerDelegate {
           guard let caiOutputs = outputs
             else { return }
           if let caiOutput = caiOutputs.first {
-            let tags = NSMutableArray()
+            //let tags = NSMutableArray()
             if modelName == Constants.ModelNames.categoryName {
+              self.apparelTags.removeAll()
+
               for concept in caiOutput.concepts {
-                tags.add(concept.conceptName)
-                if tags.count == 4 {
+                self.apparelTags.append(concept.conceptName)
+                if self.apparelTags.count == 5 {
                   break
                 }
               }
             }
             if modelName == Constants.ModelNames.colorName {
+              self.colorTags.removeAll()
               for concept in caiOutput.colors {
-                tags.add(concept.conceptName)
+                self.colorTags.append(concept.conceptName)
               }
             }
             DispatchQueue.main.async {
               if modelName == Constants.ModelNames.categoryName {
-                self.categoriesLabel.text = String(format: modelName, tags.componentsJoined(by: ", "))
+                self.categoriesLabel.text = self.apparelTags.joined(separator: ", ")
               }
               if modelName == Constants.ModelNames.colorName {
-                self.colorLabel.text = String(format: modelName, tags.componentsJoined(by: ", "))
+                self.colorLabel.text = self.colorTags.joined(separator: ", ")
               }
             }
           }
