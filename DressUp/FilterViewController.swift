@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+//HomeViewController is the delegate of FilterViewController
 protocol FilterViewControllerDelegete: class {
   func passData(passOccasionText: String, passApparelText: String, passColorText: String)
 }
@@ -231,6 +233,7 @@ final class FilterViewController: UIViewController {
   }
   
   private func initialize() {
+    
     //occasion filter
     view.addSubview(occasionLabel)
     view.addSubview(occasionTextField)

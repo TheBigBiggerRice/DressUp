@@ -20,8 +20,8 @@ final class CameraViewController: UIViewController {
     return view
   }()
   
-  fileprivate let categoriesLabel: UILabel = {
-    let label = UILabel()
+  fileprivate let categoriesLabel: DULabel = {
+    let label = DULabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Categories: "
@@ -29,15 +29,29 @@ final class CameraViewController: UIViewController {
     return label
   }()
   
-  fileprivate let colorLabel: UILabel = {
-    let label = UILabel()
+  fileprivate let colorLabel: DULabel = {
+    let label = DULabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Colors: "
     label.lineBreakMode = .byWordWrapping
     return label
   }()
+  fileprivate let occasionTextField: DUTextField = {
+    let textField = DUTextField()
+    textField.translatesAutoresizingMaskIntoConstraints = false
+    textField.placeholder = "Occasion:"
+    
+    return textField
+  }()
   
+  fileprivate let positionTextField: DUTextField = {
+    let textField = DUTextField()
+    textField.translatesAutoresizingMaskIntoConstraints = false
+    textField.placeholder = "Position:"
+    return textField
+  }()
+    
   fileprivate let saveButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -74,6 +88,9 @@ final class CameraViewController: UIViewController {
     let tagsPageTabBar = UITabBarItem(title: "Camera", image: #imageLiteral(resourceName: "camera"), selectedImage: nil)
     tabBarItem = tagsPageTabBar
     self.navigationItem.title = "Camera"
+    
+    occasionTextField.delegate = self
+    positionTextField.delegate = self
   }
   
   deinit {
@@ -86,6 +103,8 @@ final class CameraViewController: UIViewController {
     view.addSubview(imageView)
     view.addSubview(categoriesLabel)
     view.addSubview(colorLabel)
+    view.addSubview(occasionTextField)
+    view.addSubview(positionTextField)
     view.addSubview(saveButton)
     view.addSubview(takePhotoButton)
     view.addSubview(chooseButton)
@@ -102,10 +121,20 @@ final class CameraViewController: UIViewController {
     view.addConstraint(NSLayoutConstraint(item: imageView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0))
     view.addConstraint(NSLayoutConstraint(item: imageView, attribute: .height, relatedBy: .equal, toItem: imageView, attribute: .width, multiplier: 1.0, constant: 0))
     
+    //position text field
+    view.addConstraint(NSLayoutConstraint(item: positionTextField, attribute: .top, relatedBy: .equal, toItem: imageView, attribute: .bottom, multiplier: 1.0, constant: 10))
+    view.addConstraint(NSLayoutConstraint(item: positionTextField, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: positionTextField, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0))
+    
+    //occasion text field
+    view.addConstraint(NSLayoutConstraint(item: occasionTextField, attribute: .top, relatedBy: .equal, toItem: positionTextField, attribute: .bottom, multiplier: 1.0, constant: 10))
+    view.addConstraint(NSLayoutConstraint(item: occasionTextField, attribute: .left, relatedBy: .equal, toItem: positionTextField, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: occasionTextField, attribute: .right, relatedBy: .equal, toItem: positionTextField, attribute: .right, multiplier: 1.0, constant: 0))
+    
     // categories label
-    view.addConstraint(NSLayoutConstraint(item: categoriesLabel, attribute: .top, relatedBy: .equal, toItem: imageView, attribute: .bottom, multiplier: 1.0, constant: 10))
-    view.addConstraint(NSLayoutConstraint(item: categoriesLabel, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 10))
-    view.addConstraint(NSLayoutConstraint(item: categoriesLabel, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 10))
+    view.addConstraint(NSLayoutConstraint(item: categoriesLabel, attribute: .top, relatedBy: .equal, toItem: occasionTextField, attribute: .bottom, multiplier: 1.0, constant: 10))
+    view.addConstraint(NSLayoutConstraint(item: categoriesLabel, attribute: .left, relatedBy: .equal, toItem: occasionTextField, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: categoriesLabel, attribute: .right, relatedBy: .equal, toItem: occasionTextField, attribute: .right, multiplier: 1.0, constant: 0))
     
     // color label
     view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .top, relatedBy: .equal, toItem: categoriesLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
@@ -147,8 +176,12 @@ final class CameraViewController: UIViewController {
   }
   
   private dynamic func saveButtonTapped() {
+    
+    let occasionTags = occasionTextField.text?.components(separatedBy: ",") ?? []
+    let positionTags = positionTextField.text ?? ""
+    
     if let image = pendingImage {
-      PhotoService.create(for: image, imageApparel: apparelTags, imageColor: colorTags)
+      PhotoService.create(for: image, imageApparel: apparelTags, imageColor: colorTags, imageOccasion: occasionTags, imagePosition: positionTags)
       saveButtonHeightConstraint.constant = 0
       UIView.animate(
         withDuration: 0.2,
@@ -228,3 +261,13 @@ extension CameraViewController: UIImagePickerControllerDelegate {
 extension CameraViewController: UINavigationControllerDelegate {
   
 }
+
+
+extension CameraViewController: UITextFieldDelegate {
+  
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    return true
+  }
+}
+

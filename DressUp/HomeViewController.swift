@@ -10,15 +10,13 @@ import UIKit
 
 private let screenWidth = UIScreen.main.bounds.size.width
 
-//should use a table view
-//create collection view within each table view cell
+//HomeViewController 
 final class HomeViewController: UIViewController {
   
   fileprivate var homeController: HomeController = HomeController()
   
   
   fileprivate var homeTableView: UITableView = UITableView()
-  //let filters: [String] = ["top", "pants", "footwear"]
   
   fileprivate let currentFiltersLabel: DULabel = {
     let label = DULabel()

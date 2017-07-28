@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class FilteredPhotoCollectionCell: UICollectionViewCell {
   
@@ -17,7 +18,7 @@ class FilteredPhotoCollectionCell: UICollectionViewCell {
       }
       let imageURL = URL(string: vm.imageURL)
       filteredImageView.kf.setImage(with: imageURL)
-      //filteredImageView.imageFromUrl(urlString: vm.imageURL)
+      
     }
   }
   
@@ -27,6 +28,7 @@ class FilteredPhotoCollectionCell: UICollectionViewCell {
     view.contentMode = .scaleToFill
     return view
   }()
+  
   
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
@@ -49,15 +51,3 @@ class FilteredPhotoCollectionCell: UICollectionViewCell {
   
 }
 
-//extension UIImageView {
-//  public func imageFromUrl(urlString: String) {
-//    if let url = URL(string: urlString) {
-//      let request = URLRequest(url: url)
-//      NSURLConnection.sendAsynchronousRequest(request as URLRequest, queue: .main, completionHandler: { (response, data, error) in
-//        if let imageData = data as NSData? {
-//          self.image = UIImage(data: imageData as Data)
-//        }
-//      })
-//    }
-//  }
-//}

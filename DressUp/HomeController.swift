@@ -6,7 +6,7 @@
 //  Copyright © 2017 Chenyang Zhang. All rights reserved.
 //
 
-//NEW STUFF
+
 import UIKit
 import Firebase
 import FirebaseDatabase
@@ -20,7 +20,7 @@ final class HomeController: NSObject {
   weak var delegate: HomeControllerDelegate?
   
   var user: User!
-  //
+  
   var photoCollection = [Photos]() {
     didSet {
       delegate?.homeControllerShouldReloadData(self)
@@ -45,8 +45,6 @@ final class HomeController: NSObject {
 
 extension HomeController: UITableViewDelegate {
   
-  
-  //
   fileprivate func collectionCellViewModel(forRow row: Int) -> HomeTableViewCellViewModel {
     var viewModels: [FilteredPhotoCollectionCellViewModel] = []
     for photo in photoCollection {
@@ -55,11 +53,11 @@ extension HomeController: UITableViewDelegate {
     }
     return viewModels
   }
-  //NEW STUFF
+  
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath)
     cell.backgroundColor = .clear
-    (cell as? HomeTableViewCell)?.cellViewModel = collectionCellViewModel(forRow: indexPath.row) // you need to get data back first before making this thing
+    (cell as? HomeTableViewCell)?.cellViewModel = collectionCellViewModel(forRow: indexPath.row)
     return cell
   }
   

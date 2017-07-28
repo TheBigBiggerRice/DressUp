@@ -96,10 +96,6 @@ extension HomeTableViewCell: UICollectionViewDataSource {
   }
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilteredPhotoCollectionCell.description(), for: indexPath)
-    //let photo = photoCollection[indexPath.row]
-    
-    //if the apparel of the image is the same as the apparel of what is inputed, the fill the cell with this kind of image
-    //if the color of the image is the same as the color of what is inputed, fill the cell with this kind of image
     
     if let viewModel = cellViewModel?[indexPath.row] {
       (cell as? FilteredPhotoCollectionCell)?.viewModel = viewModel
