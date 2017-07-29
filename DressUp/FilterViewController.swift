@@ -11,7 +11,7 @@ import UIKit
 
 //HomeViewController is the delegate of FilterViewController
 protocol FilterViewControllerDelegete: class {
-  func passData(passOccasionText: String, passApparelText: String, passColorText: String)
+  func filterViewControllerDidFinishFiltering(_ controller: FilterViewController, withOccasion occasion: String, andApparel apparel: String, andColor color: String)
 }
 
 final class FilterViewController: UIViewController {
@@ -21,7 +21,6 @@ final class FilterViewController: UIViewController {
   var apparelText: String = ""
   var colorText: String = ""
   weak var delegate: FilterViewControllerDelegete?
-  
 
   //choose which filters to enable
   fileprivate let occasionLabel: DULabel = {
@@ -317,13 +316,22 @@ final class FilterViewController: UIViewController {
   }
   
   private dynamic func confirmButtonTapped() {
+    
+    //reload my collection view cells after the confirm button is tapped
     occasionText = occasionTextField.text ?? ""
     apparelText = apparelTextField.text ?? ""
     colorText = colorTextField.text ?? ""
     
-    delegate?.passData(passOccasionText: occasionText, passApparelText: apparelText, passColorText: colorText)
     
-    dismiss(animated: true, completion: nil)
+    dismiss(animated: true) { [weak self] finished in
+      guard let strongSelf = self,
+      let occasion = strongSelf.occasionTextField.text,
+      let apparel = strongSelf.apparelTextField.text,
+      let color = strongSelf.colorTextField.text else {
+        return
+      }
+      strongSelf.delegate?.filterViewControllerDidFinishFiltering(strongSelf, withOccasion: occasion, andApparel: apparel, andColor: color)
+    }
   }
   
 }

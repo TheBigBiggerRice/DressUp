@@ -24,7 +24,7 @@ final class CameraViewController: UIViewController {
     let label = DULabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
-    label.text = "Categories: "
+    label.text = "Categories"
     label.lineBreakMode = .byWordWrapping
     return label
   }()
@@ -33,7 +33,7 @@ final class CameraViewController: UIViewController {
     let label = DULabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
-    label.text = "Colors: "
+    label.text = "Colors"
     label.lineBreakMode = .byWordWrapping
     return label
   }()
@@ -209,12 +209,13 @@ extension CameraViewController: UIImagePickerControllerDelegate {
       recognizeImage(image: image, modelID: Constants.ModelIDs.colorID, modelName: Constants.ModelNames.colorName)
       takePhotoButton.isEnabled = false
       chooseButton.isEnabled = false
+      saveButton.isEnabled = false
       pendingImage = image
-      displaySaveButton()
     }
   }
   
   func recognizeImage(image: UIImage, modelID: String, modelName: String) {
+    
     if app != nil {
       app?.getModelByID(modelID, completion: { (model, error) in
         let caiImage = ClarifaiImage(image: image)!
@@ -222,7 +223,7 @@ extension CameraViewController: UIImagePickerControllerDelegate {
           guard let caiOutputs = outputs
             else { return }
           if let caiOutput = caiOutputs.first {
-            //let tags = NSMutableArray()
+          
             if modelName == Constants.ModelNames.categoryName {
               self.apparelTags.removeAll()
 
@@ -251,6 +252,9 @@ extension CameraViewController: UIImagePickerControllerDelegate {
           DispatchQueue.main.async {
             self.takePhotoButton.isEnabled = true
             self.chooseButton.isEnabled = true
+            self.saveButton.isEnabled = true
+            self.displaySaveButton()
+
           }
         })
       })

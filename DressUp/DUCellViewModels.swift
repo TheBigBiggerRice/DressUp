@@ -20,6 +20,15 @@ final class FilteredPhotoCollectionCellViewModel: FilteredPhotoCollectionCellPre
   var imageURL: String {
     return photo.imageURL
   }
+  
+  var imagePosition: String {
+    return photo.imagePosition
+  }
+  
+  var imageOccasion: [String] {
+    return photo.imageOccasion
+  }
+  
   var imageApparel: [String] {
     return photo.imageApparel
   }

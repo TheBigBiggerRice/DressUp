@@ -14,6 +14,7 @@ class FilteredPhotoCollectionCell: UICollectionViewCell {
   var viewModel: FilteredPhotoCollectionCellViewModel? {
     didSet {
       guard let vm = viewModel else {
+        filteredImageView.image = nil
         return
       }
       let imageURL = URL(string: vm.imageURL)

@@ -15,7 +15,6 @@ final class HomeViewController: UIViewController {
   
   fileprivate var homeController: HomeController = HomeController()
   
-  
   fileprivate var homeTableView: UITableView = UITableView()
   
   fileprivate let currentFiltersLabel: DULabel = {
@@ -97,33 +96,48 @@ final class HomeViewController: UIViewController {
   override func viewDidLoad() {
     
     super.viewDidLoad()
+    
     initialize()
+    
     homeController.delegate = self
     let homeTabBar = UITabBarItem(title: "Home", image: #imageLiteral(resourceName: "home"), selectedImage: nil)
     tabBarItem = homeTabBar
+    
     
     self.navigationItem.title = "Home"
     
     self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(filterButtonTapped(sender:)))
     self.navigationItem.rightBarButtonItem?.tintColor = .white
     
+    self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Randomize", style: .plain, target: self, action: #selector(randomizeButtonTapped(sender:)))
+    self.navigationItem.leftBarButtonItem?.tintColor = .white
+    
     homeTableView.frame = CGRect(x: 0, y: 64, width: self.view.bounds.size.width, height: 375)
     homeTableView.delegate = self
     homeTableView.dataSource = self
     homeTableView.register(HomeTableViewCell.self, forCellReuseIdentifier: "HomeTableViewCell")
     homeTableView.backgroundColor = .white
-    //homeTableView.tableFooterView
     
     self.view.addSubview(homeTableView)
+    
   }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    homeController.redownload()
+  }
+  
   
   func filterButtonTapped(sender: UIBarButtonItem) {
     let vc = FilterViewController()
     vc.delegate = self
     let nc = UINavigationController(rootViewController: vc)
     present(nc, animated: true, completion: nil)
+    
   }
-  
+  func randomizeButtonTapped(sender:UIBarButtonItem) {
+    print("randomize")
+  }
 }
 
 extension HomeViewController: UITableViewDelegate {
@@ -148,12 +162,16 @@ extension HomeViewController: UITableViewDataSource {
 
 extension HomeViewController: FilterViewControllerDelegete {
   
-  func passData(passOccasionText: String, passApparelText: String, passColorText: String) {
-    occasionLabel.text = "Occasion: \(passOccasionText)"
-    apparelLabel.text = "Apparel: \(passApparelText)"
-    colorLabel.text = "Color: \(passColorText)"
-    
+  func filterViewControllerDidFinishFiltering(_ controller: FilterViewController, withOccasion occasion: String, andApparel apparel: String, andColor color: String) {
+    homeController.occasion = occasion.components(separatedBy: ", ")
+    homeController.apparel = apparel.components(separatedBy: ", ")
+    homeController.color = color.components(separatedBy: ", ")
+    occasionLabel.text = "Occasion: \(occasion)"
+    apparelLabel.text = "Apparel: \(apparel)"
+    colorLabel.text = "Color: \(color)"
+    homeTableView.reloadData()
   }
+  
 }
 
 extension HomeViewController: HomeControllerDelegate {

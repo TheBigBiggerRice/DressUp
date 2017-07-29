@@ -29,15 +29,44 @@ final class HomeController: NSObject {
   var profileHandle: DatabaseHandle = 0
   var profileRef: DatabaseReference?
   
+  //processed photo collection based on table view cell rows
+  var topPhotoCollection = [Photos]()
+  var bottomPhotoCollection = [Photos]()
+  var shoesPhotoCollection = [Photos]()
+  
+  //inputs by the user
+  var occasion = [String]()
+  var apparel = [String]()
+  var color = [String]()
+  
   override init() {
     super.init()
+  }
   
-    //firebase stuff
+  func redownload() {
+    
+    topPhotoCollection.removeAll()
+    bottomPhotoCollection.removeAll()
+    shoesPhotoCollection.removeAll()
+    
     user = user ?? User.current
     profileHandle = UserService.observeProfile(for: user) { [unowned self] (ref, user, photos) in
       self.profileRef = ref
       self.user = user
       self.photoCollection = photos.sorted(by: {$0.creationDate > $1.creationDate})
+      
+      for photo in self.photoCollection {
+        
+        if photo.imagePosition == "Top" {
+          self.topPhotoCollection.append(photo)
+        }
+        if photo.imagePosition == "Bottom" {
+          self.bottomPhotoCollection.append(photo)
+        }
+        if photo.imagePosition == "Shoes" {
+          self.shoesPhotoCollection.append(photo)
+        }
+      }
     }
   }
   
@@ -46,18 +75,69 @@ final class HomeController: NSObject {
 extension HomeController: UITableViewDelegate {
   
   fileprivate func collectionCellViewModel(forRow row: Int) -> HomeTableViewCellViewModel {
-    var viewModels: [FilteredPhotoCollectionCellViewModel] = []
-    for photo in photoCollection {
-      let viewModel = FilteredPhotoCollectionCellViewModel(withPhoto: photo)
-      viewModels.append(viewModel)
+    
+    let setOccasion = Set(self.occasion)
+    let setApparel = Set(self.apparel)
+    let setColor = Set(self.color)
+    
+    //filtering the photos based on input
+    if 0 == row {
+      
+      var filteredTopPhotoCollection = [Photos]()
+      
+      filteredTopPhotoCollection = topPhotoCollection.filter { photo in
+        
+        let setPhotoOccasion = Set(photo.imageOccasion)
+        let setPhotoApparel = Set(photo.imageApparel)
+        let setPhotoColor = Set(photo.imageColor)
+        
+        if setOccasion.intersection(setPhotoOccasion).count > 0 || setApparel.intersection(setPhotoApparel).count > 0 || setColor.intersection(setPhotoColor).count > 0 || (setOccasion.count == 0 && setApparel.count == 0 && setColor.count == 0) { return true }
+        else { return false }
+      }
+      return filteredTopPhotoCollection.map { FilteredPhotoCollectionCellViewModel(withPhoto: $0) }
     }
-    return viewModels
+    else if 1 == row {
+      
+      var filteredBottomPhotoCollection = [Photos]()
+      
+      filteredBottomPhotoCollection = bottomPhotoCollection.filter { photo in
+        
+        let setPhotoOccasion = Set(photo.imageOccasion)
+        let setPhotoApparel = Set(photo.imageApparel)
+        let setPhotoColor = Set(photo.imageColor)
+        
+        if setOccasion.intersection(setPhotoOccasion).count > 0 || setApparel.intersection(setPhotoApparel).count > 0 || setColor.intersection(setPhotoColor).count > 0 || (setOccasion.count == 0 && setApparel.count == 0 && setColor.count == 0) { return true }
+        else { return false }
+      }
+      
+      return filteredBottomPhotoCollection.map { FilteredPhotoCollectionCellViewModel(withPhoto: $0) }
+    }
+    else if 2 == row {
+      
+      var filteredShoesPhotoCollection = [Photos]()
+      
+      filteredShoesPhotoCollection = shoesPhotoCollection.filter { photo in
+        
+        let setPhotoOccasion = Set(photo.imageOccasion)
+        let setPhotoApparel = Set(photo.imageApparel)
+        let setPhotoColor = Set(photo.imageColor)
+        
+        if setOccasion.intersection(setPhotoOccasion).count > 0 || setApparel.intersection(setPhotoApparel).count > 0 || setColor.intersection(setPhotoColor).count > 0 || (setOccasion.count == 0 && setApparel.count == 0 && setColor.count == 0) { return true }
+        else { return false }
+      }
+      return filteredShoesPhotoCollection.map { FilteredPhotoCollectionCellViewModel(withPhoto: $0) }
+    }
+    else {
+      return []
+    }
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath)
     cell.backgroundColor = .clear
-    (cell as? HomeTableViewCell)?.cellViewModel = collectionCellViewModel(forRow: indexPath.row)
+    let cvm = collectionCellViewModel(forRow: indexPath.row)
+    print(cvm.count)
+    (cell as? HomeTableViewCell)?.cellViewModel = cvm
     return cell
   }
   
@@ -74,12 +154,5 @@ extension HomeController: UITableViewDataSource {
   }
   
 }
-
-
-
-
-
-
-
 
 
