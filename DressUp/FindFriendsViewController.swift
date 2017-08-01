@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FindFriendsViewController: UIViewController {
+class FindFriendsViewController: DUViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     let findFriendsTabBar = UITabBarItem(title: "Friends", image: #imageLiteral(resourceName: "friends"), selectedImage: nil)

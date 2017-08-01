@@ -26,7 +26,8 @@ class FilteredPhotoCollectionCell: UICollectionViewCell {
   let filteredImageView: UIImageView = {
     let view = UIImageView()
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.contentMode = .scaleToFill
+    view.contentMode = .scaleAspectFill
+    view.clipsToBounds = true
     return view
   }()
   

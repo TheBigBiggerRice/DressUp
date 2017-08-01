@@ -13,7 +13,8 @@ class PhotoCollectionCell: UICollectionViewCell {
   let thumbImageView: UIImageView = {
     let view = UIImageView()
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.contentMode = .scaleToFill
+    view.contentMode = .scaleAspectFill
+    view.clipsToBounds = true
     return view
   }()
   

@@ -11,7 +11,7 @@ import UIKit
 private let screenWidth = UIScreen.main.bounds.size.width
 
 //HomeViewController 
-final class HomeViewController: UIViewController {
+final class HomeViewController: DUViewController {
   
   fileprivate var homeController: HomeController = HomeController()
   
@@ -69,7 +69,7 @@ final class HomeViewController: UIViewController {
     view.addSubview(colorLabel)
     
     //current filters label
-    view.addConstraint(NSLayoutConstraint(item: currentFiltersLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 439))
+    view.addConstraint(NSLayoutConstraint(item: currentFiltersLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 375))
     view.addConstraint(NSLayoutConstraint(item: currentFiltersLabel, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0))
     view.addConstraint(NSLayoutConstraint(item: currentFiltersLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth))
     view.addConstraint(NSLayoutConstraint(item: currentFiltersLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
@@ -97,29 +97,28 @@ final class HomeViewController: UIViewController {
     
     super.viewDidLoad()
     
+    view.backgroundColor = .yellow
     initialize()
     
     homeController.delegate = self
-    let homeTabBar = UITabBarItem(title: "Home", image: #imageLiteral(resourceName: "home"), selectedImage: nil)
-    tabBarItem = homeTabBar
+
+    homeTableView.isScrollEnabled = false
     
+    navigationItem.title = "Home"
     
-    self.navigationItem.title = "Home"
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(filterButtonTapped(sender:)))
+    navigationItem.rightBarButtonItem?.tintColor = .white
     
-    self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(filterButtonTapped(sender:)))
-    self.navigationItem.rightBarButtonItem?.tintColor = .white
+    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Randomize", style: .plain, target: self, action: #selector(randomizeButtonTapped(sender:)))
+    navigationItem.leftBarButtonItem?.tintColor = .white
     
-    self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Randomize", style: .plain, target: self, action: #selector(randomizeButtonTapped(sender:)))
-    self.navigationItem.leftBarButtonItem?.tintColor = .white
-    
-    homeTableView.frame = CGRect(x: 0, y: 64, width: self.view.bounds.size.width, height: 375)
+    homeTableView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: 375)
     homeTableView.delegate = self
     homeTableView.dataSource = self
     homeTableView.register(HomeTableViewCell.self, forCellReuseIdentifier: "HomeTableViewCell")
     homeTableView.backgroundColor = .white
     
-    self.view.addSubview(homeTableView)
-    
+    view.addSubview(homeTableView)
   }
   
   override func viewWillAppear(_ animated: Bool) {

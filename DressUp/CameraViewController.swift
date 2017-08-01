@@ -8,15 +8,33 @@
 import UIKit
 import Clarifai
 
-final class CameraViewController: UIViewController {
+final class CameraViewController: DUViewController {
   
   var apparelTags = [String]()
   var colorTags = [String]()
+  
+  let cameraRightBorder = CALayer()
 
+  fileprivate let blurView: UIVisualEffectView = {
+    let view = UIVisualEffectView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    let effect = UIBlurEffect(style: UIBlurEffectStyle.light)
+    view.effect = effect
+    return view
+  }()
+  
   fileprivate let imageView: UIImageView = {
     let view = UIImageView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.contentMode = .scaleAspectFit
+    return view
+  }()
+  
+  fileprivate let backgroundImageView: UIImageView = {
+    let view = UIImageView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.contentMode = .scaleAspectFill
+    view.clipsToBounds = true
     return view
   }()
   
@@ -26,6 +44,7 @@ final class CameraViewController: UIViewController {
     label.numberOfLines = 0
     label.text = "Categories"
     label.lineBreakMode = .byWordWrapping
+    label.font = label.font.withSize(14)
     return label
   }()
   
@@ -35,13 +54,14 @@ final class CameraViewController: UIViewController {
     label.numberOfLines = 0
     label.text = "Colors"
     label.lineBreakMode = .byWordWrapping
+    label.font = label.font.withSize(14)
     return label
   }()
   fileprivate let occasionTextField: DUTextField = {
     let textField = DUTextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.placeholder = "Occasion:"
-    
+    textField.font = textField.font?.withSize(14)
     return textField
   }()
   
@@ -49,30 +69,41 @@ final class CameraViewController: UIViewController {
     let textField = DUTextField()
     textField.translatesAutoresizingMaskIntoConstraints = false
     textField.placeholder = "Position:"
+    textField.font = textField.font?.withSize(14)
+
     return textField
   }()
     
   fileprivate let saveButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
-    button.backgroundColor = .blue
+    
     button.setTitle("Save", for: .normal)
+    button.setTitleColor(.black, for: .normal)
+    
+    button.layer.cornerRadius = 25
+    button.layer.borderWidth = 2
+    button.layer.borderColor = UIColor.black.cgColor
+    
+    button.alpha = 0
+    
     return button
   }()
   
-  fileprivate let takePhotoButton: UIButton = {
+  //choose image button on top of the photo
+  fileprivate let chooseImageButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
-    button.setTitle("Take Photo", for: .normal)
-    button.backgroundColor = .brown
+    button.setImage(#imageLiteral(resourceName: "chooseImageButton"), for: .normal)
+    //button.imageView?.alpha = 0
     return button
   }()
   
-  fileprivate let chooseButton: UIButton = {
+  fileprivate let takePhotoImageButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
-    button.setTitle("Choose From Library", for: .normal)
-    button.backgroundColor = .orange
+    button.setImage(#imageLiteral(resourceName: "takePhotoImageButton"), for: .normal)
+    //button.imageView?.alpha = 0
     return button
   }()
   
@@ -83,43 +114,76 @@ final class CameraViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
     app = ClarifaiApp(apiKey: "eeace7a446b74adda719b9b8cd62b7a1")
     initialize()
-    let tagsPageTabBar = UITabBarItem(title: "Camera", image: #imageLiteral(resourceName: "camera"), selectedImage: nil)
-    tabBarItem = tagsPageTabBar
     self.navigationItem.title = "Camera"
     
     occasionTextField.delegate = self
     positionTextField.delegate = self
+    
   }
   
   deinit {
-    takePhotoButton.removeTarget(self, action: nil, for: .allEvents)
-    chooseButton.removeTarget(self, action: nil, for: .allEvents)
+    takePhotoImageButton.removeTarget(self, action: nil, for: .allEvents)
+    chooseImageButton.removeTarget(self, action: nil, for: .allEvents)
     saveButton.removeTarget(self, action: nil, for: .allEvents)
   }
   
   private func initialize() {
-    view.addSubview(imageView)
+
+    view.addSubview(backgroundImageView)
+    view.insertSubview(blurView, aboveSubview: backgroundImageView)
+    view.insertSubview(imageView, aboveSubview: blurView)
+    view.insertSubview(chooseImageButton, aboveSubview: imageView)
+    view.insertSubview(takePhotoImageButton, aboveSubview: imageView)
+    
     view.addSubview(categoriesLabel)
     view.addSubview(colorLabel)
+    
     view.addSubview(occasionTextField)
     view.addSubview(positionTextField)
-    view.addSubview(saveButton)
-    view.addSubview(takePhotoButton)
-    view.addSubview(chooseButton)
     
-    takePhotoButton.addTarget(self, action: #selector(CameraViewController.takePhotoButtonTapped), for: .touchUpInside)
-    chooseButton.addTarget(self, action: #selector(CameraViewController.chooseButtonTapped), for: .touchUpInside)
+    view.addSubview(saveButton)
+    
+    backgroundImageView.layer.borderColor = UIColor.black.cgColor
+    
+    takePhotoImageButton.addTarget(self, action: #selector(CameraViewController.takePhotoImageButtonTapped), for: .touchUpInside)
+    chooseImageButton.addTarget(self, action: #selector(CameraViewController.chooseImageButtonTapped), for: .touchUpInside)
     saveButton.addTarget(self, action: #selector(CameraViewController.saveButtonTapped), for: .touchUpInside)
     
     let screenWidth = UIScreen.main.bounds.size.width
     
-    // imageview
-    view.addConstraint(NSLayoutConstraint(item: imageView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: imageView, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: imageView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: imageView, attribute: .height, relatedBy: .equal, toItem: imageView, attribute: .width, multiplier: 1.0, constant: 0))
+    //background imageview
+    view.addConstraint(NSLayoutConstraint(item: backgroundImageView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: backgroundImageView, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: backgroundImageView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: backgroundImageView, attribute: .height, relatedBy: .equal, toItem: backgroundImageView, attribute: .width, multiplier: 1.0, constant: 0))
+    
+    //blur view
+    view.addConstraint(NSLayoutConstraint(item: blurView, attribute: .top, relatedBy: .equal, toItem: backgroundImageView, attribute: .top, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: blurView, attribute: .left, relatedBy: .equal, toItem: backgroundImageView, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: blurView, attribute: .right, relatedBy: .equal, toItem: backgroundImageView, attribute: .right, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: blurView, attribute: .bottom, relatedBy: .equal, toItem: backgroundImageView, attribute: .bottom, multiplier: 1.0, constant: 0))
+    
+    //imageview
+    view.addConstraint(NSLayoutConstraint(item: imageView, attribute: .top, relatedBy: .equal, toItem: backgroundImageView, attribute: .top, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: imageView, attribute: .left, relatedBy: .equal, toItem: backgroundImageView, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: imageView, attribute: .right, relatedBy: .equal, toItem: backgroundImageView, attribute: .right, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: imageView, attribute: .bottom, relatedBy: .equal, toItem: backgroundImageView, attribute: .bottom, multiplier: 1.0, constant: 0))
+    
+    //take photo image button on top of image
+    view.addConstraint(NSLayoutConstraint(item: takePhotoImageButton, attribute: .top, relatedBy: .equal, toItem: backgroundImageView, attribute: .top, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: takePhotoImageButton, attribute: .left, relatedBy: .equal, toItem: backgroundImageView, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: takePhotoImageButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth/2))
+    view.addConstraint(NSLayoutConstraint(item: takePhotoImageButton, attribute: .bottom, relatedBy: .equal, toItem: backgroundImageView, attribute: .bottom, multiplier: 1.0, constant: 0))
+    
+    //choose image button on top of image
+    view.addConstraint(NSLayoutConstraint(item: chooseImageButton, attribute: .top, relatedBy: .equal, toItem: backgroundImageView, attribute: .top, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: chooseImageButton, attribute: .left, relatedBy: .equal, toItem: takePhotoImageButton, attribute: .right, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: chooseImageButton, attribute: .right, relatedBy: .equal, toItem: backgroundImageView, attribute: .right, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: chooseImageButton, attribute: .bottom, relatedBy: .equal, toItem: backgroundImageView, attribute: .bottom, multiplier: 1.0, constant: 0))
+    
     
     //position text field
     view.addConstraint(NSLayoutConstraint(item: positionTextField, attribute: .top, relatedBy: .equal, toItem: imageView, attribute: .bottom, multiplier: 1.0, constant: 10))
@@ -147,28 +211,16 @@ final class CameraViewController: UIViewController {
     view.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: -50))
     saveButtonHeightConstraint = NSLayoutConstraint(item: saveButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0)
     view.addConstraint(saveButtonHeightConstraint)
-    
-    // take photo
-    view.addConstraint(NSLayoutConstraint(item: takePhotoButton, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: takePhotoButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth / 2))
-    view.addConstraint(NSLayoutConstraint(item: takePhotoButton, attribute: .bottom, relatedBy: .equal, toItem: saveButton, attribute: .top, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: takePhotoButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
-    
-    // choose photo
-    view.addConstraint(NSLayoutConstraint(item: chooseButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth / 2))
-    view.addConstraint(NSLayoutConstraint(item: chooseButton, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: chooseButton, attribute: .bottom, relatedBy: .equal, toItem: saveButton, attribute: .top, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: chooseButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
   }
   
-  private dynamic func takePhotoButtonTapped() {
+  private dynamic func takePhotoImageButtonTapped() {
     picker.allowsEditing = false
     picker.sourceType = UIImagePickerControllerSourceType.camera
     picker.delegate = self
     present(picker, animated: true, completion: nil)
   }
   
-  private dynamic func chooseButtonTapped() {
+  private dynamic func chooseImageButtonTapped() {
     picker.allowsEditing = false
     picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
     picker.delegate = self
@@ -184,18 +236,23 @@ final class CameraViewController: UIViewController {
       PhotoService.create(for: image, imageApparel: apparelTags, imageColor: colorTags, imageOccasion: occasionTags, imagePosition: positionTags)
       saveButtonHeightConstraint.constant = 0
       UIView.animate(
-        withDuration: 0.2,
+        withDuration: 0.4,
         delay: 0,
         options: .curveEaseIn,
         animations: { [weak self] _ in
+          self?.saveButton.alpha = 0
           self?.view.layoutIfNeeded()
+          
         }
       )
     }
   }
   
   fileprivate func displaySaveButton() {
-    saveButtonHeightConstraint.constant = 50
+    saveButtonHeightConstraint.constant = 40
+    saveButton.alpha = 1
+    takePhotoImageButton.setImage(nil, for: .normal)
+    chooseImageButton.setImage(nil, for: .normal)
   }
 }
 
@@ -205,17 +262,21 @@ extension CameraViewController: UIImagePickerControllerDelegate {
     dismiss(animated: true, completion: nil)
     if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
       imageView.image = image
+      backgroundImageView.image = image
       recognizeImage(image: image, modelID: Constants.ModelIDs.categoryID, modelName: Constants.ModelNames.categoryName)
       recognizeImage(image: image, modelID: Constants.ModelIDs.colorID, modelName: Constants.ModelNames.colorName)
-      takePhotoButton.isEnabled = false
-      chooseButton.isEnabled = false
+      takePhotoImageButton.isEnabled = false
+      chooseImageButton.isEnabled = false
       saveButton.isEnabled = false
       pendingImage = image
+      chooseImageButton.alpha = 0
+      takePhotoImageButton.alpha = 0
+
     }
+    
   }
   
   func recognizeImage(image: UIImage, modelID: String, modelName: String) {
-    
     if app != nil {
       app?.getModelByID(modelID, completion: { (model, error) in
         let caiImage = ClarifaiImage(image: image)!
@@ -250,11 +311,12 @@ extension CameraViewController: UIImagePickerControllerDelegate {
             }
           }
           DispatchQueue.main.async {
-            self.takePhotoButton.isEnabled = true
-            self.chooseButton.isEnabled = true
+            self.takePhotoImageButton.isEnabled = true
+            self.chooseImageButton.isEnabled = true
             self.saveButton.isEnabled = true
+            self.chooseImageButton.alpha = 1
+            self.takePhotoImageButton.alpha = 1
             self.displaySaveButton()
-
           }
         })
       })

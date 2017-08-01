@@ -12,6 +12,8 @@
 		9932E23C1F2A5A7D00E48F70 /* DULabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9932E23B1F2A5A7D00E48F70 /* DULabel.swift */; };
 		9932E2401F2A656D00E48F70 /* FilteredPhotoCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9932E23F1F2A656D00E48F70 /* FilteredPhotoCollectionCell.swift */; };
 		9932E2421F2A773C00E48F70 /* UIView+DressUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9932E2411F2A773C00E48F70 /* UIView+DressUp.swift */; };
+		993623D81F2E6720002CCFDF /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993623D71F2E6720002CCFDF /* CustomTabBar.swift */; };
+		993623DA1F2E6EF4002CCFDF /* DUTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 993623D91F2E6EF4002CCFDF /* DUTabBarController.swift */; };
 		994E30AA1F1B000400F0C53A /* Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994E30A91F1B000400F0C53A /* Photos.swift */; };
 		994E30AC1F1BE64500F0C53A /* UIImage+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994E30AB1F1BE64500F0C53A /* UIImage+Size.swift */; };
 		994E30AE1F1BE7E000F0C53A /* StorageReference+Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994E30AD1F1BE7E000F0C53A /* StorageReference+Post.swift */; };
@@ -40,8 +42,10 @@
 		999655461F18A1E700A9E1DB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655451F18A1E700A9E1DB /* HomeViewController.swift */; };
 		999655481F18A21400A9E1DB /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655471F18A21400A9E1DB /* TimelineViewController.swift */; };
 		9996554A1F18A21F00A9E1DB /* FindFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655491F18A21F00A9E1DB /* FindFriendsViewController.swift */; };
-		9996554C1F18BBA900A9E1DB /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9996554B1F18BBA900A9E1DB /* MainTabBarController.swift */; };
 		999655551F193EF800A9E1DB /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655541F193EF800A9E1DB /* StorageService.swift */; };
+		99AC20F21F2D9D340058BD73 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AC20F11F2D9D340058BD73 /* UIColor.swift */; };
+		99EA72FD1F2D5D1500B46F5C /* DUViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EA72FC1F2D5D1500B46F5C /* DUViewController.swift */; };
+		99EA73011F2D6F1300B46F5C /* ForceTouchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EA73001F2D6F1300B46F5C /* ForceTouchViewController.swift */; };
 		99FE58041F2881EC0067A6C3 /* DUTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE58031F2881EC0067A6C3 /* DUTextField.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +55,8 @@
 		9932E23B1F2A5A7D00E48F70 /* DULabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DULabel.swift; sourceTree = "<group>"; };
 		9932E23F1F2A656D00E48F70 /* FilteredPhotoCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilteredPhotoCollectionCell.swift; sourceTree = "<group>"; };
 		9932E2411F2A773C00E48F70 /* UIView+DressUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+DressUp.swift"; sourceTree = "<group>"; };
+		993623D71F2E6720002CCFDF /* CustomTabBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
+		993623D91F2E6EF4002CCFDF /* DUTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DUTabBarController.swift; sourceTree = "<group>"; };
 		994E30A91F1B000400F0C53A /* Photos.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photos.swift; sourceTree = "<group>"; };
 		994E30AB1F1BE64500F0C53A /* UIImage+Size.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Size.swift"; sourceTree = "<group>"; };
 		994E30AD1F1BE7E000F0C53A /* StorageReference+Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "StorageReference+Post.swift"; sourceTree = "<group>"; };
@@ -81,8 +87,10 @@
 		999655451F18A1E700A9E1DB /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		999655471F18A21400A9E1DB /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		999655491F18A21F00A9E1DB /* FindFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindFriendsViewController.swift; sourceTree = "<group>"; };
-		9996554B1F18BBA900A9E1DB /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		999655541F193EF800A9E1DB /* StorageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		99AC20F11F2D9D340058BD73 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		99EA72FC1F2D5D1500B46F5C /* DUViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DUViewController.swift; sourceTree = "<group>"; };
+		99EA73001F2D6F1300B46F5C /* ForceTouchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForceTouchViewController.swift; sourceTree = "<group>"; };
 		99FE58031F2881EC0067A6C3 /* DUTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DUTextField.swift; path = Extensions/DUTextField.swift; sourceTree = "<group>"; };
 		CBBF58DFFA69E0007F1EA230 /* Pods-DressUp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DressUp.release.xcconfig"; path = "Pods/Target Support Files/Pods-DressUp/Pods-DressUp.release.xcconfig"; sourceTree = "<group>"; };
 		E1AC77BA1F61AA31A9F2FA1B /* Pods_DressUp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DressUp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -138,8 +146,8 @@
 		990734E21F212D610090E7CC /* Overview */ = {
 			isa = PBXGroup;
 			children = (
-				9996554B1F18BBA900A9E1DB /* MainTabBarController.swift */,
 				994E30AF1F1C76A200F0C53A /* DUNavigationController.swift */,
+				993623D91F2E6EF4002CCFDF /* DUTabBarController.swift */,
 			);
 			name = Overview;
 			sourceTree = "<group>";
@@ -150,6 +158,7 @@
 				994E30B21F1D287400F0C53A /* PhotoCollectionCell.swift */,
 				9932E23F1F2A656D00E48F70 /* FilteredPhotoCollectionCell.swift */,
 				9932D4F61F29464B00A433E4 /* HomeTableViewCell.swift */,
+				993623D71F2E6720002CCFDF /* CustomTabBar.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -220,6 +229,7 @@
 				999655451F18A1E700A9E1DB /* HomeViewController.swift */,
 				9990761E1F2AF12700666EC9 /* HomeController.swift */,
 				9958169E1F27D83900DD4D02 /* FilterViewController.swift */,
+				99EA73001F2D6F1300B46F5C /* ForceTouchViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -254,6 +264,8 @@
 				994E30AB1F1BE64500F0C53A /* UIImage+Size.swift */,
 				994E30AD1F1BE7E000F0C53A /* StorageReference+Post.swift */,
 				994E30B61F1D6CAD00F0C53A /* DatabaseReference+Extenstion.swift */,
+				99EA72FC1F2D5D1500B46F5C /* DUViewController.swift */,
+				99AC20F11F2D9D340058BD73 /* UIColor.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -386,13 +398,17 @@
 			files = (
 				994E30AC1F1BE64500F0C53A /* UIImage+Size.swift in Sources */,
 				9932E23C1F2A5A7D00E48F70 /* DULabel.swift in Sources */,
+				99EA72FD1F2D5D1500B46F5C /* DUViewController.swift in Sources */,
 				9932E2401F2A656D00E48F70 /* FilteredPhotoCollectionCell.swift in Sources */,
 				9991BB9E1F22C41A0074A6DC /* PhotoViewController.swift in Sources */,
 				999655381F184A2300A9E1DB /* User.swift in Sources */,
+				993623DA1F2E6EF4002CCFDF /* DUTabBarController.swift in Sources */,
 				999655351F1834D600A9E1DB /* LoginViewController.swift in Sources */,
+				99AC20F21F2D9D340058BD73 /* UIColor.swift in Sources */,
+				993623D81F2E6720002CCFDF /* CustomTabBar.swift in Sources */,
 				994E30AE1F1BE7E000F0C53A /* StorageReference+Post.swift in Sources */,
-				9996554C1F18BBA900A9E1DB /* MainTabBarController.swift in Sources */,
 				994E30B31F1D287400F0C53A /* PhotoCollectionCell.swift in Sources */,
+				99EA73011F2D6F1300B46F5C /* ForceTouchViewController.swift in Sources */,
 				9958169F1F27D83900DD4D02 /* FilterViewController.swift in Sources */,
 				9996553F1F18594300A9E1DB /* UserService.swift in Sources */,
 				9991BBA01F22C4250074A6DC /* LibraryViewController.swift in Sources */,
