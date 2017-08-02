@@ -265,7 +265,6 @@ extension LibraryViewController: UIViewControllerPreviewingDelegate {
     
     guard let indexPath = collectionView.indexPathForItem(at: location) else { return nil }
     
-    
     guard let cell = collectionView.cellForItem(at: indexPath) else { return nil }
     
     let vc = ForceTouchViewController()
@@ -275,7 +274,7 @@ extension LibraryViewController: UIViewControllerPreviewingDelegate {
     let imageURL = URL(string: photo.imageURL)
     
     vc.imageView.kf.setImage(with: imageURL)
-    vc.preferredContentSize = CGSize(width: 0.0, height: 0.0)
+    vc.preferredContentSize = CGSize(width: 0.0, height: 300.0)
     
     previewingContext.sourceRect = cell.frame
     
@@ -285,9 +284,9 @@ extension LibraryViewController: UIViewControllerPreviewingDelegate {
   func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
     show(viewControllerToCommit, sender: self)
   }
+  
   override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
     self.check3DTouch()
-    
   }
 }
 
