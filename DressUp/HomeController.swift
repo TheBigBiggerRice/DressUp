@@ -60,10 +60,10 @@ final class HomeController: NSObject {
         if photo.imagePosition == "Top" {
           self.topPhotoCollection.append(photo)
         }
-        if photo.imagePosition == "Bottom" {
+        if photo.imagePosition == "Pants" {
           self.bottomPhotoCollection.append(photo)
         }
-        if photo.imagePosition == "Shoes" {
+        if photo.imagePosition == "Footwear" {
           self.shoesPhotoCollection.append(photo)
         }
       }
@@ -136,7 +136,7 @@ extension HomeController: UITableViewDelegate {
     let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath)
     cell.backgroundColor = .clear
     let cvm = collectionCellViewModel(forRow: indexPath.row)
-    print(cvm.count)
+    //print(cvm.count)
     (cell as? HomeTableViewCell)?.cellViewModel = cvm
     return cell
   }
