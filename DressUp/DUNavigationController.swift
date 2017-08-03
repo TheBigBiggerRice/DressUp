@@ -12,6 +12,9 @@ import UIKit
 final class DUNavigationController: UINavigationController {
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+//    self.navigationBar.barStyle = UIBarStyle.black
+//    self.navigationBar.tintColor = UIColor.white
   }
 }
 

@@ -19,6 +19,7 @@ final class CameraViewController: DUViewController {
   
   //for category labels
   var categoryButtonIndex = 0
+  
   let occasionButtonText = ["Romantic", "Casual", "Night Out", "Sports", "School", "Work", "Business", "Formal"]
   
   let occasionButtonIndex = [0,1,2,3,4,5,6,7]
@@ -26,8 +27,6 @@ final class CameraViewController: DUViewController {
   var occasionButtons = [UIButton]()
   
   var occasionTags = [String]()
-  
-  
   
   fileprivate let blurView: UIVisualEffectView = {
     let view = UIVisualEffectView()
@@ -52,7 +51,6 @@ final class CameraViewController: DUViewController {
     return view
   }()
   
-  
   //category label
   fileprivate let categoryLabel: DULabel = {
     let label = DULabel()
@@ -64,36 +62,43 @@ final class CameraViewController: DUViewController {
   //don't need scroll view for this, there is enough space, probably, I think
   
   //top, pants, footwear buttons
-  fileprivate let topButton: UIButton = {
-    let button = UIButton()
+  fileprivate let topButton: DUButton = {
+    let button = DUButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitleColor(.white, for: .normal)
     button.setTitle("Top", for: .normal)
     button.layer.cornerRadius = 12.5
-    button.layer.backgroundColor = UIColor.lighterPurple.cgColor
+    button.layer.backgroundColor = UIColor.lighterBlack.cgColor
     return button
   }()
   
-  fileprivate let pantsButton: UIButton = {
-    let button = UIButton()
+  fileprivate let pantsButton: DUButton = {
+    let button = DUButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitleColor(.white, for: .normal)
     button.setTitle("Pants", for: .normal)
     button.layer.cornerRadius = 12.5
-    button.layer.backgroundColor = UIColor.lighterPurple.cgColor
+    button.layer.backgroundColor = UIColor.lighterBlack.cgColor
     return button
   }()
   
-  fileprivate let footwearButton: UIButton = {
-    let button = UIButton()
+  fileprivate let footwearButton: DUButton = {
+    let button = DUButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitleColor(.white, for: .normal)
     button.setTitle("Footwear", for: .normal)
     button.layer.cornerRadius = 12.5
-    button.layer.backgroundColor = UIColor.lighterPurple.cgColor
+    button.layer.backgroundColor = UIColor.lighterBlack.cgColor
     return button
   }()
   
+  fileprivate let occasionScrollView: UIScrollView = {
+    let view = UIScrollView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.showsHorizontalScrollIndicator = false
+    return view
+  }()
+
   //occasion label and tags
   fileprivate let occasionLabel: DULabel = {
     let label = DULabel()
@@ -102,24 +107,11 @@ final class CameraViewController: DUViewController {
     return label
   }()
   
-  fileprivate let occasionScrollView: UIScrollView = {
-    let view = UIScrollView()
-    view.translatesAutoresizingMaskIntoConstraints = false
-    return view
-  }()
-  //this is the button that will be constrained in the for loop, inside the scroll view
-  //  fileprivate let occasionButton: UIButton = {
-  //    let button = UIButton()
-  //    button.translatesAutoresizingMaskIntoConstraints = false
-  //    button.setTitleColor(.white, for: .normal)
-  //    button.layer.cornerRadius = 12.5
-  //    button.layer.backgroundColor = UIColor.lighterPurple.cgColor
-  //    return button
-  //  }()
-  //
   fileprivate let apparelScrollView: UIScrollView = {
     let view = UIScrollView()
     view.translatesAutoresizingMaskIntoConstraints = false
+    view.showsHorizontalScrollIndicator = false
+
     return view
   }()
   
@@ -135,6 +127,8 @@ final class CameraViewController: DUViewController {
   fileprivate let colorScrollView: UIScrollView = {
     let view = UIScrollView()
     view.translatesAutoresizingMaskIntoConstraints = false
+    view.showsHorizontalScrollIndicator = false
+
     return view
   }()
   
@@ -147,17 +141,9 @@ final class CameraViewController: DUViewController {
     
     return label
   }()
-  //THIS WILL BE REPLACED BY OCCASION LABEL
-  //  fileprivate let occasionTextField: DUTextField = {
-  //    let textField = DUTextField()
-  //    textField.translatesAutoresizingMaskIntoConstraints = false
-  //    textField.placeholder = "Occasion:"
-  //
-  //    return textField
-  //  }()
   
-  fileprivate let saveButton: UIButton = {
-    let button = UIButton()
+  fileprivate let saveButton: DUButton = {
+    let button = DUButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     
     button.setTitle("Save", for: .normal)
@@ -173,15 +159,15 @@ final class CameraViewController: DUViewController {
   }()
   
   //choose image button on top of the photo
-  fileprivate let chooseImageButton: UIButton = {
-    let button = UIButton()
+  fileprivate let chooseImageButton: DUButton = {
+    let button = DUButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setImage(#imageLiteral(resourceName: "chooseImageButton"), for: .normal)
     return button
   }()
   
-  fileprivate let takePhotoImageButton: UIButton = {
-    let button = UIButton()
+  fileprivate let takePhotoImageButton: DUButton = {
+    let button = DUButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setImage(#imageLiteral(resourceName: "takePhotoImageButton"), for: .normal)
     return button
@@ -198,9 +184,17 @@ final class CameraViewController: DUViewController {
     app = ClarifaiApp(apiKey: "eeace7a446b74adda719b9b8cd62b7a1")
     initialize()
     self.navigationItem.title = "Camera"
-    
-    //occasionTextField.delegate = self
-    //positionTextField.delegate = self
+    //self.navigationController?.navigationBar.tintColor = .white
+    //self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "GothamRounded-Bold", size: 17)!]
+  
+    for family: String in UIFont.familyNames
+    {
+      print("\(family)")
+      for names: String in UIFont.fontNames(forFamilyName: family)
+      {
+        print("== \(names)")
+      }
+    }
     
   }
   
@@ -216,6 +210,7 @@ final class CameraViewController: DUViewController {
   }
   
   private func initialize() {
+    
     
     view.addSubview(backgroundImageView)
     view.insertSubview(blurView, aboveSubview: backgroundImageView)
@@ -424,39 +419,36 @@ final class CameraViewController: DUViewController {
   
   private dynamic func topButtonTapped() {
     categoryButtonIndex = 0
-    topButton.layer.backgroundColor = UIColor.darkerPurple.cgColor
-    pantsButton.layer.backgroundColor = UIColor.lighterPurple.cgColor
-    footwearButton.layer.backgroundColor = UIColor.lighterPurple.cgColor
+    topButton.layer.backgroundColor = UIColor.onyxBlack.cgColor
+    pantsButton.layer.backgroundColor = UIColor.lighterBlack.cgColor
+    footwearButton.layer.backgroundColor = UIColor.lighterBlack.cgColor
     
-    print("top button tapped")
   }
   
   private dynamic func pantsButtonTapped() {
     categoryButtonIndex = 1
-    pantsButton.layer.backgroundColor = UIColor.darkerPurple.cgColor
-    topButton.layer.backgroundColor = UIColor.lighterPurple.cgColor
-    footwearButton.layer.backgroundColor = UIColor.lighterPurple.cgColor
-    print("pants Button Tapped")
+    pantsButton.layer.backgroundColor = UIColor.onyxBlack.cgColor
+    topButton.layer.backgroundColor = UIColor.lighterBlack.cgColor
+    footwearButton.layer.backgroundColor = UIColor.lighterBlack.cgColor
   }
   
   private dynamic func footwearButtonTapped() {
     categoryButtonIndex = 2
-    footwearButton.layer.backgroundColor = UIColor.darkerPurple.cgColor
-    topButton.layer.backgroundColor = UIColor.lighterPurple.cgColor
-    pantsButton.layer.backgroundColor = UIColor.lighterPurple.cgColor
-    print("footwear button tapped")
+    footwearButton.layer.backgroundColor = UIColor.onyxBlack.cgColor
+    topButton.layer.backgroundColor = UIColor.lighterBlack.cgColor
+    pantsButton.layer.backgroundColor = UIColor.lighterBlack.cgColor
   }
   private dynamic func occasionButtonTapped(sender: UIButton) {
     for index in occasionButtonIndex {
       if sender.isSelected {
         if sender.tag == index {
-          sender.layer.backgroundColor = UIColor.lighterPurple.cgColor
+          sender.layer.backgroundColor = UIColor.lighterBlack.cgColor
           occasionTags = occasionTags.filter{$0 != sender.titleLabel?.text }
           sender.isSelected = false
         }
       } else {
         if sender.tag == index {
-          sender.layer.backgroundColor = UIColor.darkerPurple.cgColor
+          sender.layer.backgroundColor = UIColor.onyxBlack.cgColor
           occasionTags.append((sender.titleLabel?.text)!)
           sender.isSelected = true
         }
@@ -500,8 +492,18 @@ final class CameraViewController: DUViewController {
   }
   
   fileprivate func displaySaveButton() {
-    saveButtonHeightConstraint.constant = 40
-    saveButton.alpha = 1
+    //saveButtonHeightConstraint.constant = 40
+    //saveButton.alpha = 1
+    UIView.animate(
+      withDuration: 0.4,
+      delay: 0,
+      options: .curveEaseIn,
+      animations: { [weak self] _ in
+        self?.saveButton.alpha = 1
+        self?.saveButtonHeightConstraint.constant = 40
+        self?.view.layoutIfNeeded()
+      }
+    )
     takePhotoImageButton.setImage(nil, for: .normal)
     chooseImageButton.setImage(nil, for: .normal)
     
@@ -517,18 +519,18 @@ final class CameraViewController: DUViewController {
     label.layer.cornerRadius = 12.5
     label.textColor = .white
     
-    label.layer.backgroundColor = UIColor.lighterPurple.cgColor
+    label.layer.backgroundColor = UIColor.onyxBlack.cgColor
     
     return label
   }
   
-  func createOccasionbutton() -> UIButton {
+  func createOccasionbutton() -> DUButton {
     
-    let button = UIButton()
+    let button = DUButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitleColor(.white, for: .normal)
     button.layer.cornerRadius = 12.5
-    button.layer.backgroundColor = UIColor.lighterPurple.cgColor
+    button.layer.backgroundColor = UIColor.lighterBlack.cgColor
     return button
     
   }
@@ -577,9 +579,6 @@ extension CameraViewController: UIImagePickerControllerDelegate {
                 
                 for concept in caiOutput.concepts {
                   self.apparelTags.append(concept.conceptName)
-                  if self.apparelTags.count == 5 {
-                    break
-                  }
                 }
                 
                 for label in self.allApparelLabels {
@@ -628,9 +627,6 @@ extension CameraViewController: UIImagePickerControllerDelegate {
                 self.colorTags.removeAll()
                 for concept in caiOutput.colors {
                   self.colorTags.append(concept.conceptName)
-                  if self.colorTags.count == 5 {
-                    break
-                  }
                 }
                 for label in self.colorLabels {
                   label.removeFromSuperview()

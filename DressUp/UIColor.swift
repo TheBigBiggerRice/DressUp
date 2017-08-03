@@ -9,14 +9,14 @@
 import UIKit
 
 extension UIColor {
-  class var royalPurple: UIColor {
-    return UIColor(red: 102/255, green: 51/255, blue: 153/255, alpha: 1.0)
+  class var onyxBlack: UIColor {
+    return UIColor(red: 17/255, green: 18/255, blue: 18/255, alpha: 1.0)
   }
-  class var lighterPurple: UIColor {
-    return UIColor(red: 160/255, green: 121/255, blue: 200/255, alpha: 1.0)
+  class var lighterBlack: UIColor {
+    return UIColor(red: 108/255, green: 115/255, blue: 115/255, alpha: 1.0)
   }
-  class var darkerPurple: UIColor {
-    return UIColor(red: 59/255, green: 13/255, blue: 106/255, alpha: 1.0)
-  }
-  
+//  class var darkerBlack: UIColor {
+//    return UIColor(red: 7/255, green: 10/255, blue: 10/255, alpha: 1.0)
+//  }
+//  
 }

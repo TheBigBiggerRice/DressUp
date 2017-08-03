@@ -16,11 +16,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    
     FirebaseApp.configure()
+    
     configureInitialRootViewController(for: window)
-    UINavigationBar.appearance().barTintColor = UIColor.royalPurple
+    
+    UINavigationBar.appearance().barTintColor = UIColor.onyxBlack
+    
     UINavigationBar.appearance().tintColor = .white
-    UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white]
+    
+    UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 20)!, NSForegroundColorAttributeName : UIColor.white]
+    
     UIApplication.shared.statusBarStyle = .lightContent
     
     return true

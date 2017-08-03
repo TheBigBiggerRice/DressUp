@@ -35,7 +35,7 @@ class CustomTabBar: UIView {
   fileprivate let topBarView: UIView = {
     let view = UIView()
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.backgroundColor = UIColor.royalPurple
+    view.backgroundColor = UIColor.onyxBlack
     return view
   }()
   
