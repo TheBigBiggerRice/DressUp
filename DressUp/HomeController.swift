@@ -91,7 +91,7 @@ extension HomeController: UITableViewDelegate {
         let setPhotoApparel = Set(photo.imageApparel)
         let setPhotoColor = Set(photo.imageColor)
         
-        if setOccasion.intersection(setPhotoOccasion).count > 0 || setApparel.intersection(setPhotoApparel).count > 0 || setColor.intersection(setPhotoColor).count > 0 || (setOccasion.count == 0 && setApparel.count == 0 && setColor.count == 0) { return true }
+        if setOccasion.intersection(setPhotoOccasion).count > 0 || setApparel.intersection(setPhotoApparel).count > 0 || setColor.intersection(setPhotoColor).count > 0 || (setOccasion.contains("") == true && setApparel.contains("") == true && setColor.contains("") == true) || (setOccasion.isEmpty == true && setApparel.isEmpty == true && setColor.isEmpty == true) { return true }
         else { return false }
       }
       return filteredTopPhotoCollection.map { FilteredPhotoCollectionCellViewModel(withPhoto: $0) }
@@ -106,7 +106,7 @@ extension HomeController: UITableViewDelegate {
         let setPhotoApparel = Set(photo.imageApparel)
         let setPhotoColor = Set(photo.imageColor)
         
-        if setOccasion.intersection(setPhotoOccasion).count > 0 || setApparel.intersection(setPhotoApparel).count > 0 || setColor.intersection(setPhotoColor).count > 0 || (setOccasion.count == 0 && setApparel.count == 0 && setColor.count == 0) { return true }
+        if setOccasion.intersection(setPhotoOccasion).count > 0 || setApparel.intersection(setPhotoApparel).count > 0 || setColor.intersection(setPhotoColor).count > 0 || (setOccasion.contains("") == true && setApparel.contains("") == true && setColor.contains("") == true) || (setOccasion.isEmpty == true && setApparel.isEmpty == true && setColor.isEmpty == true) { return true }
         else { return false }
       }
       
@@ -122,7 +122,7 @@ extension HomeController: UITableViewDelegate {
         let setPhotoApparel = Set(photo.imageApparel)
         let setPhotoColor = Set(photo.imageColor)
         
-        if setOccasion.intersection(setPhotoOccasion).count > 0 || setApparel.intersection(setPhotoApparel).count > 0 || setColor.intersection(setPhotoColor).count > 0 || (setOccasion.count == 0 && setApparel.count == 0 && setColor.count == 0) { return true }
+        if setOccasion.intersection(setPhotoOccasion).count > 0 || setApparel.intersection(setPhotoApparel).count > 0 || setColor.intersection(setPhotoColor).count > 0 || (setOccasion.contains("") == true && setApparel.contains("") == true && setColor.contains("") == true) || (setOccasion.isEmpty == true && setApparel.isEmpty == true && setColor.isEmpty == true) { return true }
         else { return false }
       }
       return filteredShoesPhotoCollection.map { FilteredPhotoCollectionCellViewModel(withPhoto: $0) }

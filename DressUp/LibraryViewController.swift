@@ -13,7 +13,10 @@ class LibraryViewController: DUViewController {
   
   //firebase stuff
   var user: User!
+
   var photoCollection = [Photos]()
+  
+  var forceTouchIndexPath: IndexPath?
   
   var photoCollectionSorted = [Photos]()
   
@@ -43,10 +46,13 @@ class LibraryViewController: DUViewController {
     //select button
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(LibraryViewController.selectButtonTapped(sender:)))
     navigationItem.rightBarButtonItem?.tintColor = .white
-    
+    navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 17)!], for: .normal)
+
     //deletebutton
     navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(LibraryViewController.deleteButtonTapped(sender:)))
     navigationItem.leftBarButtonItem?.tintColor = .clear
+    navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 17)!], for: .normal)
+
     
     collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: flowLayout)
     collectionView.register(PhotoCollectionCell.self, forCellWithReuseIdentifier: "PhotoCollectionCell")
@@ -195,7 +201,7 @@ extension LibraryViewController: UICollectionViewDelegate {
         if !selectedPhotos.contains(photo.imageUID) {
           selectedPhotos.append(photo.imageUID)
         }
-        //need to remove deselected item from selectedPhotos
+        
       }
       (collectionView.cellForItem(at: indexPath) as? PhotoCollectionCell)?.fadeInAlphaView()
       selectedRows.append(indexPath.row)
@@ -217,7 +223,7 @@ extension LibraryViewController: UICollectionViewDelegate {
 }
 
 extension LibraryViewController: UICollectionViewDataSource {
-  //the whole collection view is one big section
+  
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return photoCollection.count
   }
@@ -267,6 +273,8 @@ extension LibraryViewController: UIViewControllerPreviewingDelegate {
     
     guard let cell = collectionView.cellForItem(at: indexPath) else { return nil }
     
+    forceTouchIndexPath = indexPath
+    
     let vc = ForceTouchViewController()
     
     let photo = photoCollection[indexPath.row]
@@ -274,6 +282,7 @@ extension LibraryViewController: UIViewControllerPreviewingDelegate {
     let imageURL = URL(string: photo.imageURL)
     
     vc.imageView.kf.setImage(with: imageURL)
+    
     vc.preferredContentSize = CGSize(width: 0.0, height: 300.0)
     
     previewingContext.sourceRect = cell.frame
@@ -282,7 +291,30 @@ extension LibraryViewController: UIViewControllerPreviewingDelegate {
   }
 
   func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-    show(viewControllerToCommit, sender: self)
+    
+  
+    let photo = photoCollection[(forceTouchIndexPath?.row)!]
+    
+    let vc = PhotoViewController()
+    
+    let imageURL = URL(string: photo.imageURL)
+    
+    vc.photoImageView.kf.setImage(with: imageURL)
+    
+    vc.backgroundImageView.kf.setImage(with: imageURL)
+    
+    
+    let nc = UINavigationController(rootViewController: vc)
+    
+    let photoURLs: [String]  = photoCollection.map {$0.imageURL}
+    vc.urls = imageURL
+    vc.newPhotoURLs = photoURLs
+    vc.numImages = self.photoCollection.count
+    
+    //get the image uid, prepare for deletion
+    vc.imageUID = photo.imageUID
+
+    show(nc, sender: self)
   }
   
   override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

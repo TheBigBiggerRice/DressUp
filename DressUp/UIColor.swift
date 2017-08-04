@@ -15,8 +15,7 @@ extension UIColor {
   class var lighterBlack: UIColor {
     return UIColor(red: 108/255, green: 115/255, blue: 115/255, alpha: 1.0)
   }
-//  class var darkerBlack: UIColor {
-//    return UIColor(red: 7/255, green: 10/255, blue: 10/255, alpha: 1.0)
-//  }
-//  
+  class var royalBlue: UIColor {
+    return UIColor(red: 10/255, green: 79/255, blue: 168/255, alpha: 1.0)
+  }
 }

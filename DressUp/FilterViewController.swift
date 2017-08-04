@@ -28,8 +28,8 @@ final class FilterViewController: UIViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Occasion"
-    label.textColor = .white
-    label.backgroundColor = .blue
+    //label.textColor = .white
+    //label.backgroundColor = .blue
     label.lineBreakMode = .byWordWrapping
     return label
   }()
@@ -39,8 +39,8 @@ final class FilterViewController: UIViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Apparel"
-    label.textColor = .white
-    label.backgroundColor = .red
+    //label.textColor = .white
+    //label.backgroundColor = .red
     label.lineBreakMode = .byWordWrapping
     return label
   }()
@@ -50,8 +50,8 @@ final class FilterViewController: UIViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Colors"
-    label.textColor = .white
-    label.backgroundColor = .brown
+    //label.textColor = .white
+    //label.backgroundColor = .brown
     label.lineBreakMode = .byWordWrapping
     return label
   }()
@@ -108,12 +108,12 @@ final class FilterViewController: UIViewController {
     return textField
   }()
   
-  //confirm
+  
   fileprivate let confirmButton: UIButton = {
     let button = UIButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitle("Confirm", for: .normal)
-    button.backgroundColor = .orange
+    button.backgroundColor = UIColor.royalBlue
     return button
   }()
   
@@ -130,6 +130,7 @@ final class FilterViewController: UIViewController {
     
     self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped(sender:)))
     self.navigationItem.rightBarButtonItem?.tintColor = .white
+    navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 17)!], for: .normal)
     
     occasionTextField.delegate = self
     apparelTextField.delegate = self
@@ -138,13 +139,13 @@ final class FilterViewController: UIViewController {
   
   //cancel button
   private dynamic func cancelButtonTapped(sender: UIBarButtonItem) {
-    print("cancel tapped")
+    
     dismiss(animated: true, completion: nil)
   }
   
   //occasion switch
   private dynamic func switchOccasionValueDidChange(sender: UISwitch) {
-    print("switch occasion tapped")
+    
     if switchOccasion.isOn == true {
       occasionTextFieldHeightConstraint.constant = 50
       occasionTextField.alpha = 1
@@ -173,7 +174,7 @@ final class FilterViewController: UIViewController {
   
   //apparel switch
   private dynamic func switchApparelValueDidChange(sender: UISwitch) {
-    print("switch apparel tapped")
+    
     if switchApparel.isOn == true {
       apparelTextFieldHeightConstraints.constant = 50
       apparelTextField.alpha = 1
@@ -201,7 +202,7 @@ final class FilterViewController: UIViewController {
   
   //color switch
   private dynamic func switchColorValueDidChange(sender: UISwitch) {
-    print("switch color tapped")
+    
     if switchColor.isOn == true {
       colorTextFieldHeightConstraints.constant = 50
       colorTextField.alpha = 1
@@ -318,10 +319,16 @@ final class FilterViewController: UIViewController {
   private dynamic func confirmButtonTapped() {
     
     //reload my collection view cells after the confirm button is tapped
-    occasionText = occasionTextField.text ?? ""
-    apparelText = apparelTextField.text ?? ""
-    colorText = colorTextField.text ?? ""
     
+      occasionText = occasionTextField.text ?? ""
+    
+    
+      apparelText = apparelTextField.text ?? ""
+    
+    
+      colorText = colorTextField.text ?? ""
+    
+
     
     dismiss(animated: true) { [weak self] finished in
       guard let strongSelf = self,

@@ -7,6 +7,7 @@
 //
 import UIKit
 import Clarifai
+import SCLAlertView
 
 final class CameraViewController: DUViewController {
   
@@ -20,9 +21,7 @@ final class CameraViewController: DUViewController {
   //for category labels
   var categoryButtonIndex = 0
   
-  let occasionButtonText = ["Romantic", "Casual", "Night Out", "Sports", "School", "Work", "Business", "Formal"]
-  
-  let occasionButtonIndex = [0,1,2,3,4,5,6,7]
+  var occasionButtonText = ["Romantic", "Casual", "Night Out", "Sports", "School", "Work", "Business", "Formal"]
   
   var occasionButtons = [UIButton]()
   
@@ -98,7 +97,7 @@ final class CameraViewController: DUViewController {
     view.showsHorizontalScrollIndicator = false
     return view
   }()
-
+  
   //occasion label and tags
   fileprivate let occasionLabel: DULabel = {
     let label = DULabel()
@@ -107,11 +106,19 @@ final class CameraViewController: DUViewController {
     return label
   }()
   
+  //add occasions button
+  fileprivate let addOccasionsButton: DUButton = {
+    let button = DUButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.setImage(#imageLiteral(resourceName: "betterLookingAdd"), for: .normal)
+    return button
+  }()
+  
   fileprivate let apparelScrollView: UIScrollView = {
     let view = UIScrollView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.showsHorizontalScrollIndicator = false
-
+    
     return view
   }()
   
@@ -128,7 +135,7 @@ final class CameraViewController: DUViewController {
     let view = UIScrollView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.showsHorizontalScrollIndicator = false
-
+    
     return view
   }()
   
@@ -184,18 +191,6 @@ final class CameraViewController: DUViewController {
     app = ClarifaiApp(apiKey: "eeace7a446b74adda719b9b8cd62b7a1")
     initialize()
     self.navigationItem.title = "Camera"
-    //self.navigationController?.navigationBar.tintColor = .white
-    //self.navigationController?.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "GothamRounded-Bold", size: 17)!]
-  
-    for family: String in UIFont.familyNames
-    {
-      print("\(family)")
-      for names: String in UIFont.fontNames(forFamilyName: family)
-      {
-        print("== \(names)")
-      }
-    }
-    
   }
   
   deinit {
@@ -227,6 +222,7 @@ final class CameraViewController: DUViewController {
     //for occasions
     view.addSubview(occasionLabel)
     view.addSubview(occasionScrollView)
+    occasionScrollView.addSubview(addOccasionsButton)
     
     //for apparel(auto generated)
     view.addSubview(apparelLabel)
@@ -235,9 +231,6 @@ final class CameraViewController: DUViewController {
     //for color(auto generated)
     view.addSubview(colorLabel)
     view.addSubview(colorScrollView)
-    
-    //view.addSubview(occasionTextField)
-    //view.addSubview(positionTextField)
     
     view.addSubview(saveButton)
     
@@ -249,6 +242,8 @@ final class CameraViewController: DUViewController {
     topButton.addTarget(self, action: #selector(CameraViewController.topButtonTapped), for: .touchUpInside)
     pantsButton.addTarget(self, action: #selector(CameraViewController.pantsButtonTapped), for: .touchUpInside)
     footwearButton.addTarget(self, action: #selector(CameraViewController.footwearButtonTapped), for: .touchUpInside)
+    
+    addOccasionsButton.addTarget(self, action: #selector(CameraViewController.addOccasionsButtonTapped), for: .touchUpInside)
     
     saveButton.addTarget(self, action: #selector(CameraViewController.saveButtonTapped), for: .touchUpInside)
     
@@ -323,7 +318,48 @@ final class CameraViewController: DUViewController {
     view.addConstraint(NSLayoutConstraint(item: occasionScrollView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: -10))
     view.addConstraint(NSLayoutConstraint(item: occasionScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 30))
     
-    //set the constraints for the buttons
+    //add occasion button
+    occasionScrollView.addConstraint(NSLayoutConstraint(item: addOccasionsButton, attribute: .right, relatedBy: .equal, toItem: occasionScrollView, attribute: .right, multiplier: 1.0, constant: 0))
+    occasionScrollView.addConstraint(NSLayoutConstraint(item: addOccasionsButton, attribute: .top, relatedBy: .equal, toItem: occasionScrollView, attribute: .top, multiplier: 1.0, constant: 0))
+    occasionScrollView.addConstraint(NSLayoutConstraint(item: addOccasionsButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+    occasionScrollView.addConstraint(NSLayoutConstraint(item: addOccasionsButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+    
+    //set the constraints for the occasion buttons
+    addConstraintsForOccasionButtons()
+    
+    //apparel label
+    view.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .top, relatedBy: .equal, toItem: occasionLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
+    view.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .left, relatedBy: .equal, toItem: occasionLabel, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: categoryLabel.intrinsicContentSize.width + 20))
+    view.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+    
+    //apparel scroll view
+    view.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .left, relatedBy: .equal, toItem: apparelLabel, attribute: .right, multiplier: 1.0, constant: 5))
+    view.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .top, relatedBy: .equal, toItem: apparelLabel, attribute: .top, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: -10))
+    view.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 30))
+    
+    //color label
+    view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .top, relatedBy: .equal, toItem: apparelLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
+    view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .left, relatedBy: .equal, toItem: apparelLabel, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: categoryLabel.intrinsicContentSize.width + 20))
+    view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+    
+    //color scroll view
+    view.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .left, relatedBy: .equal, toItem: colorLabel, attribute: .right, multiplier: 1.0, constant: 5))
+    view.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .top, relatedBy: .equal, toItem: colorLabel, attribute: .top, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: -10))
+    view.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 30))
+    //view.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .centerY, relatedBy: .equal, toItem: colorLabel, attribute: .centerY, multiplier: 1.0, constant: 0))
+    
+    //save button
+    view.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: -50))
+    saveButtonHeightConstraint = NSLayoutConstraint(item: saveButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0)
+    view.addConstraint(saveButtonHeightConstraint)
+  }
+  func addConstraintsForOccasionButtons() {
     
     for button in occasionButtons {
       button.removeFromSuperview()
@@ -331,8 +367,14 @@ final class CameraViewController: DUViewController {
     occasionButtons.removeAll()
     
     for occasion in occasionButtonText {
+      
       let button = createOccasionbutton()
       button.setTitle(occasion, for: .normal)
+      
+      if occasionTags.contains(occasion) {
+        button.backgroundColor = UIColor.onyxBlack
+      }
+      
       occasionButtons.append(button)
     }
     
@@ -365,43 +407,11 @@ final class CameraViewController: DUViewController {
         
       }
     }
-    occasionScrollView.addConstraint(NSLayoutConstraint(item: previousOccasionButton!, attribute: .right, relatedBy: .equal, toItem: occasionScrollView, attribute: .right, multiplier: 1.0, constant: 0))
+    occasionScrollView.addConstraint(NSLayoutConstraint(item: previousOccasionButton!, attribute: .right, relatedBy: .equal, toItem: addOccasionsButton, attribute: .left, multiplier: 1.0, constant: -5))
     
-    //previousOccasionButton = nil
-    
-    //apparel label
-    view.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .top, relatedBy: .equal, toItem: occasionLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
-    view.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .left, relatedBy: .equal, toItem: occasionLabel, attribute: .left, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: categoryLabel.intrinsicContentSize.width + 20))
-    view.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
-    
-    //apparel scroll view
-    view.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .left, relatedBy: .equal, toItem: apparelLabel, attribute: .right, multiplier: 1.0, constant: 5))
-    view.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .top, relatedBy: .equal, toItem: apparelLabel, attribute: .top, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: -10))
-    view.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 30))
-    //view.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .centerY, relatedBy: .equal, toItem: apparelLabel, attribute: .centerY, multiplier: 1.0, constant: 0))
-    
-    //color label
-    view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .top, relatedBy: .equal, toItem: apparelLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
-    view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .left, relatedBy: .equal, toItem: apparelLabel, attribute: .left, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: categoryLabel.intrinsicContentSize.width + 20))
-    view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
-    
-    //color scroll view
-    view.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .left, relatedBy: .equal, toItem: colorLabel, attribute: .right, multiplier: 1.0, constant: 5))
-    view.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .top, relatedBy: .equal, toItem: colorLabel, attribute: .top, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: -10))
-    view.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 30))
-    //view.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .centerY, relatedBy: .equal, toItem: colorLabel, attribute: .centerY, multiplier: 1.0, constant: 0))
-    
-    //save button
-    view.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: -50))
-    saveButtonHeightConstraint = NSLayoutConstraint(item: saveButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0)
-    view.addConstraint(saveButtonHeightConstraint)
   }
+  
+  
   
   private dynamic func takePhotoImageButtonTapped() {
     picker.allowsEditing = false
@@ -438,25 +448,61 @@ final class CameraViewController: DUViewController {
     topButton.layer.backgroundColor = UIColor.lighterBlack.cgColor
     pantsButton.layer.backgroundColor = UIColor.lighterBlack.cgColor
   }
+  
   private dynamic func occasionButtonTapped(sender: UIButton) {
-    for index in occasionButtonIndex {
+    for index in 0 ..< occasionButtonText.count {
       if sender.isSelected {
         if sender.tag == index {
           sender.layer.backgroundColor = UIColor.lighterBlack.cgColor
-          occasionTags = occasionTags.filter{$0 != sender.titleLabel?.text }
+          occasionTags = occasionTags.filter{ $0 != sender.titleLabel?.text }
           sender.isSelected = false
         }
-      } else {
+      }
+      else {
         if sender.tag == index {
           sender.layer.backgroundColor = UIColor.onyxBlack.cgColor
+          occasionTags = occasionTags.filter{ $0 != sender.titleLabel?.text }
           occasionTags.append((sender.titleLabel?.text)!)
           sender.isSelected = true
         }
       }
     }
   }
-  private dynamic func saveButtonTapped() {
   
+  //when the add occasion button is tapped, UI alert view controller
+  private dynamic func addOccasionsButtonTapped() {
+    
+    let appearance = SCLAlertView.SCLAppearance(
+      
+      kCircleIconHeight: 30,
+      
+      kTitleFont: UIFont(name: "GothamRounded-Light", size: 20)!,
+      kTextFont: UIFont(name: "GothamRounded-Light", size: 14)!,
+      kButtonFont: UIFont(name: "GothamRounded-Light", size: 14)!,
+      
+      showCloseButton: false,
+      
+      hideWhenBackgroundViewIsTapped: true
+    )
+    
+    let alertView = SCLAlertView(appearance: appearance)
+    let occasionTextField = alertView.addTextField("Your occasion")
+    alertView.addButton("Confirm") {
+      
+      if occasionTextField.text != "" {
+        self.occasionButtonText.append(occasionTextField.text!)
+        
+        self.addConstraintsForOccasionButtons()
+      }
+    }
+    
+    let alertViewIcon = UIImage(named: "clothes_white")
+    _ = alertView.showCustom("Add Occasion", subTitle: "Want to wear this at another occasion? Customize your own!", color: UIColor.royalBlue, icon: alertViewIcon!)
+  }
+  
+  
+  private dynamic func saveButtonTapped() {
+    
     var positionTags = ""
     if categoryButtonIndex == 0 {
       positionTags = "Top"
@@ -470,7 +516,7 @@ final class CameraViewController: DUViewController {
       positionTags = "Footwear"
       
     }
-    ///let positionTags = positionTextField.text ?? ""
+    
     takePhotoImageButton.setImage(#imageLiteral(resourceName: "takePhotoImageButton"), for: .normal)
     chooseImageButton.setImage(#imageLiteral(resourceName: "chooseImageButton"), for: .normal)
     imageView.image = nil
@@ -492,8 +538,7 @@ final class CameraViewController: DUViewController {
   }
   
   fileprivate func displaySaveButton() {
-    //saveButtonHeightConstraint.constant = 40
-    //saveButton.alpha = 1
+    
     UIView.animate(
       withDuration: 0.4,
       delay: 0,
@@ -509,7 +554,6 @@ final class CameraViewController: DUViewController {
     
   }
   
-  //generate uilabels for categories and colors
   func createLabel() -> DULabel {
     let label = DULabel()
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -536,8 +580,6 @@ final class CameraViewController: DUViewController {
   }
   
 }
-
-
 
 extension CameraViewController: UIImagePickerControllerDelegate {
   

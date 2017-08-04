@@ -48,8 +48,13 @@ final class PhotoViewController: DUViewController {
     self.navigationItem.title = "Photo"
     self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped(sender:)))
     self.navigationItem.rightBarButtonItem?.tintColor = .white
+    navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 17)!], for: .normal)
+
+    
+    
     self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(deleteButtonTapped(sender:)))
     self.navigationItem.leftBarButtonItem?.tintColor = .white
+    navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 17)!], for: .normal)
     
     //swiping between photos
     let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))

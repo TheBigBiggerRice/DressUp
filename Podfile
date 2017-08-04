@@ -13,5 +13,6 @@ target 'DressUp' do
   pod 'Firebase/Storage'
   pod 'Clarifai'
   pod 'Kingfisher'
+  pod "SCLAlertView"
 
 end

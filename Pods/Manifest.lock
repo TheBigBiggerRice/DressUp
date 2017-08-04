@@ -60,6 +60,7 @@ PODS:
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.10)
   - Kingfisher (3.10.3)
+  - SCLAlertView (0.7.0)
 
 DEPENDENCIES:
   - Clarifai
@@ -69,6 +70,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - FirebaseUI/Auth
   - Kingfisher
+  - SCLAlertView
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
@@ -84,7 +86,8 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 30d874b96d0d76028f61fbd122801e3f030d47db
   Kingfisher: a0ac82dc5bcf0388dd74b294cf2cc13730c63436
+  SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
 
-PODFILE CHECKSUM: c924447071eb70e8a90fe008f1aacc60c5637a8f
+PODFILE CHECKSUM: 1ff43b009e62b909be6330947f3794c0166275ad
 
 COCOAPODS: 1.2.1

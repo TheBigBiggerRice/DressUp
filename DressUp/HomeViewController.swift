@@ -22,8 +22,8 @@ final class HomeViewController: DUViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Current filters:"
-    label.backgroundColor = .green
-    label.textColor = .white
+    //label.backgroundColor = .green
+    //label.textColor = .white
     label.lineBreakMode =  .byWordWrapping
     return label
   }()
@@ -33,8 +33,8 @@ final class HomeViewController: DUViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Occasion:"
-    label.textColor = .white
-    label.backgroundColor = .blue
+    //label.textColor = .white
+    //label.backgroundColor = .blue
     label.lineBreakMode = .byWordWrapping
     return label
   }()
@@ -44,8 +44,8 @@ final class HomeViewController: DUViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Apparel:"
-    label.textColor = .white
-    label.backgroundColor = .purple
+    //label.textColor = .white
+    //label.backgroundColor = .purple
     label.lineBreakMode = .byWordWrapping
     return label
   }()
@@ -55,8 +55,8 @@ final class HomeViewController: DUViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Color:"
-    label.textColor = .white
-    label.backgroundColor = .black
+    //label.textColor = .white
+    //label.backgroundColor = .black
     label.lineBreakMode = .byWordWrapping
     return label
   }()
@@ -107,10 +107,8 @@ final class HomeViewController: DUViewController {
     navigationItem.title = "Home"
     
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(filterButtonTapped(sender:)))
-    navigationItem.rightBarButtonItem?.tintColor = .white
     
-    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Randomize", style: .plain, target: self, action: #selector(randomizeButtonTapped(sender:)))
-    navigationItem.leftBarButtonItem?.tintColor = .white
+    navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 17)!], for: .normal)
     
     homeTableView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: 375)
     homeTableView.delegate = self

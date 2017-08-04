@@ -23,9 +23,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     UINavigationBar.appearance().barTintColor = UIColor.onyxBlack
     
+    //UINavigationBar.appearance().isOpaque = true
+    
     UINavigationBar.appearance().tintColor = .white
     
     UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 20)!, NSForegroundColorAttributeName : UIColor.white]
+    
+    
     
     UIApplication.shared.statusBarStyle = .lightContent
     
