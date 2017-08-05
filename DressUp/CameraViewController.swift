@@ -67,7 +67,7 @@ final class CameraViewController: DUViewController {
     button.setTitleColor(.white, for: .normal)
     button.setTitle("Top", for: .normal)
     button.layer.cornerRadius = 12.5
-    button.layer.backgroundColor = UIColor.lighterBlack.cgColor
+    button.layer.backgroundColor = UIColor.lighterBlue.cgColor
     return button
   }()
   
@@ -77,7 +77,7 @@ final class CameraViewController: DUViewController {
     button.setTitleColor(.white, for: .normal)
     button.setTitle("Pants", for: .normal)
     button.layer.cornerRadius = 12.5
-    button.layer.backgroundColor = UIColor.lighterBlack.cgColor
+    button.layer.backgroundColor = UIColor.lighterBlue.cgColor
     return button
   }()
   
@@ -87,7 +87,7 @@ final class CameraViewController: DUViewController {
     button.setTitleColor(.white, for: .normal)
     button.setTitle("Footwear", for: .normal)
     button.layer.cornerRadius = 12.5
-    button.layer.backgroundColor = UIColor.lighterBlack.cgColor
+    button.layer.backgroundColor = UIColor.lighterBlue.cgColor
     return button
   }()
   
@@ -372,7 +372,7 @@ final class CameraViewController: DUViewController {
       button.setTitle(occasion, for: .normal)
       
       if occasionTags.contains(occasion) {
-        button.backgroundColor = UIColor.onyxBlack
+        button.backgroundColor = UIColor.royalBlue
       }
       
       occasionButtons.append(button)
@@ -429,38 +429,38 @@ final class CameraViewController: DUViewController {
   
   private dynamic func topButtonTapped() {
     categoryButtonIndex = 0
-    topButton.layer.backgroundColor = UIColor.onyxBlack.cgColor
-    pantsButton.layer.backgroundColor = UIColor.lighterBlack.cgColor
-    footwearButton.layer.backgroundColor = UIColor.lighterBlack.cgColor
+    topButton.layer.backgroundColor = UIColor.royalBlue.cgColor
+    pantsButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    footwearButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
     
   }
   
   private dynamic func pantsButtonTapped() {
     categoryButtonIndex = 1
-    pantsButton.layer.backgroundColor = UIColor.onyxBlack.cgColor
-    topButton.layer.backgroundColor = UIColor.lighterBlack.cgColor
-    footwearButton.layer.backgroundColor = UIColor.lighterBlack.cgColor
+    pantsButton.layer.backgroundColor = UIColor.royalBlue.cgColor
+    topButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    footwearButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
   }
   
   private dynamic func footwearButtonTapped() {
     categoryButtonIndex = 2
-    footwearButton.layer.backgroundColor = UIColor.onyxBlack.cgColor
-    topButton.layer.backgroundColor = UIColor.lighterBlack.cgColor
-    pantsButton.layer.backgroundColor = UIColor.lighterBlack.cgColor
+    footwearButton.layer.backgroundColor = UIColor.royalBlue.cgColor
+    topButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    pantsButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
   }
   
   private dynamic func occasionButtonTapped(sender: UIButton) {
     for index in 0 ..< occasionButtonText.count {
       if sender.isSelected {
         if sender.tag == index {
-          sender.layer.backgroundColor = UIColor.lighterBlack.cgColor
+          sender.layer.backgroundColor = UIColor.lighterBlue.cgColor
           occasionTags = occasionTags.filter{ $0 != sender.titleLabel?.text }
           sender.isSelected = false
         }
       }
       else {
         if sender.tag == index {
-          sender.layer.backgroundColor = UIColor.onyxBlack.cgColor
+          sender.layer.backgroundColor = UIColor.royalBlue.cgColor
           occasionTags = occasionTags.filter{ $0 != sender.titleLabel?.text }
           occasionTags.append((sender.titleLabel?.text)!)
           sender.isSelected = true
@@ -563,7 +563,7 @@ final class CameraViewController: DUViewController {
     label.layer.cornerRadius = 12.5
     label.textColor = .white
     
-    label.layer.backgroundColor = UIColor.onyxBlack.cgColor
+    label.layer.backgroundColor = UIColor.royalBlue.cgColor
     
     return label
   }
@@ -574,7 +574,7 @@ final class CameraViewController: DUViewController {
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitleColor(.white, for: .normal)
     button.layer.cornerRadius = 12.5
-    button.layer.backgroundColor = UIColor.lighterBlack.cgColor
+    button.layer.backgroundColor = UIColor.lighterBlue.cgColor
     return button
     
   }

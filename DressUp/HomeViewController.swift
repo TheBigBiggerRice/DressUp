@@ -17,24 +17,24 @@ final class HomeViewController: DUViewController {
   
   fileprivate var homeTableView: UITableView = UITableView()
   
-  fileprivate let currentFiltersLabel: DULabel = {
-    let label = DULabel()
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.numberOfLines = 0
-    label.text = "Current filters:"
-    //label.backgroundColor = .green
-    //label.textColor = .white
-    label.lineBreakMode =  .byWordWrapping
-    return label
-  }()
+//  fileprivate let currentFiltersLabel: DULabel = {
+//    let label = DULabel()
+//    label.translatesAutoresizingMaskIntoConstraints = false
+//    label.numberOfLines = 0
+//    label.text = "Current filters:"
+  
+//    
+//    label.lineBreakMode =  .byWordWrapping
+//    return label
+//  }()
   
   fileprivate let occasionLabel: DULabel = {
     let label = DULabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Occasion:"
-    //label.textColor = .white
-    //label.backgroundColor = .blue
+    
+    
     label.lineBreakMode = .byWordWrapping
     return label
   }()
@@ -44,8 +44,8 @@ final class HomeViewController: DUViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Apparel:"
-    //label.textColor = .white
-    //label.backgroundColor = .purple
+    
+    
     label.lineBreakMode = .byWordWrapping
     return label
   }()
@@ -55,28 +55,36 @@ final class HomeViewController: DUViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Color:"
-    //label.textColor = .white
-    //label.backgroundColor = .black
+    
+    
     label.lineBreakMode = .byWordWrapping
     return label
   }()
   
+  fileprivate let randomizeButton: DUButton = {
+    let button = DUButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.setTitle("Randomize", for: .normal)
+    button.titleLabel?.font = UIFont(name: "GothamRounded-Light", size: 17)
+    button.backgroundColor = UIColor.royalBlue
+    button.layer.cornerRadius = 5
+    return button
+  }()
+  
   private func initialize() {
     
-    view.addSubview(currentFiltersLabel)
+    
     view.addSubview(occasionLabel)
     view.addSubview(apparelLabel)
     view.addSubview(colorLabel)
     
-    //current filters label
-    view.addConstraint(NSLayoutConstraint(item: currentFiltersLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 375))
-    view.addConstraint(NSLayoutConstraint(item: currentFiltersLabel, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: currentFiltersLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth))
-    view.addConstraint(NSLayoutConstraint(item: currentFiltersLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
+    view.addSubview(randomizeButton)
+    
+
     
     //occasion label
-    view.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .top, relatedBy: .equal, toItem: currentFiltersLabel, attribute: .bottom, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .left, relatedBy: .equal, toItem: currentFiltersLabel, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 375))
+    view.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0))
     view.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth))
     view.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     
@@ -91,7 +99,16 @@ final class HomeViewController: DUViewController {
     view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .left, relatedBy: .equal, toItem: apparelLabel, attribute: .left, multiplier: 1.0, constant: 0))
     view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth))
     view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
+    
+    //randomize button
+    view.addConstraint(NSLayoutConstraint(item: randomizeButton, attribute: .top, relatedBy: .equal, toItem: colorLabel, attribute: .bottom, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: randomizeButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 200))
+    view.addConstraint(NSLayoutConstraint(item: randomizeButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
+    view.addConstraint(NSLayoutConstraint(item: randomizeButton, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0))
+    
   }
+  
+  
   
   override func viewDidLoad() {
     
@@ -132,6 +149,7 @@ final class HomeViewController: DUViewController {
     present(nc, animated: true, completion: nil)
     
   }
+  
   func randomizeButtonTapped(sender:UIBarButtonItem) {
     print("randomize")
   }
@@ -160,12 +178,15 @@ extension HomeViewController: UITableViewDataSource {
 extension HomeViewController: FilterViewControllerDelegete {
   
   func filterViewControllerDidFinishFiltering(_ controller: FilterViewController, withOccasion occasion: String, andApparel apparel: String, andColor color: String) {
+    
     homeController.occasion = occasion.components(separatedBy: ", ")
     homeController.apparel = apparel.components(separatedBy: ", ")
     homeController.color = color.components(separatedBy: ", ")
+    
     occasionLabel.text = "Occasion: \(occasion)"
     apparelLabel.text = "Apparel: \(apparel)"
     colorLabel.text = "Color: \(color)"
+    
     homeTableView.reloadData()
   }
   

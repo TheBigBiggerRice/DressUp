@@ -43,8 +43,6 @@
 		999655411F18857F00A9E1DB /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655401F18857F00A9E1DB /* Constants.swift */; };
 		999655441F18861F00A9E1DB /* Storyboard+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655431F18861F00A9E1DB /* Storyboard+Utility.swift */; };
 		999655461F18A1E700A9E1DB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655451F18A1E700A9E1DB /* HomeViewController.swift */; };
-		999655481F18A21400A9E1DB /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655471F18A21400A9E1DB /* TimelineViewController.swift */; };
-		9996554A1F18A21F00A9E1DB /* FindFriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655491F18A21F00A9E1DB /* FindFriendsViewController.swift */; };
 		999655551F193EF800A9E1DB /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655541F193EF800A9E1DB /* StorageService.swift */; };
 		99AC20F21F2D9D340058BD73 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AC20F11F2D9D340058BD73 /* UIColor.swift */; };
 		99EA72FD1F2D5D1500B46F5C /* DUViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EA72FC1F2D5D1500B46F5C /* DUViewController.swift */; };
@@ -91,8 +89,6 @@
 		999655401F18857F00A9E1DB /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		999655431F18861F00A9E1DB /* Storyboard+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Storyboard+Utility.swift"; sourceTree = "<group>"; };
 		999655451F18A1E700A9E1DB /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		999655471F18A21400A9E1DB /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
-		999655491F18A21F00A9E1DB /* FindFriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindFriendsViewController.swift; sourceTree = "<group>"; };
 		999655541F193EF800A9E1DB /* StorageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		99AC20F11F2D9D340058BD73 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		99EA72FC1F2D5D1500B46F5C /* DUViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DUViewController.swift; sourceTree = "<group>"; };
@@ -138,15 +134,6 @@
 				999655391F184C3400A9E1DB /* CreateUsernameViewController.swift */,
 			);
 			name = Login;
-			sourceTree = "<group>";
-		};
-		990734E11F212D380090E7CC /* Pending  */ = {
-			isa = PBXGroup;
-			children = (
-				999655471F18A21400A9E1DB /* TimelineViewController.swift */,
-				999655491F18A21F00A9E1DB /* FindFriendsViewController.swift */,
-			);
-			name = "Pending ";
 			sourceTree = "<group>";
 		};
 		990734E21F212D610090E7CC /* Overview */ = {
@@ -238,7 +225,6 @@
 			children = (
 				990734E21F212D610090E7CC /* Overview */,
 				990734E01F212D1C0090E7CC /* Login */,
-				990734E11F212D380090E7CC /* Pending  */,
 				9991BB9D1F22C41A0074A6DC /* PhotoViewController.swift */,
 				9991BB9F1F22C4250074A6DC /* LibraryViewController.swift */,
 				9991BBA11F22C4320074A6DC /* CameraViewController.swift */,
@@ -437,11 +423,9 @@
 				9990761F1F2AF12700666EC9 /* HomeController.swift in Sources */,
 				9990761D1F2AE9EB00666EC9 /* DUCellViewModels.swift in Sources */,
 				999655441F18861F00A9E1DB /* Storyboard+Utility.swift in Sources */,
-				9996554A1F18A21F00A9E1DB /* FindFriendsViewController.swift in Sources */,
 				995035481F19A7E7009453E1 /* PhotoService.swift in Sources */,
 				9932E2421F2A773C00E48F70 /* UIView+DressUp.swift in Sources */,
 				99FE58041F2881EC0067A6C3 /* DUTextField.swift in Sources */,
-				999655481F18A21400A9E1DB /* TimelineViewController.swift in Sources */,
 				9991BBA21F22C4320074A6DC /* CameraViewController.swift in Sources */,
 				999655411F18857F00A9E1DB /* Constants.swift in Sources */,
 				994E30B71F1D6CAD00F0C53A /* DatabaseReference+Extenstion.swift in Sources */,
