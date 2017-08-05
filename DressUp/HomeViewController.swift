@@ -17,17 +17,6 @@ final class HomeViewController: DUViewController {
   
   fileprivate var homeTableView: UITableView = UITableView()
   
-//  fileprivate let currentFiltersLabel: DULabel = {
-//    let label = DULabel()
-//    label.translatesAutoresizingMaskIntoConstraints = false
-//    label.numberOfLines = 0
-//    label.text = "Current filters:"
-  
-//    
-//    label.lineBreakMode =  .byWordWrapping
-//    return label
-//  }()
-  
   fileprivate let occasionLabel: DULabel = {
     let label = DULabel()
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -71,14 +60,19 @@ final class HomeViewController: DUViewController {
     return button
   }()
   
+  deinit {
+    randomizeButton.removeTarget(self, action: nil, for: .allEvents)
+  }
+  
   private func initialize() {
-    
     
     view.addSubview(occasionLabel)
     view.addSubview(apparelLabel)
     view.addSubview(colorLabel)
-    
     view.addSubview(randomizeButton)
+    
+    
+    randomizeButton.addTarget(self, action: #selector(randomizeButtonTapped), for: .touchUpInside)
     
 
     
@@ -107,8 +101,6 @@ final class HomeViewController: DUViewController {
     view.addConstraint(NSLayoutConstraint(item: randomizeButton, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0))
     
   }
-  
-  
   
   override func viewDidLoad() {
     
@@ -150,9 +142,20 @@ final class HomeViewController: DUViewController {
     
   }
   
-  func randomizeButtonTapped(sender:UIBarButtonItem) {
+  func randomizeButtonTapped() {
     print("randomize")
+    let vc = RandomizePhotoViewController()
+    
+    let nc = UINavigationController(rootViewController: vc)
+    
+    
+    present(nc, animated: true, completion: nil)
+    
+    
   }
+  
+  
+  
 }
 
 extension HomeViewController: UITableViewDelegate {

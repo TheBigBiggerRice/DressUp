@@ -31,8 +31,10 @@ final class HomeController: NSObject {
   
   //processed photo collection based on table view cell rows
   var topPhotoCollection = [Photos]()
-  var bottomPhotoCollection = [Photos]()
-  var shoesPhotoCollection = [Photos]()
+  var pantsPhotoCollection = [Photos]()
+  var footwearPhotoCollection = [Photos]()
+  
+  
   
   //inputs by the user
   var occasion = [String]()
@@ -46,8 +48,8 @@ final class HomeController: NSObject {
   func redownload() {
     
     topPhotoCollection.removeAll()
-    bottomPhotoCollection.removeAll()
-    shoesPhotoCollection.removeAll()
+    pantsPhotoCollection.removeAll()
+    footwearPhotoCollection.removeAll()
     
     user = user ?? User.current
     profileHandle = UserService.observeProfile(for: user) { [unowned self] (ref, user, photos) in
@@ -61,10 +63,10 @@ final class HomeController: NSObject {
           self.topPhotoCollection.append(photo)
         }
         if photo.imagePosition == "Pants" {
-          self.bottomPhotoCollection.append(photo)
+          self.pantsPhotoCollection.append(photo)
         }
         if photo.imagePosition == "Footwear" {
-          self.shoesPhotoCollection.append(photo)
+          self.footwearPhotoCollection.append(photo)
         }
       }
     }
@@ -80,7 +82,7 @@ extension HomeController: UITableViewDelegate {
     let setApparel = Set(self.apparel)
     let setColor = Set(self.color)
     
-    //filtering the photos based on input
+    
     if 0 == row {
       
       var filteredTopPhotoCollection = [Photos]()
@@ -98,9 +100,9 @@ extension HomeController: UITableViewDelegate {
     }
     else if 1 == row {
       
-      var filteredBottomPhotoCollection = [Photos]()
+      var filteredPantsPhotoCollection = [Photos]()
       
-      filteredBottomPhotoCollection = bottomPhotoCollection.filter { photo in
+      filteredPantsPhotoCollection = pantsPhotoCollection.filter { photo in
         
         let setPhotoOccasion = Set(photo.imageOccasion)
         let setPhotoApparel = Set(photo.imageApparel)
@@ -110,13 +112,13 @@ extension HomeController: UITableViewDelegate {
         else { return false }
       }
       
-      return filteredBottomPhotoCollection.map { FilteredPhotoCollectionCellViewModel(withPhoto: $0) }
+      return filteredPantsPhotoCollection.map { FilteredPhotoCollectionCellViewModel(withPhoto: $0) }
     }
     else if 2 == row {
       
-      var filteredShoesPhotoCollection = [Photos]()
+      var filteredFootwearPhotoCollection = [Photos]()
       
-      filteredShoesPhotoCollection = shoesPhotoCollection.filter { photo in
+      filteredFootwearPhotoCollection = footwearPhotoCollection.filter { photo in
         
         let setPhotoOccasion = Set(photo.imageOccasion)
         let setPhotoApparel = Set(photo.imageApparel)
@@ -125,7 +127,7 @@ extension HomeController: UITableViewDelegate {
         if setOccasion.intersection(setPhotoOccasion).count > 0 || setApparel.intersection(setPhotoApparel).count > 0 || setColor.intersection(setPhotoColor).count > 0 || (setOccasion.contains("") == true && setApparel.contains("") == true && setColor.contains("") == true) || (setOccasion.isEmpty == true && setApparel.isEmpty == true && setColor.isEmpty == true) { return true }
         else { return false }
       }
-      return filteredShoesPhotoCollection.map { FilteredPhotoCollectionCellViewModel(withPhoto: $0) }
+      return filteredFootwearPhotoCollection.map { FilteredPhotoCollectionCellViewModel(withPhoto: $0) }
     }
     else {
       return []
@@ -136,7 +138,7 @@ extension HomeController: UITableViewDelegate {
     let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTableViewCell", for: indexPath)
     cell.backgroundColor = .clear
     let cvm = collectionCellViewModel(forRow: indexPath.row)
-    //print(cvm.count)
+    
     (cell as? HomeTableViewCell)?.cellViewModel = cvm
     return cell
   }

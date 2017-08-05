@@ -27,6 +27,7 @@
 		995E5D1A1F330595005DA1BE /* gotham_rounded_bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 995E5D191F330595005DA1BE /* gotham_rounded_bold.otf */; };
 		996B75951F182D6000E835AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996B75941F182D6000E835AA /* AppDelegate.swift */; };
 		996B759C1F182D6000E835AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 996B759B1F182D6000E835AA /* Assets.xcassets */; };
+		99711BFA1F367FF00097C405 /* RandomizePhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99711BF91F367FF00097C405 /* RandomizePhotoViewController.swift */; };
 		9990761D1F2AE9EB00666EC9 /* DUCellViewModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9990761C1F2AE9EB00666EC9 /* DUCellViewModels.swift */; };
 		9990761F1F2AF12700666EC9 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9990761E1F2AF12700666EC9 /* HomeController.swift */; };
 		9991BB9E1F22C41A0074A6DC /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9991BB9D1F22C41A0074A6DC /* PhotoViewController.swift */; };
@@ -72,6 +73,7 @@
 		996B75911F182D6000E835AA /* DressUp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DressUp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		996B75941F182D6000E835AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		996B759B1F182D6000E835AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		99711BF91F367FF00097C405 /* RandomizePhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomizePhotoViewController.swift; sourceTree = "<group>"; };
 		9990761C1F2AE9EB00666EC9 /* DUCellViewModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DUCellViewModels.swift; sourceTree = "<group>"; };
 		9990761E1F2AF12700666EC9 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		9991BB9D1F22C41A0074A6DC /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				9991BB9D1F22C41A0074A6DC /* PhotoViewController.swift */,
 				9991BB9F1F22C4250074A6DC /* LibraryViewController.swift */,
 				9991BBA11F22C4320074A6DC /* CameraViewController.swift */,
+				99711BF91F367FF00097C405 /* RandomizePhotoViewController.swift */,
 				999655451F18A1E700A9E1DB /* HomeViewController.swift */,
 				9990761E1F2AF12700666EC9 /* HomeController.swift */,
 				9958169E1F27D83900DD4D02 /* FilterViewController.swift */,
@@ -422,6 +425,7 @@
 				9932D4F71F29464B00A433E4 /* HomeTableViewCell.swift in Sources */,
 				9990761F1F2AF12700666EC9 /* HomeController.swift in Sources */,
 				9990761D1F2AE9EB00666EC9 /* DUCellViewModels.swift in Sources */,
+				99711BFA1F367FF00097C405 /* RandomizePhotoViewController.swift in Sources */,
 				999655441F18861F00A9E1DB /* Storyboard+Utility.swift in Sources */,
 				995035481F19A7E7009453E1 /* PhotoService.swift in Sources */,
 				9932E2421F2A773C00E48F70 /* UIView+DressUp.swift in Sources */,
