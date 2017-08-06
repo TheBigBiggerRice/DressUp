@@ -143,11 +143,14 @@ final class HomeViewController: DUViewController {
   }
   
   func randomizeButtonTapped() {
-    print("randomize")
+    
     let vc = RandomizePhotoViewController()
     
     let nc = UINavigationController(rootViewController: vc)
     
+    vc.topPhotos = homeController.filteredTopPhotoCollection
+    vc.pantsPhotos = homeController.filteredPantsPhotoCollection
+    vc.footwearPhotos = homeController.filteredFootwearPhotoCollection
     
     present(nc, animated: true, completion: nil)
     

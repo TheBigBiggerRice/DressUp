@@ -34,7 +34,12 @@ final class HomeController: NSObject {
   var pantsPhotoCollection = [Photos]()
   var footwearPhotoCollection = [Photos]()
   
-  
+  var filteredTopPhotoCollection = [Photos]()
+  var filteredPantsPhotoCollection = [Photos]()
+  var filteredFootwearPhotoCollection = [Photos]()
+
+
+
   
   //inputs by the user
   var occasion = [String]()
@@ -85,7 +90,6 @@ extension HomeController: UITableViewDelegate {
     
     if 0 == row {
       
-      var filteredTopPhotoCollection = [Photos]()
       
       filteredTopPhotoCollection = topPhotoCollection.filter { photo in
         
@@ -100,7 +104,7 @@ extension HomeController: UITableViewDelegate {
     }
     else if 1 == row {
       
-      var filteredPantsPhotoCollection = [Photos]()
+      
       
       filteredPantsPhotoCollection = pantsPhotoCollection.filter { photo in
         
@@ -116,8 +120,7 @@ extension HomeController: UITableViewDelegate {
     }
     else if 2 == row {
       
-      var filteredFootwearPhotoCollection = [Photos]()
-      
+
       filteredFootwearPhotoCollection = footwearPhotoCollection.filter { photo in
         
         let setPhotoOccasion = Set(photo.imageOccasion)
