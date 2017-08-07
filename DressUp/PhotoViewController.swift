@@ -17,6 +17,7 @@ final class PhotoViewController: DUViewController {
   var photoOccasions: [[String]] = [[]]
   var photoApparels: [[String]] = [[]]
   var photoColors: [[String]] = [[]]
+  var photoUIDs: [String] = []
   
   var imageIndex = 0
   var numImages = 0
@@ -158,11 +159,13 @@ final class PhotoViewController: DUViewController {
       photoImageView.kf.setImage(with: currentURL)
       backgroundImageView.kf.setImage(with: currentURL)
       
+      
       categoryAlphaLabel.text = "Category: \(photoCategories[imageIndex])"
       occasionAlphaLabel.text = "Occasion: \(photoOccasions[imageIndex].joined(separator: ", "))"
       apparelAlphaLabel.text = "Apparel: \(photoApparels[imageIndex].joined(separator: ", "))"
       colorAlphaLabel.text = "Color: \(photoColors[imageIndex].joined(separator: ", "))"
 
+      imageUID = photoUIDs[imageIndex]
 
     case UISwipeGestureRecognizerDirection.left:
       imageIndex += 1
@@ -172,14 +175,19 @@ final class PhotoViewController: DUViewController {
       currentURL = URL(string: photoURLs[imageIndex])
       photoImageView.kf.setImage(with: currentURL)
       backgroundImageView.kf.setImage(with: currentURL)
+      
       categoryAlphaLabel.text = "Category: \(photoCategories[imageIndex])"
       occasionAlphaLabel.text = "Occasion: \(photoOccasions[imageIndex].joined(separator: ", "))"
       apparelAlphaLabel.text = "Apparel: \(photoApparels[imageIndex].joined(separator: ", "))"
       colorAlphaLabel.text = "Color: \(photoColors[imageIndex].joined(separator: ", "))"
+      
+      imageUID = photoUIDs[imageIndex]
+
 
     default:
       break
     }
+    
   }
   
   func imageViewLongPress(sender: UILongPressGestureRecognizer) {
@@ -220,27 +228,25 @@ final class PhotoViewController: DUViewController {
     view.addConstraint(NSLayoutConstraint(item: categoryAlphaLabel, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1.0, constant: -100))
     view.addConstraint(NSLayoutConstraint(item: categoryAlphaLabel, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0))
     view.addConstraint(NSLayoutConstraint(item: categoryAlphaLabel, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0))
-    //view.addConstraint(NSLayoutConstraint(item: categoryAlphaLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+    
     
     
     //occasion alpha label
     view.addConstraint(NSLayoutConstraint(item: occasionAlphaLabel, attribute: .top, relatedBy: .equal, toItem: categoryAlphaLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
     view.addConstraint(NSLayoutConstraint(item: occasionAlphaLabel, attribute: .left, relatedBy: .equal, toItem: categoryAlphaLabel, attribute: .left, multiplier: 1.0, constant: 0))
     view.addConstraint(NSLayoutConstraint(item: occasionAlphaLabel, attribute: .right, relatedBy: .equal, toItem: categoryAlphaLabel, attribute: .right, multiplier: 1.0, constant: 0))
-    //view.addConstraint(NSLayoutConstraint(item: occasionAlphaLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+    
     
     //apparel alpha label
     view.addConstraint(NSLayoutConstraint(item: apparelAlphaLabel, attribute: .top, relatedBy: .equal, toItem: occasionAlphaLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
     view.addConstraint(NSLayoutConstraint(item: apparelAlphaLabel, attribute: .left, relatedBy: .equal, toItem: occasionAlphaLabel, attribute: .left, multiplier: 1.0, constant: 0))
     view.addConstraint(NSLayoutConstraint(item: apparelAlphaLabel, attribute: .right, relatedBy: .equal, toItem: occasionAlphaLabel, attribute: .right, multiplier: 1.0, constant: 0))
-    //view.addConstraint(NSLayoutConstraint(item: apparelAlphaLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+    
     
     //color alpha label
     view.addConstraint(NSLayoutConstraint(item: colorAlphaLabel, attribute: .top, relatedBy: .equal, toItem: apparelAlphaLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
     view.addConstraint(NSLayoutConstraint(item: colorAlphaLabel, attribute: .left, relatedBy: .equal, toItem: apparelAlphaLabel, attribute: .left, multiplier: 1.0, constant: 0))
     view.addConstraint(NSLayoutConstraint(item: colorAlphaLabel, attribute: .right, relatedBy: .equal, toItem: apparelAlphaLabel, attribute: .right, multiplier: 1.0, constant: 0))
-    //view.addConstraint(NSLayoutConstraint(item: colorAlphaLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
-    
     
     
   }
@@ -249,6 +255,7 @@ final class PhotoViewController: DUViewController {
     UIView.animate(
       withDuration: 0.3,
       animations: { [weak self] _ in
+        
         self?.alphaView.alpha = 0.8
         self?.categoryAlphaLabel.alpha = 1
         self?.occasionAlphaLabel.alpha = 1
@@ -256,12 +263,14 @@ final class PhotoViewController: DUViewController {
         self?.colorAlphaLabel.alpha = 1
       }
     )
+    
   }
   
   func fadeOutAlphaView() {
     UIView.animate(
       withDuration: 0.3,
       animations: { [weak self] _ in
+        
         self?.alphaView.alpha = 0
         self?.categoryAlphaLabel.alpha = 0
         self?.occasionAlphaLabel.alpha = 0
@@ -270,6 +279,7 @@ final class PhotoViewController: DUViewController {
 
       }
     )
+    
   }
 
 

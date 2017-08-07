@@ -193,6 +193,7 @@ extension LibraryViewController: UICollectionViewDelegate {
       let photoOccasions: [[String]] = photoCollection.map {$0.imageOccasion}
       let photoApparels: [[String]] = photoCollection.map {$0.imageApparel}
       let photoColors: [[String]] = photoCollection.map {$0.imageColor}
+      let photoUIDs: [String] = photoCollection.map {$0.imageUID}
 
       vc.currentURL = imageURL
       
@@ -201,6 +202,7 @@ extension LibraryViewController: UICollectionViewDelegate {
       vc.photoOccasions = photoOccasions
       vc.photoApparels = photoApparels
       vc.photoColors = photoColors
+      vc.photoUIDs = photoUIDs
       
       vc.numImages = self.photoCollection.count
     
@@ -335,17 +337,17 @@ extension LibraryViewController: UIViewControllerPreviewingDelegate {
     let photoOccasions: [[String]] = photoCollection.map {$0.imageOccasion}
     let photoApparels: [[String]] = photoCollection.map {$0.imageApparel}
     let photoColors: [[String]] = photoCollection.map {$0.imageColor}
-
+    let photoUIDs: [String] = photoCollection.map {$0.imageUID}
     
     vc.currentURL = imageURL
 
-    
     vc.photoURLs = photoURLs
     vc.photoCategories = photoCategories
     vc.photoOccasions = photoOccasions
     vc.photoApparels = photoApparels
     vc.photoColors = photoColors
-    
+    vc.photoUIDs = photoUIDs
+
     vc.numImages = self.photoCollection.count
     
     //get the image uid, prepare for deletion
