@@ -621,6 +621,7 @@ extension CameraViewController: UIImagePickerControllerDelegate {
                 
                 for concept in caiOutput.concepts {
                   self.apparelTags.append(concept.conceptName)
+                
                 }
                 
                 for label in self.allApparelLabels {

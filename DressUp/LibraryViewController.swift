@@ -115,11 +115,11 @@ class LibraryViewController: DUViewController {
     
     self.navigationItem.rightBarButtonItem?.tintColor = .clear
     self.navigationItem.leftBarButtonItem?.tintColor = .white
-    print("select photos")
+    //print("select photos")
   }
   
   private dynamic func deleteButtonTapped(sender: UIBarButtonItem) {
-    print(selectedPhotos)
+    //print(selectedPhotos)
     for imageUID in selectedPhotos {
       PhotoService.delete(deletePhoto: imageUID)
     }
@@ -177,6 +177,11 @@ extension LibraryViewController: UICollectionViewDelegate {
       let imageURL = URL(string: photo.imageURL)
       vc.photoImageView.kf.setImage(with: imageURL)
       vc.backgroundImageView.kf.setImage(with: imageURL)
+      vc.categoryAlphaLabel.text = "Category: \(photo.imagePosition)"
+      vc.occasionAlphaLabel.text = "Occasion: \(photo.imageOccasion.joined(separator: ", "))"
+      vc.apparelAlphaLabel.text = "Apparel: \(photo.imageApparel.joined(separator: ", "))"
+      vc.colorAlphaLabel.text = "Color: \(photo.imageColor.joined(separator: ", "))"
+      
       
       
       let nc = UINavigationController(rootViewController: vc)
@@ -193,7 +198,7 @@ extension LibraryViewController: UICollectionViewDelegate {
       
     else{
       
-      print("select item")
+      //print("select item")
       let indexPaths = self.collectionView.indexPathsForSelectedItems
       
       for indexPath in indexPaths! {
@@ -211,7 +216,7 @@ extension LibraryViewController: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
     if selectButtonOn == true {
       //Deselect code here
-      print("deselect item")
+      //print("deselect item")
       let photo = photoCollection[indexPath.row]
       if selectedPhotos.contains(photo.imageUID) {
         selectedPhotos.remove(at: selectedPhotos.index(of: photo.imageUID)!)
@@ -321,25 +326,6 @@ extension LibraryViewController: UIViewControllerPreviewingDelegate {
     self.check3DTouch()
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

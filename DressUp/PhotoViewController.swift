@@ -16,6 +16,7 @@ final class PhotoViewController: DUViewController {
   var numImages = 0
   var imageUID: String = ""
   
+  
   fileprivate let blurView: UIVisualEffectView = {
     let view = UIVisualEffectView()
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -37,7 +38,68 @@ final class PhotoViewController: DUViewController {
     let view = UIImageView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.contentMode = .scaleAspectFit
+    
     return view
+  }()
+  
+  fileprivate let alphaView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.alpha = 0
+    view.backgroundColor = .black
+    view.isUserInteractionEnabled = false
+    return view
+  }()
+  
+  //four labels to show tags when long pressed
+  let categoryAlphaLabel: DULabel = {
+    let label = DULabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    
+    label.numberOfLines = 0
+    label.lineBreakMode = .byWordWrapping
+    //label.text = "Category Here"
+    label.textColor = .white
+    label.alpha = 0
+    return label
+  }()
+  
+  let occasionAlphaLabel: DULabel = {
+    let label = DULabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    
+    label.numberOfLines = 0
+    label.lineBreakMode = .byWordWrapping
+    label.text = "Occasion Here"
+    label.textColor = .white
+    
+    label.alpha = 0
+    return label
+  }()
+  
+  let apparelAlphaLabel: DULabel = {
+    let label = DULabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    
+    label.numberOfLines = 0
+    label.lineBreakMode = .byWordWrapping
+    label.text = "Apparel Here"
+    label.textColor = .white
+    label.alpha = 0
+    
+    return label
+  }()
+  
+  let colorAlphaLabel: DULabel = {
+    let label = DULabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    
+    label.numberOfLines = 0
+    label.lineBreakMode = .byWordWrapping
+    label.text = "Color Here"
+    label.textColor = .white
+    label.alpha = 0
+    return label
   }()
   
   override func viewDidLoad() {
@@ -50,8 +112,6 @@ final class PhotoViewController: DUViewController {
     self.navigationItem.rightBarButtonItem?.tintColor = .white
     navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 17)!], for: .normal)
 
-    
-    
     self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(deleteButtonTapped(sender:)))
     self.navigationItem.leftBarButtonItem?.tintColor = .white
     navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 17)!], for: .normal)
@@ -64,6 +124,14 @@ final class PhotoViewController: DUViewController {
     let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
     swipeRight.direction = .right
     self.view.addGestureRecognizer(swipeRight)
+    
+    let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(imageViewLongPress))
+    longGesture.minimumPressDuration = 0.5
+    self.view.addGestureRecognizer(longGesture)
+    
+    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
+    self.view.addGestureRecognizer(tapGesture)
+    
     
   }
   
@@ -106,7 +174,20 @@ final class PhotoViewController: DUViewController {
     }
   }
   
+  func imageViewLongPress(sender: UILongPressGestureRecognizer) {
+    fadeInAlphaView()
+  }
+  
+  func imageViewTapped(sender: UITapGestureRecognizer) {
+    fadeOutAlphaView()
+  }
+  
   private func initialize() {
+  
+    view.insertSubview(blurView, aboveSubview: backgroundImageView)
+    view.insertSubview(photoImageView, aboveSubview: blurView)
+    view.insertSubview(alphaView, aboveSubview: photoImageView)
+
     
     //background image view
     backgroundImageView.addToAndConstrain(insideSuper: view)
@@ -117,25 +198,73 @@ final class PhotoViewController: DUViewController {
     //image view
     photoImageView.addToAndConstrain(insideSuper: view)
     
-    view.insertSubview(blurView, aboveSubview: backgroundImageView)
-    view.insertSubview(photoImageView, aboveSubview: blurView)
+    //alpha view
+    alphaView.addToAndConstrain(insideSuper: view)
+    
+    view.insertSubview(categoryAlphaLabel, aboveSubview: alphaView)
+    view.insertSubview(occasionAlphaLabel, aboveSubview: alphaView)
+    view.insertSubview(apparelAlphaLabel, aboveSubview: alphaView)
+    view.insertSubview(colorAlphaLabel, aboveSubview: alphaView)
+
+    
+    
+    //category alpha label
+    view.addConstraint(NSLayoutConstraint(item: categoryAlphaLabel, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1.0, constant: -100))
+    view.addConstraint(NSLayoutConstraint(item: categoryAlphaLabel, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: categoryAlphaLabel, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0))
+    //view.addConstraint(NSLayoutConstraint(item: categoryAlphaLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+    
+    
+    //occasion alpha label
+    view.addConstraint(NSLayoutConstraint(item: occasionAlphaLabel, attribute: .top, relatedBy: .equal, toItem: categoryAlphaLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
+    view.addConstraint(NSLayoutConstraint(item: occasionAlphaLabel, attribute: .left, relatedBy: .equal, toItem: categoryAlphaLabel, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: occasionAlphaLabel, attribute: .right, relatedBy: .equal, toItem: categoryAlphaLabel, attribute: .right, multiplier: 1.0, constant: 0))
+    //view.addConstraint(NSLayoutConstraint(item: occasionAlphaLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+    
+    //apparel alpha label
+    view.addConstraint(NSLayoutConstraint(item: apparelAlphaLabel, attribute: .top, relatedBy: .equal, toItem: occasionAlphaLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
+    view.addConstraint(NSLayoutConstraint(item: apparelAlphaLabel, attribute: .left, relatedBy: .equal, toItem: occasionAlphaLabel, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: apparelAlphaLabel, attribute: .right, relatedBy: .equal, toItem: occasionAlphaLabel, attribute: .right, multiplier: 1.0, constant: 0))
+    //view.addConstraint(NSLayoutConstraint(item: apparelAlphaLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+    
+    //color alpha label
+    view.addConstraint(NSLayoutConstraint(item: colorAlphaLabel, attribute: .top, relatedBy: .equal, toItem: apparelAlphaLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
+    view.addConstraint(NSLayoutConstraint(item: colorAlphaLabel, attribute: .left, relatedBy: .equal, toItem: apparelAlphaLabel, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: colorAlphaLabel, attribute: .right, relatedBy: .equal, toItem: apparelAlphaLabel, attribute: .right, multiplier: 1.0, constant: 0))
+    //view.addConstraint(NSLayoutConstraint(item: colorAlphaLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+    
+    
+    
   }
+  
+  func fadeInAlphaView() {
+    UIView.animate(
+      withDuration: 0.3,
+      animations: { [weak self] _ in
+        self?.alphaView.alpha = 0.8
+        self?.categoryAlphaLabel.alpha = 1
+        self?.occasionAlphaLabel.alpha = 1
+        self?.apparelAlphaLabel.alpha = 1
+        self?.colorAlphaLabel.alpha = 1
+      }
+    )
+  }
+  
+  func fadeOutAlphaView() {
+    UIView.animate(
+      withDuration: 0.3,
+      animations: { [weak self] _ in
+        self?.alphaView.alpha = 0
+        self?.categoryAlphaLabel.alpha = 0
+        self?.occasionAlphaLabel.alpha = 0
+        self?.apparelAlphaLabel.alpha = 0
+        self?.colorAlphaLabel.alpha = 0
+
+      }
+    )
+  }
+
+
+  
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
