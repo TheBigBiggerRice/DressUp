@@ -14,8 +14,8 @@ final class CameraViewController: DUViewController {
   var apparelTags = [String]()
   var colorTags = [String]()
   
-  var apparelLabels = [UILabel]()
-  var colorLabels = [UILabel]()
+  var apparelButtons = [UIButton]()
+  var colorButtons = [UIButton]()
   
   var occasionButtonIsSelected = false
   
@@ -554,18 +554,13 @@ final class CameraViewController: DUViewController {
     
   }
   
-  func createLabel() -> DULabel {
-    let label = DULabel()
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.numberOfLines = 0
-    label.lineBreakMode = .byWordWrapping
-    
-    label.layer.cornerRadius = 12.5
-    label.textColor = .white
-    
-    label.layer.backgroundColor = UIColor.royalBlue.cgColor
-    
-    return label
+  func createButton() -> DUButton {
+    let button = DUButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.layer.cornerRadius = 12.5
+    button.setTitleColor(.white, for: .normal)
+    button.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    return button
   }
   
   func createOccasionbutton() -> DUButton {
@@ -625,45 +620,45 @@ extension CameraViewController: UIImagePickerControllerDelegate {
                   }
                 }
                 
-                for label in self.apparelLabels {
+                for button in self.apparelButtons {
                   
-                  label.removeFromSuperview()
+                  button.removeFromSuperview()
                 }
                 
-                self.apparelLabels.removeAll()
+                self.apparelButtons.removeAll()
                 
                 for apparel in self.apparelTags {
-                  let label = self.createLabel()
-                  label.text = apparel
-                  self.apparelLabels.append(label)
+                  let button = self.createButton()
+                  button.setTitle(apparel, for: .normal)
+                  self.apparelButtons.append(button)
                 }
                 
-                var previousLabel: UILabel?
+                var previousButton: UIButton?
                 
-                for label in self.apparelLabels {
-                  if nil == previousLabel {
+                for button in self.apparelButtons {
+                  if nil == previousButton {
                     
-                    previousLabel = label
+                    previousButton = button
                     
-                    self.apparelScrollView.addSubview(label)
+                    self.apparelScrollView.addSubview(button)
                     
-                    self.apparelScrollView.addConstraint(NSLayoutConstraint(item: label, attribute: .top, relatedBy: .equal, toItem: self.apparelScrollView, attribute: .top, multiplier: 1.0, constant: 0))
-                    self.apparelScrollView.addConstraint(NSLayoutConstraint(item: label, attribute: .left, relatedBy: .equal, toItem: self.apparelScrollView, attribute: .left, multiplier: 1.0, constant: 0))
-                    self.apparelScrollView.addConstraint(NSLayoutConstraint(item: label, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: label.intrinsicContentSize.width + 20))
-                    self.apparelScrollView.addConstraint(NSLayoutConstraint(item: label, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+                    self.apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: self.apparelScrollView, attribute: .top, multiplier: 1.0, constant: 0))
+                    self.apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: self.apparelScrollView, attribute: .left, multiplier: 1.0, constant: 0))
+                    self.apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
+                    self.apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
                     
                   } else {
-                    self.apparelScrollView.addSubview(label)
+                    self.apparelScrollView.addSubview(button)
                     
-                    self.apparelScrollView.addConstraint(NSLayoutConstraint(item: label, attribute: .top, relatedBy: .equal, toItem: previousLabel, attribute: .top, multiplier: 1.0, constant: 0))
-                    self.apparelScrollView.addConstraint(NSLayoutConstraint(item: label, attribute: .left, relatedBy: .equal, toItem: previousLabel, attribute: .right, multiplier: 1.0, constant: 5))
-                    self.apparelScrollView.addConstraint(NSLayoutConstraint(item: label, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: label.intrinsicContentSize.width + 20))
-                    self.apparelScrollView.addConstraint(NSLayoutConstraint(item: label, attribute: .bottom, relatedBy: .equal, toItem: previousLabel, attribute: .bottom , multiplier: 1.0, constant: 0))
+                    self.apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: previousButton, attribute: .top, multiplier: 1.0, constant: 0))
+                    self.apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousButton, attribute: .right, multiplier: 1.0, constant: 5))
+                    self.apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
+                    self.apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: previousButton, attribute: .bottom , multiplier: 1.0, constant: 0))
                     
-                    previousLabel = label
+                    previousButton = button
                   }
                 }
-                self.apparelScrollView.addConstraint(NSLayoutConstraint(item: previousLabel!, attribute: .right, relatedBy: .equal, toItem: self.apparelScrollView, attribute: .right, multiplier: 1.0, constant: 0))
+                self.apparelScrollView.addConstraint(NSLayoutConstraint(item: previousButton!, attribute: .right, relatedBy: .equal, toItem: self.apparelScrollView, attribute: .right, multiplier: 1.0, constant: 0))
                 
               }
               
@@ -674,38 +669,38 @@ extension CameraViewController: UIImagePickerControllerDelegate {
                     self.colorTags.append(concept.conceptName)
                   }
                 }
-                for label in self.colorLabels {
-                  label.removeFromSuperview()
+                for button in self.colorButtons {
+                  button.removeFromSuperview()
                 }
                 
-                self.colorLabels.removeAll()
+                self.colorButtons.removeAll()
                 
                 for color in self.colorTags {
-                  let label = self.createLabel()
-                  label.text = color
-                  self.colorLabels.append(label)
+                  let button = self.createButton()
+                  button.setTitle(color, for: .normal)
+                  self.colorButtons.append(button)
                 }
-                var previousLabel: UILabel?
+                var previousButton: UIButton?
                 
-                for label in self.colorLabels {
-                  if nil == previousLabel {
-                    previousLabel = label
-                    self.colorScrollView.addSubview(label)
-                    self.colorScrollView.addConstraint(NSLayoutConstraint(item: label, attribute: .top, relatedBy: .equal, toItem: self.colorScrollView, attribute: .top, multiplier: 1.0, constant: 0))
-                    self.colorScrollView.addConstraint(NSLayoutConstraint(item: label, attribute: .left, relatedBy: .equal, toItem: self.colorScrollView, attribute: .left, multiplier: 1.0, constant: 0))
-                    self.colorScrollView.addConstraint(NSLayoutConstraint(item: label, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: label.intrinsicContentSize.width + 20))
-                    self.colorScrollView.addConstraint(NSLayoutConstraint(item: label, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+                for button in self.colorButtons {
+                  if nil == previousButton {
+                    previousButton = button
+                    self.colorScrollView.addSubview(button)
+                    self.colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: self.colorScrollView, attribute: .top, multiplier: 1.0, constant: 0))
+                    self.colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: self.colorScrollView, attribute: .left, multiplier: 1.0, constant: 0))
+                    self.colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
+                    self.colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
                   } else {
-                    self.colorScrollView.addSubview(label)
-                    self.colorScrollView.addConstraint(NSLayoutConstraint(item: label, attribute: .top, relatedBy: .equal, toItem: previousLabel, attribute: .top, multiplier: 1.0, constant: 0))
-                    self.colorScrollView.addConstraint(NSLayoutConstraint(item: label, attribute: .left, relatedBy: .equal, toItem: previousLabel, attribute: .right, multiplier: 1.0, constant: 5))
-                    self.colorScrollView.addConstraint(NSLayoutConstraint(item: label, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: label.intrinsicContentSize.width + 20))
-                    self.colorScrollView.addConstraint(NSLayoutConstraint(item: label, attribute: .bottom, relatedBy: .equal, toItem: previousLabel, attribute: .bottom , multiplier: 1.0, constant: 0))
+                    self.colorScrollView.addSubview(button)
+                    self.colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: previousButton, attribute: .top, multiplier: 1.0, constant: 0))
+                    self.colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousButton, attribute: .right, multiplier: 1.0, constant: 5))
+                    self.colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
+                    self.colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: previousButton, attribute: .bottom , multiplier: 1.0, constant: 0))
                     
-                    previousLabel = label
+                    previousButton = button
                   }
                 }
-                self.colorScrollView.addConstraint(NSLayoutConstraint(item: previousLabel!, attribute: .right, relatedBy: .equal, toItem: self.colorScrollView, attribute: .right, multiplier: 1.0, constant: 0))
+                self.colorScrollView.addConstraint(NSLayoutConstraint(item: previousButton!, attribute: .right, relatedBy: .equal, toItem: self.colorScrollView, attribute: .right, multiplier: 1.0, constant: 0))
               }
             }
           }
