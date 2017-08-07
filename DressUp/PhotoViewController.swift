@@ -10,8 +10,14 @@ import UIKit
 
 final class PhotoViewController: DUViewController {
   
-  var urls: URL?
-  var newPhotoURLs: [String] = []
+  var currentURL: URL?
+  
+  var photoURLs: [String] = []
+  var photoCategories: [String] = []
+  var photoOccasions: [[String]] = [[]]
+  var photoApparels: [[String]] = [[]]
+  var photoColors: [[String]] = [[]]
+  
   var imageIndex = 0
   var numImages = 0
   var imageUID: String = ""
@@ -55,10 +61,8 @@ final class PhotoViewController: DUViewController {
   let categoryAlphaLabel: DULabel = {
     let label = DULabel()
     label.translatesAutoresizingMaskIntoConstraints = false
-    
     label.numberOfLines = 0
     label.lineBreakMode = .byWordWrapping
-    //label.text = "Category Here"
     label.textColor = .white
     label.alpha = 0
     return label
@@ -67,12 +71,9 @@ final class PhotoViewController: DUViewController {
   let occasionAlphaLabel: DULabel = {
     let label = DULabel()
     label.translatesAutoresizingMaskIntoConstraints = false
-    
     label.numberOfLines = 0
     label.lineBreakMode = .byWordWrapping
-    //label.text = "Occasion Here"
     label.textColor = .white
-    
     label.alpha = 0
     return label
   }()
@@ -80,23 +81,18 @@ final class PhotoViewController: DUViewController {
   let apparelAlphaLabel: DULabel = {
     let label = DULabel()
     label.translatesAutoresizingMaskIntoConstraints = false
-    
     label.numberOfLines = 0
     label.lineBreakMode = .byWordWrapping
-    //label.text = "Apparel Here"
     label.textColor = .white
     label.alpha = 0
-    
     return label
   }()
   
   let colorAlphaLabel: DULabel = {
     let label = DULabel()
     label.translatesAutoresizingMaskIntoConstraints = false
-    
     label.numberOfLines = 0
     label.lineBreakMode = .byWordWrapping
-    //label.text = "Color Here"
     label.textColor = .white
     label.alpha = 0
     return label
@@ -147,9 +143,9 @@ final class PhotoViewController: DUViewController {
   
   //handle swipe right and left
   func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
-    for url in newPhotoURLs {
-      if URL(string: url) == self.urls {
-        imageIndex = newPhotoURLs.index(of: url)!
+    for url in photoURLs {
+      if URL(string: url) == self.currentURL {
+        imageIndex = photoURLs.index(of: url)!
       }
     }
     switch gesture.direction {
@@ -158,23 +154,29 @@ final class PhotoViewController: DUViewController {
       if imageIndex < 0 {
         imageIndex = numImages - 1
       }
-      urls = URL(string: newPhotoURLs[imageIndex])
-      photoImageView.kf.setImage(with: urls)
-      backgroundImageView.kf.setImage(with: urls)
+      currentURL = URL(string: photoURLs[imageIndex])
+      photoImageView.kf.setImage(with: currentURL)
+      backgroundImageView.kf.setImage(with: currentURL)
       
-//      vc.categoryAlphaLabel.text = "Category: \(photo.imagePosition)"
-//      vc.occasionAlphaLabel.text = "Occasion: \(photo.imageOccasion.joined(separator: ", "))"
-//      vc.apparelAlphaLabel.text = "Apparel: \(photo.imageApparel.joined(separator: ", "))"
-//      vc.colorAlphaLabel.text = "Color: \(photo.imageColor.joined(separator: ", "))"
+      categoryAlphaLabel.text = "Category: \(photoCategories[imageIndex])"
+      occasionAlphaLabel.text = "Occasion: \(photoOccasions[imageIndex].joined(separator: ", "))"
+      apparelAlphaLabel.text = "Apparel: \(photoApparels[imageIndex].joined(separator: ", "))"
+      colorAlphaLabel.text = "Color: \(photoColors[imageIndex].joined(separator: ", "))"
+
 
     case UISwipeGestureRecognizerDirection.left:
       imageIndex += 1
       if imageIndex > (numImages - 1) {
         imageIndex = 0
       }
-      urls = URL(string: newPhotoURLs[imageIndex])
-      photoImageView.kf.setImage(with: urls)
-      backgroundImageView.kf.setImage(with: urls)
+      currentURL = URL(string: photoURLs[imageIndex])
+      photoImageView.kf.setImage(with: currentURL)
+      backgroundImageView.kf.setImage(with: currentURL)
+      categoryAlphaLabel.text = "Category: \(photoCategories[imageIndex])"
+      occasionAlphaLabel.text = "Occasion: \(photoOccasions[imageIndex].joined(separator: ", "))"
+      apparelAlphaLabel.text = "Apparel: \(photoApparels[imageIndex].joined(separator: ", "))"
+      colorAlphaLabel.text = "Color: \(photoColors[imageIndex].joined(separator: ", "))"
+
     default:
       break
     }
