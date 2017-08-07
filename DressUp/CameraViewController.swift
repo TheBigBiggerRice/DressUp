@@ -13,7 +13,8 @@ final class CameraViewController: DUViewController {
   
   var apparelTags = [String]()
   var colorTags = [String]()
-  var allApparelLabels = [UILabel]()
+  
+  var apparelLabels = [UILabel]()
   var colorLabels = [UILabel]()
   
   var occasionButtonIsSelected = false
@@ -350,7 +351,7 @@ final class CameraViewController: DUViewController {
     view.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .top, relatedBy: .equal, toItem: colorLabel, attribute: .top, multiplier: 1.0, constant: 0))
     view.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: -10))
     view.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 30))
-    //view.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .centerY, relatedBy: .equal, toItem: colorLabel, attribute: .centerY, multiplier: 1.0, constant: 0))
+    
     
     //save button
     view.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0))
@@ -469,7 +470,6 @@ final class CameraViewController: DUViewController {
     }
   }
   
-  //when the add occasion button is tapped, UI alert view controller
   private dynamic func addOccasionsButtonTapped() {
     
     let appearance = SCLAlertView.SCLAppearance(
@@ -620,26 +620,27 @@ extension CameraViewController: UIImagePickerControllerDelegate {
                 self.apparelTags.removeAll()
                 
                 for concept in caiOutput.concepts {
-                  self.apparelTags.append(concept.conceptName)
-                
+                  if self.apparelTags.count < 5 {
+                    self.apparelTags.append(concept.conceptName)
+                  }
                 }
                 
-                for label in self.allApparelLabels {
+                for label in self.apparelLabels {
                   
                   label.removeFromSuperview()
                 }
                 
-                self.allApparelLabels.removeAll()
+                self.apparelLabels.removeAll()
                 
                 for apparel in self.apparelTags {
                   let label = self.createLabel()
                   label.text = apparel
-                  self.allApparelLabels.append(label)
+                  self.apparelLabels.append(label)
                 }
                 
                 var previousLabel: UILabel?
                 
-                for label in self.allApparelLabels {
+                for label in self.apparelLabels {
                   if nil == previousLabel {
                     
                     previousLabel = label
@@ -669,7 +670,9 @@ extension CameraViewController: UIImagePickerControllerDelegate {
               if modelName == Constants.ModelNames.colorName {
                 self.colorTags.removeAll()
                 for concept in caiOutput.colors {
-                  self.colorTags.append(concept.conceptName)
+                  if self.colorTags.count < 5 {
+                    self.colorTags.append(concept.conceptName)
+                  }
                 }
                 for label in self.colorLabels {
                   label.removeFromSuperview()
@@ -703,11 +706,10 @@ extension CameraViewController: UIImagePickerControllerDelegate {
                   }
                 }
                 self.colorScrollView.addConstraint(NSLayoutConstraint(item: previousLabel!, attribute: .right, relatedBy: .equal, toItem: self.colorScrollView, attribute: .right, multiplier: 1.0, constant: 0))
-                
-                
               }
             }
           }
+          
           DispatchQueue.main.async {
             
             self.takePhotoImageButton.isEnabled = true

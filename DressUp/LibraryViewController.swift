@@ -164,7 +164,6 @@ class LibraryViewController: DUViewController {
 
 extension LibraryViewController: UICollectionViewDelegate {
   
-  //tapping on a cell and displaying the image
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     
     if selectButtonOn == false {
@@ -350,7 +349,6 @@ extension LibraryViewController: UIViewControllerPreviewingDelegate {
 
     vc.numImages = self.photoCollection.count
     
-    //get the image uid, prepare for deletion
     vc.imageUID = photo.imageUID
 
     show(nc, sender: self)

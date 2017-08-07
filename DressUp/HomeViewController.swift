@@ -71,10 +71,7 @@ final class HomeViewController: DUViewController {
     view.addSubview(colorLabel)
     view.addSubview(randomizeButton)
     
-    
     randomizeButton.addTarget(self, action: #selector(randomizeButtonTapped), for: .touchUpInside)
-    
-
     
     //occasion label
     view.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 375))
