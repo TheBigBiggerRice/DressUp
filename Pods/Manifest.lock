@@ -60,6 +60,7 @@ PODS:
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.10)
   - Kingfisher (3.10.3)
+  - RBBAnimation (0.4.0)
   - SCLAlertView (0.7.0)
 
 DEPENDENCIES:
@@ -70,6 +71,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - FirebaseUI/Auth
   - Kingfisher
+  - RBBAnimation (= 0.4.0)
   - SCLAlertView
 
 SPEC CHECKSUMS:
@@ -86,8 +88,9 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 30d874b96d0d76028f61fbd122801e3f030d47db
   Kingfisher: a0ac82dc5bcf0388dd74b294cf2cc13730c63436
+  RBBAnimation: 4b2d66f6d993febce63cd564da934985313b9c59
   SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
 
-PODFILE CHECKSUM: 1ff43b009e62b909be6330947f3794c0166275ad
+PODFILE CHECKSUM: 5a2fb44ff847053a64f0e5550f58737fddb6c6a2
 
 COCOAPODS: 1.2.1

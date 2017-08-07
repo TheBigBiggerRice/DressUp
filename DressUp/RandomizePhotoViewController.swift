@@ -10,8 +10,6 @@ import UIKit
 import Kingfisher
 
 
-
-
 final class RandomizePhotoViewController: DUViewController {
   
   var topPhotos = [Photos]()
@@ -24,7 +22,9 @@ final class RandomizePhotoViewController: DUViewController {
     let view = UIImageView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.contentMode = .scaleAspectFill
+    view.layer.cornerRadius = 112
     view.clipsToBounds = true
+    
     return view
   }()
   
@@ -32,6 +32,7 @@ final class RandomizePhotoViewController: DUViewController {
     let view = UIImageView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.contentMode = .scaleAspectFill
+    view.layer.cornerRadius = 112
     view.clipsToBounds = true
     
     return view
@@ -41,6 +42,7 @@ final class RandomizePhotoViewController: DUViewController {
     let view = UIImageView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.contentMode = .scaleAspectFill
+    view.layer.cornerRadius = 112
     view.clipsToBounds = true
     
     return view
@@ -52,33 +54,28 @@ final class RandomizePhotoViewController: DUViewController {
     super.viewDidLoad()
     initialize()
     
-    
-    
     self.navigationItem.title = "Outfit of the day"
+    
     self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped))
+    
     self.navigationItem.rightBarButtonItem?.tintColor = .white
+    
     navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 17)!], for: .normal)
     
+    view.backgroundColor = UIColor.lighterBlack
     
-    if topPhotos.count > 0 {
-      let topRandomIndex = Int(arc4random_uniform(UInt32(topPhotos.count)))
-      let topImageURL = URL(string: topPhotos[topRandomIndex].imageURL)
-      topImageView.kf.setImage(with: topImageURL)
-    }
-    
-    if pantsPhotos.count > 0 {
-      let pantsRandomIndex = Int(arc4random_uniform(UInt32(pantsPhotos.count)))
-      let pantsImageURL = URL(string: pantsPhotos[pantsRandomIndex].imageURL)
-      pantsImageView.kf.setImage(with: pantsImageURL)
-    }
-    
-    if footwearPhotos.count > 0 {
-      let footwearRandomIndex = Int(arc4random_uniform(UInt32(footwearPhotos.count)))
-      let footwearImageURL = URL(string: footwearPhotos[footwearRandomIndex ].imageURL)
-      footwearImageView.kf.setImage(with: footwearImageURL)
-    }
+    randomize()
     
   }
+  
+
+
+  //shake to shuffle
+  override func motionBegan(_ motion: UIEventSubtype, with event: UIEvent?) {
+    randomize()
+  }
+  
+  
 
   private func initialize() {
     
@@ -114,6 +111,77 @@ final class RandomizePhotoViewController: DUViewController {
   func cancelButtonTapped() {
     dismiss(animated: true, completion: nil)
   }
+  
+  
+  
+  func randomize() {
+    if topPhotos.count > 0 {
+      let topRandomIndex = Int(arc4random_uniform(UInt32(topPhotos.count)))
+      let topImageURL = URL(string: topPhotos[topRandomIndex].imageURL)
+      topImageView.kf.setImage(with: topImageURL)
+      topImageView.transform = CGAffineTransform(scaleX: 0.3, y: 2)
+      
+      UIView.animate(
+        withDuration: 1,
+        delay: 0,
+        usingSpringWithDamping: 0.3,
+        initialSpringVelocity: 0,
+        options: .curveEaseOut,
+        animations: {
+        self.topImageView.transform = .identity
+          
+      }) { (success) in
+        
+      }
+    
+    }
+    
+    if pantsPhotos.count > 0 {
+      let pantsRandomIndex = Int(arc4random_uniform(UInt32(pantsPhotos.count)))
+      let pantsImageURL = URL(string: pantsPhotos[pantsRandomIndex].imageURL)
+      pantsImageView.kf.setImage(with: pantsImageURL)
+      
+      pantsImageView.transform = CGAffineTransform(scaleX: 0.3, y: 2)
+      
+      UIView.animate(
+        withDuration: 1,
+        delay: 0,
+        usingSpringWithDamping: 0.3,
+        initialSpringVelocity: 0,
+        options: .curveEaseOut,
+        animations: {
+          self.pantsImageView.transform = .identity
+          
+      }) { (success) in
+        
+      }
+      
+    }
+    
+    if footwearPhotos.count > 0 {
+      let footwearRandomIndex = Int(arc4random_uniform(UInt32(footwearPhotos.count)))
+      let footwearImageURL = URL(string: footwearPhotos[footwearRandomIndex ].imageURL)
+      footwearImageView.kf.setImage(with: footwearImageURL)
+      
+      footwearImageView.transform = CGAffineTransform(scaleX: 0.3, y: 2)
+      
+      UIView.animate(
+        withDuration: 1,
+        delay: 0,
+        usingSpringWithDamping: 0.3,
+        initialSpringVelocity: 0,
+        options: .curveEaseOut,
+        animations: {
+          self.footwearImageView.transform = .identity
+          
+      }) { (success) in
+        
+      }
+      
+    }
+
+  }
+  
   
   
 }

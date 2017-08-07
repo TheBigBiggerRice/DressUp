@@ -39,6 +39,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>RBBAnimation.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SCLAlertView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -62,12 +67,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5C056DB68732226EBB6564BC9AC44805</key>
+		<key>3A5710A5A2392950D188FB2B9FD02591</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AC9A51265607F96F87B7CDDCF7ECDC05</key>
+		<key>3D0C5AD6364F201304651C1E27E16A50</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5C056DB68732226EBB6564BC9AC44805</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,12 +87,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C9B353195D619A16805F7045D5F7B37E</key>
+		<key>CF671F7E57B92905F1CC91D036D6B4A7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CF671F7E57B92905F1CC91D036D6B4A7</key>
+		<key>DA819331F409381F9A153D509E217E0B</key>
 		<dict>
 			<key>primary</key>
 			<true/>

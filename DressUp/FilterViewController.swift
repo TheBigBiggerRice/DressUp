@@ -28,8 +28,8 @@ final class FilterViewController: UIViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Occasion"
-    //label.textColor = .white
-    //label.backgroundColor = .blue
+    
+    
     label.lineBreakMode = .byWordWrapping
     return label
   }()
@@ -39,8 +39,8 @@ final class FilterViewController: UIViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Apparel"
-    //label.textColor = .white
-    //label.backgroundColor = .red
+    
+    
     label.lineBreakMode = .byWordWrapping
     return label
   }()
@@ -50,8 +50,8 @@ final class FilterViewController: UIViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Colors"
-    //label.textColor = .white
-    //label.backgroundColor = .brown
+    
+    
     label.lineBreakMode = .byWordWrapping
     return label
   }()
@@ -114,6 +114,7 @@ final class FilterViewController: UIViewController {
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitle("Confirm", for: .normal)
     button.backgroundColor = UIColor.royalBlue
+    button.layer.cornerRadius = 5
     return button
   }()
   

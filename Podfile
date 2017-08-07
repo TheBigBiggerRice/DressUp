@@ -14,5 +14,6 @@ target 'DressUp' do
   pod 'Clarifai'
   pod 'Kingfisher'
   pod "SCLAlertView"
+  pod 'RBBAnimation', '0.4.0'
 
 end
