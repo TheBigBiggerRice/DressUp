@@ -70,7 +70,7 @@ final class PhotoViewController: DUViewController {
     
     label.numberOfLines = 0
     label.lineBreakMode = .byWordWrapping
-    label.text = "Occasion Here"
+    //label.text = "Occasion Here"
     label.textColor = .white
     
     label.alpha = 0
@@ -83,7 +83,7 @@ final class PhotoViewController: DUViewController {
     
     label.numberOfLines = 0
     label.lineBreakMode = .byWordWrapping
-    label.text = "Apparel Here"
+    //label.text = "Apparel Here"
     label.textColor = .white
     label.alpha = 0
     
@@ -96,7 +96,7 @@ final class PhotoViewController: DUViewController {
     
     label.numberOfLines = 0
     label.lineBreakMode = .byWordWrapping
-    label.text = "Color Here"
+    //label.text = "Color Here"
     label.textColor = .white
     label.alpha = 0
     return label
@@ -161,6 +161,12 @@ final class PhotoViewController: DUViewController {
       urls = URL(string: newPhotoURLs[imageIndex])
       photoImageView.kf.setImage(with: urls)
       backgroundImageView.kf.setImage(with: urls)
+      
+//      vc.categoryAlphaLabel.text = "Category: \(photo.imagePosition)"
+//      vc.occasionAlphaLabel.text = "Occasion: \(photo.imageOccasion.joined(separator: ", "))"
+//      vc.apparelAlphaLabel.text = "Apparel: \(photo.imageApparel.joined(separator: ", "))"
+//      vc.colorAlphaLabel.text = "Color: \(photo.imageColor.joined(separator: ", "))"
+
     case UISwipeGestureRecognizerDirection.left:
       imageIndex += 1
       if imageIndex > (numImages - 1) {

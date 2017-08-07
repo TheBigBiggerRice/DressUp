@@ -174,9 +174,11 @@ extension LibraryViewController: UICollectionViewDelegate {
       let photo = photoCollection[indexPath.row]
       
       let vc = PhotoViewController()
+      
       let imageURL = URL(string: photo.imageURL)
       vc.photoImageView.kf.setImage(with: imageURL)
       vc.backgroundImageView.kf.setImage(with: imageURL)
+      
       vc.categoryAlphaLabel.text = "Category: \(photo.imagePosition)"
       vc.occasionAlphaLabel.text = "Occasion: \(photo.imageOccasion.joined(separator: ", "))"
       vc.apparelAlphaLabel.text = "Apparel: \(photo.imageApparel.joined(separator: ", "))"
@@ -189,8 +191,7 @@ extension LibraryViewController: UICollectionViewDelegate {
       vc.urls = imageURL
       vc.newPhotoURLs = photoURLs
       vc.numImages = self.photoCollection.count
-      
-      //get the image uid, prepare for deletion
+    
       vc.imageUID = photo.imageUID
       present(nc, animated: true, completion: nil)
       
@@ -308,10 +309,17 @@ extension LibraryViewController: UIViewControllerPreviewingDelegate {
     
     vc.backgroundImageView.kf.setImage(with: imageURL)
     
+    vc.categoryAlphaLabel.text = "Category: \(photo.imagePosition)"
+    vc.occasionAlphaLabel.text = "Occasion: \(photo.imageOccasion.joined(separator: ", "))"
+    vc.apparelAlphaLabel.text = "Apparel: \(photo.imageApparel.joined(separator: ", "))"
+    vc.colorAlphaLabel.text = "Color: \(photo.imageColor.joined(separator: ", "))"
+
+    
     
     let nc = UINavigationController(rootViewController: vc)
     
     let photoURLs: [String]  = photoCollection.map {$0.imageURL}
+    
     vc.urls = imageURL
     vc.newPhotoURLs = photoURLs
     vc.numImages = self.photoCollection.count
