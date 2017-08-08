@@ -135,6 +135,11 @@ final class HomeViewController: DUViewController {
     let vc = FilterViewController()
     vc.delegate = self
     let nc = UINavigationController(rootViewController: vc)
+    
+    vc.nonRepeatAggregateOccasionTags = Set(homeController.aggregateOccasionTags)
+    vc.nonRepeatAggregateApparelTags = Set(homeController.aggregateApparelTags)
+    vc.nonRepeatAggregateColorTags = Set(homeController.aggregateColorTags)
+    
     present(nc, animated: true, completion: nil)
     
   }

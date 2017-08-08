@@ -183,7 +183,6 @@ final class PhotoViewController: DUViewController {
       
       imageUID = photoUIDs[imageIndex]
 
-
     default:
       break
     }

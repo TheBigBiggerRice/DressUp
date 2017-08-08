@@ -46,6 +46,14 @@ final class HomeController: NSObject {
   var apparel = [String]()
   var color = [String]()
   
+  
+  //the occasion, apparel, and color tags of all the photos within the photo library
+  var aggregateOccasionTags = [String]()
+  var aggregateApparelTags = [String]()
+  var aggregateColorTags = [String]()
+  
+  
+  
   override init() {
     super.init()
   }
@@ -55,6 +63,10 @@ final class HomeController: NSObject {
     topPhotoCollection.removeAll()
     pantsPhotoCollection.removeAll()
     footwearPhotoCollection.removeAll()
+   
+    aggregateOccasionTags.removeAll()
+    aggregateApparelTags.removeAll()
+    aggregateColorTags.removeAll()
     
     user = user ?? User.current
     profileHandle = UserService.observeProfile(for: user) { [unowned self] (ref, user, photos) in
@@ -63,6 +75,10 @@ final class HomeController: NSObject {
       self.photoCollection = photos.sorted(by: {$0.creationDate > $1.creationDate})
       
       for photo in self.photoCollection {
+        self.aggregateOccasionTags += photo.imageOccasion
+        self.aggregateApparelTags += photo.imageApparel
+        self.aggregateColorTags += photo.imageColor
+        
         
         if photo.imagePosition == "Top" {
           self.topPhotoCollection.append(photo)

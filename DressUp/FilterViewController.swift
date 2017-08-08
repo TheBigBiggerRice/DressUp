@@ -12,12 +12,39 @@ protocol FilterViewControllerDelegete: class {
   func filterViewControllerDidFinishFiltering(_ controller: FilterViewController, withOccasion occasion: String, andApparel apparel: String, andColor color: String)
 }
 
-final class FilterViewController: UIViewController {
+final class FilterViewController: DUViewController {
   
-  var occasionText: String = ""
-  var apparelText: String = ""
-  var colorText: String = ""
+  let screenWidth = UIScreen.main.bounds.width
+
   weak var delegate: FilterViewControllerDelegete?
+
+  var nonRepeatAggregateOccasionTags = Set<String>()
+  var nonRepeatAggregateApparelTags = Set<String>()
+  var nonRepeatAggregateColorTags = Set<String>()
+  
+  var occasionButtons = [UIButton]()
+  var apparelButtons = [UIButton]()
+  var colorButtons = [UIButton]()
+  
+  var occasionButtonsNumLines = 1
+  var apparelButtonNumLines = 1
+  var colorButtonNumLines = 1
+  
+  var occasionTags = [String]()
+  var apparelTags = [String]()
+  var colorTags = [String]()
+  
+  var occasion = ""
+  var apparel = ""
+  var color = ""
+  
+  fileprivate let overviewScrollView: UIScrollView = {
+    let view = UIScrollView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.isScrollEnabled = true
+    
+    return view
+  }()
 
   fileprivate let occasionLabel: DULabel = {
     let label = DULabel()
@@ -79,30 +106,27 @@ final class FilterViewController: UIViewController {
     return mySwitch
   }()
   
-  //text fields
-  fileprivate let occasionTextField: DUTextField = {
-    let textField = DUTextField()
-    textField.translatesAutoresizingMaskIntoConstraints = false
-    textField.placeholder = "What is the occasion?"
-    textField.alpha = 0
-    return textField
+  fileprivate let occasionButtonsView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.alpha = 0
+    return view
   }()
   
-  fileprivate let apparelTextField: DUTextField = {
-    let textField = DUTextField()
-    textField.translatesAutoresizingMaskIntoConstraints = false
-    textField.placeholder = "What is the apparel?"
-    textField.alpha = 0
-    return textField
+  fileprivate let apparelButtonsView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.alpha = 0
+    return view
   }()
   
-  fileprivate let colorTextField: DUTextField = {
-    let textField = DUTextField()
-    textField.translatesAutoresizingMaskIntoConstraints = false
-    textField.placeholder = "What is the color?"
-    textField.alpha = 0
-    return textField
+  fileprivate let colorButtonsView: UIView = {
+    let view = UIView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.alpha = 0
+    return view
   }()
+
   
   
   fileprivate let confirmButton: UIButton = {
@@ -114,14 +138,16 @@ final class FilterViewController: UIViewController {
     return button
   }()
   
-  var occasionTextFieldHeightConstraint: NSLayoutConstraint = NSLayoutConstraint()
-  var apparelTextFieldHeightConstraints: NSLayoutConstraint = NSLayoutConstraint()
-  var colorTextFieldHeightConstraints: NSLayoutConstraint = NSLayoutConstraint()
+
+  var occasionButtonsViewHeightConstraint: NSLayoutConstraint = NSLayoutConstraint()
+  var apparelButtonsViewHeightConstraint: NSLayoutConstraint = NSLayoutConstraint()
+  var colorButtonsViewHeightConstraint: NSLayoutConstraint = NSLayoutConstraint()
+
   
   override func viewDidLoad() {
     super.viewDidLoad()
     initialize()
-    
+
     self.navigationItem.title = "Filter"
     self.view.backgroundColor = .white
     
@@ -129,9 +155,10 @@ final class FilterViewController: UIViewController {
     self.navigationItem.rightBarButtonItem?.tintColor = .white
     navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 17)!], for: .normal)
     
-    occasionTextField.delegate = self
-    apparelTextField.delegate = self
-    colorTextField.delegate = self
+    
+//    occasionTextField.delegate = self
+//    apparelTextField.delegate = self
+//    colorTextField.delegate = self
   }
   
   //cancel button
@@ -144,8 +171,10 @@ final class FilterViewController: UIViewController {
   private dynamic func switchOccasionValueDidChange(sender: UISwitch) {
     
     if switchOccasion.isOn == true {
-      occasionTextFieldHeightConstraint.constant = 50
-      occasionTextField.alpha = 1
+      addConstraintsForOccasionButtons()
+      occasionButtonsViewHeightConstraint.constant = CGFloat(occasionButtonsNumLines * 30)
+      occasionButtonsNumLines = 1
+      occasionButtonsView.alpha = 1
       UIView.animate(
         withDuration: 0.2,
         delay: 0,
@@ -156,8 +185,8 @@ final class FilterViewController: UIViewController {
       )
       
     } else {
-      occasionTextFieldHeightConstraint.constant = 0
-      occasionTextField.alpha = 0
+      occasionButtonsViewHeightConstraint.constant = 0
+      occasionButtonsView.alpha = 0
       UIView.animate(
         withDuration: 0.2,
         delay: 0,
@@ -173,8 +202,11 @@ final class FilterViewController: UIViewController {
   private dynamic func switchApparelValueDidChange(sender: UISwitch) {
     
     if switchApparel.isOn == true {
-      apparelTextFieldHeightConstraints.constant = 50
-      apparelTextField.alpha = 1
+      addConstraintsForApparelButtons()
+      apparelButtonsViewHeightConstraint.constant = CGFloat(apparelButtonNumLines * 30)
+      apparelButtonNumLines = 1
+      apparelButtonsView.alpha = 1
+
       UIView.animate(
         withDuration: 0.2,
         delay: 0,
@@ -183,9 +215,11 @@ final class FilterViewController: UIViewController {
           self?.view.layoutIfNeeded()
         }
       )
+      
     } else {
-      apparelTextFieldHeightConstraints.constant = 0
-      apparelTextField.alpha = 0
+      apparelButtonsViewHeightConstraint.constant = 0
+      apparelButtonsView.alpha = 0
+
       UIView.animate(
         withDuration: 0.2,
         delay: 0,
@@ -201,8 +235,11 @@ final class FilterViewController: UIViewController {
   private dynamic func switchColorValueDidChange(sender: UISwitch) {
     
     if switchColor.isOn == true {
-      colorTextFieldHeightConstraints.constant = 50
-      colorTextField.alpha = 1
+      addConstraintsForColorButtons()
+      colorButtonsViewHeightConstraint.constant = CGFloat(colorButtonNumLines * 30)
+      colorButtonNumLines = 1
+      colorButtonsView.alpha = 1
+
       UIView.animate(
         withDuration: 0.2,
         delay: 0,
@@ -212,8 +249,9 @@ final class FilterViewController: UIViewController {
         }
       )
     } else {
-      colorTextFieldHeightConstraints.constant = 0
-      colorTextField.alpha = 0
+      colorButtonsViewHeightConstraint.constant = 0
+      colorButtonsView.alpha = 0
+
       UIView.animate(
         withDuration: 0.2,
         delay: 0,
@@ -231,23 +269,28 @@ final class FilterViewController: UIViewController {
   
   private func initialize() {
     
+    
+    //view.addSubview(overviewScrollView)
+    view.addSubview(overviewScrollView)
+
     //occasion filter
-    view.addSubview(occasionLabel)
-    view.addSubview(occasionTextField)
-    view.addSubview(switchOccasion)
+    overviewScrollView.addSubview(occasionLabel)
+    overviewScrollView.addSubview(occasionButtonsView)
+    overviewScrollView.addSubview(switchOccasion)
     
     //apparel filter
-    view.addSubview(apparelLabel)
-    view.addSubview(apparelTextField)
-    view.addSubview(switchApparel)
+    overviewScrollView.addSubview(apparelLabel)
+    overviewScrollView.addSubview(apparelButtonsView)
+    overviewScrollView.addSubview(switchApparel)
     
     //color filter
-    view.addSubview(colorLabel)
-    view.addSubview(colorTextField)
-    view.addSubview(switchColor)
+    overviewScrollView.addSubview(colorLabel)
+    overviewScrollView.addSubview(colorButtonsView)
+    overviewScrollView.addSubview(switchColor)
     
     //confirm button
-    view.addSubview(confirmButton)
+    overviewScrollView.addSubview(confirmButton)
+    
     
     
     confirmButton.addTarget(self, action: #selector(FilterViewController.confirmButtonTapped), for: .touchUpInside)
@@ -255,88 +298,363 @@ final class FilterViewController: UIViewController {
     //screen width
     let screenWidth = UIScreen.main.bounds.size.width
     
-    //occasion label
-    view.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 64))
-    view.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth))
-    view.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
+    //overview scroll view
+    view.addConstraint(NSLayoutConstraint(item: overviewScrollView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: overviewScrollView, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: overviewScrollView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: overviewScrollView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: 0))
     
-    //occasion text field
-    view.addConstraint(NSLayoutConstraint(item: occasionTextField, attribute: .top, relatedBy: .equal, toItem: occasionLabel, attribute: .bottom, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: occasionTextField, attribute: .left, relatedBy: .equal, toItem: occasionLabel, attribute: .left, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: occasionTextField, attribute: .right, relatedBy: .equal, toItem: occasionLabel, attribute: .right, multiplier: 1.0, constant: 0))
-    occasionTextFieldHeightConstraint = NSLayoutConstraint(item: occasionTextField, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0)
-    view.addConstraint(occasionTextFieldHeightConstraint)
+    //occasion label
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .top, relatedBy: .equal, toItem: overviewScrollView, attribute: .top, multiplier: 1.0, constant: 0))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .left, relatedBy: .equal, toItem: overviewScrollView, attribute: .left, multiplier: 1.0, constant: 0))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     
     //switch occasion
-    view.addConstraint(NSLayoutConstraint(item: switchOccasion, attribute: .top, relatedBy: .equal, toItem: occasionLabel, attribute: .top, multiplier: 1.0, constant: 10))
-    view.addConstraint(NSLayoutConstraint(item: switchOccasion, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: -10))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: switchOccasion, attribute: .top, relatedBy: .equal, toItem: occasionLabel, attribute: .top, multiplier: 1.0, constant: 10))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: switchOccasion, attribute: .left, relatedBy: .equal, toItem: overviewScrollView, attribute: .left, multiplier: 1.0, constant: screenWidth - 60))
     
+    //occasion buttons view
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionButtonsView, attribute: .top, relatedBy: .equal, toItem: occasionLabel, attribute: .bottom, multiplier: 1.0, constant: 0))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionButtonsView, attribute: .left, relatedBy: .equal, toItem: occasionLabel, attribute: .left, multiplier: 1.0, constant: 0))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionButtonsView, attribute: .right, relatedBy: .equal, toItem: occasionLabel, attribute: .right, multiplier: 1.0, constant: 0))
+    occasionButtonsViewHeightConstraint = NSLayoutConstraint(item: occasionButtonsView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0)
+    overviewScrollView.addConstraint(occasionButtonsViewHeightConstraint)
     
     //apparel label
-    view.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .top, relatedBy: .equal, toItem: occasionTextField, attribute: .bottom, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .left, relatedBy: .equal, toItem: occasionTextField, attribute: .left, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth))
-    view.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
-    
-    //apparel text field
-    view.addConstraint(NSLayoutConstraint(item: apparelTextField, attribute: .top, relatedBy: .equal, toItem: apparelLabel, attribute: .bottom, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: apparelTextField, attribute: .left, relatedBy: .equal, toItem: apparelLabel, attribute: .left, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: apparelTextField, attribute: .right, relatedBy: .equal, toItem: apparelLabel, attribute: .right, multiplier: 1.0, constant: 0))
-    apparelTextFieldHeightConstraints = NSLayoutConstraint(item: apparelTextField, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0)
-    view.addConstraint(apparelTextFieldHeightConstraints)
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .top, relatedBy: .equal, toItem: occasionButtonsView, attribute: .bottom, multiplier: 1.0, constant: 0))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .left, relatedBy: .equal, toItem: occasionButtonsView, attribute: .left, multiplier: 1.0, constant: 0))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     
     //switch apparel
-    view.addConstraint(NSLayoutConstraint(item: switchApparel, attribute: .top, relatedBy: .equal, toItem: apparelLabel, attribute: .top, multiplier: 1.0, constant: 10))
-    view.addConstraint(NSLayoutConstraint(item: switchApparel, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: -10))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: switchApparel, attribute: .top, relatedBy: .equal, toItem: apparelLabel, attribute: .top, multiplier: 1.0, constant: 10))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: switchApparel, attribute: .left, relatedBy: .equal, toItem: overviewScrollView, attribute: .left, multiplier: 1.0, constant: screenWidth - 60))
+    
+    //apparel buttons view
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelButtonsView, attribute: .top, relatedBy: .equal, toItem: apparelLabel, attribute: .bottom, multiplier: 1.0, constant: 0))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelButtonsView, attribute: .left, relatedBy: .equal, toItem: apparelLabel, attribute: .left, multiplier: 1.0, constant: 0))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelButtonsView, attribute: .right, relatedBy: .equal, toItem: apparelLabel, attribute: .right, multiplier: 1.0, constant: 0))
+    apparelButtonsViewHeightConstraint = NSLayoutConstraint(item: apparelButtonsView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0)
+    overviewScrollView.addConstraint(apparelButtonsViewHeightConstraint)
+    
     
     //color label
-    view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .top, relatedBy: .equal, toItem: apparelTextField, attribute: .bottom, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .left, relatedBy: .equal, toItem: apparelTextField, attribute: .left, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth))
-    view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
-    
-    //color text field
-    view.addConstraint(NSLayoutConstraint(item: colorTextField, attribute: .top, relatedBy: .equal, toItem: colorLabel, attribute: .bottom, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: colorTextField, attribute: .left, relatedBy: .equal, toItem: colorLabel, attribute: .left, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: colorTextField, attribute: .right, relatedBy: .equal, toItem: colorLabel, attribute: .right, multiplier: 1.0, constant: 0))
-    colorTextFieldHeightConstraints = NSLayoutConstraint(item: colorTextField, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0)
-    view.addConstraint(colorTextFieldHeightConstraints)
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .top, relatedBy: .equal, toItem: apparelButtonsView, attribute: .bottom, multiplier: 1.0, constant: 0))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .left, relatedBy: .equal, toItem: apparelButtonsView, attribute: .left, multiplier: 1.0, constant: 0))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
+
     
     //switch color
-    view.addConstraint(NSLayoutConstraint(item: switchColor, attribute: .top, relatedBy: .equal, toItem: colorLabel, attribute: .top, multiplier: 1.0, constant: 10))
-    view.addConstraint(NSLayoutConstraint(item: switchColor, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: -10))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: switchColor, attribute: .top, relatedBy: .equal, toItem: colorLabel, attribute: .top, multiplier: 1.0, constant: 10))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: switchColor, attribute: .left, relatedBy: .equal, toItem: overviewScrollView, attribute: .left, multiplier: 1.0, constant: screenWidth - 60))
     
-    //confirm button
-    view.addConstraint(NSLayoutConstraint(item: confirmButton, attribute: .top, relatedBy: .equal, toItem: colorTextField, attribute: .bottom, multiplier: 1.0, constant: 100))
-    view.addConstraint(NSLayoutConstraint(item: confirmButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 200))
-    view.addConstraint(NSLayoutConstraint(item: confirmButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
-    view.addConstraint(NSLayoutConstraint(item: confirmButton, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0))
-  }
-  
-  private dynamic func confirmButtonTapped() {
-    
-    //reload my collection view cells after the confirm button is tapped
-    
-      occasionText = occasionTextField.text ?? ""
-    
-    
-      apparelText = apparelTextField.text ?? ""
-    
-    
-      colorText = colorTextField.text ?? ""
+    //color buttons view
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: colorButtonsView, attribute: .top, relatedBy: .equal, toItem: colorLabel, attribute: .bottom, multiplier: 1.0, constant: 0))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: colorButtonsView, attribute: .left, relatedBy: .equal, toItem: colorLabel, attribute: .left, multiplier: 1.0, constant: 0))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: colorButtonsView, attribute: .right, relatedBy: .equal, toItem: colorLabel, attribute: .right, multiplier: 1.0, constant: 0))
+    colorButtonsViewHeightConstraint = NSLayoutConstraint(item: colorButtonsView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0)
+    overviewScrollView.addConstraint(colorButtonsViewHeightConstraint)
     
 
     
-    dismiss(animated: true) { [weak self] finished in
-      guard let strongSelf = self,
-      let occasion = strongSelf.occasionTextField.text,
-      let apparel = strongSelf.apparelTextField.text,
-      let color = strongSelf.colorTextField.text else {
-        return
-      }
-      strongSelf.delegate?.filterViewControllerDidFinishFiltering(strongSelf, withOccasion: occasion, andApparel: apparel, andColor: color)
+    //confirm button
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: confirmButton, attribute: .top, relatedBy: .equal, toItem: colorButtonsView, attribute: .bottom, multiplier: 1.0, constant: 100))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: confirmButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 200))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: confirmButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: confirmButton, attribute: .centerX, relatedBy: .equal, toItem: overviewScrollView, attribute: .centerX, multiplier: 1.0, constant: 0))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: confirmButton, attribute: .bottom, relatedBy: .equal, toItem: overviewScrollView, attribute: .bottom, multiplier: 1.0, constant: 0))
+    
+
+  }
+  
+  func addOccasionButtons() {
+    for button in occasionButtons {
+      button.removeFromSuperview()
     }
+    occasionButtons.removeAll()
+    for occasion in nonRepeatAggregateOccasionTags {
+      let button = createButton()
+      button.setTitle(occasion, for: .normal)
+      occasionButtons.append(button)
+    }
+  }
+  
+  func addConstraintsForOccasionButtons() {
+    addOccasionButtons()
+    var buttonsLength: CGFloat = 0
+    
+    var previousOccasionButton: UIButton?
+    var firstOccasionButton: UIButton?
+
+    for (index, button) in occasionButtons.enumerated() {
+      
+      button.tag = index
+      button.addTarget(self, action: #selector(FilterViewController.occasionButtonTapped(sender:)), for: .touchUpInside)
+      
+      buttonsLength += button.intrinsicContentSize.width + 25
+      
+      if buttonsLength < screenWidth {
+        
+        if nil == firstOccasionButton {
+          previousOccasionButton = button
+          firstOccasionButton = button
+          occasionButtonsView.addSubview(button)
+          occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: occasionButtonsView, attribute: .top, multiplier: 1.0, constant: 0))
+          
+          occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: occasionButtonsView, attribute: .left, multiplier: 1.0, constant: 5))
+          occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
+          occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+          occasionButtonsNumLines += 1
+
+        } else {
+          occasionButtonsView.addSubview(button)
+          occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: previousOccasionButton, attribute: .top, multiplier: 1.0, constant: 0))
+          occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousOccasionButton, attribute: .right, multiplier: 1.0, constant: 5))
+          occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
+          occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: previousOccasionButton, attribute: .bottom, multiplier: 1.0, constant: 0))
+
+          previousOccasionButton = button
+        }
+        
+      }
+      if buttonsLength > screenWidth {
+        buttonsLength = button.intrinsicContentSize.width + 25
+        
+        occasionButtonsView.addSubview(button)
+        occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: firstOccasionButton, attribute: .bottom, multiplier: 1.0, constant: 5))
+        occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: firstOccasionButton, attribute: .left, multiplier: 1.0, constant: 0))
+        occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
+        occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+        occasionButtonsNumLines += 1
+
+        previousOccasionButton = button
+        firstOccasionButton = button
+        
+      }
+    }
+  }
+  
+  func addApparelButtons() {
+    for button in apparelButtons {
+      button.removeFromSuperview()
+    }
+    apparelButtons.removeAll()
+    for apparel in nonRepeatAggregateApparelTags {
+      let button = createButton()
+      button.setTitle(apparel, for: .normal)
+      apparelButtons.append(button)
+    }
+  }
+  
+  func addConstraintsForApparelButtons() {
+    addApparelButtons()
+    var buttonsLength: CGFloat = 0
+    
+    var previousApparelButton: UIButton?
+    var firstApparelButton: UIButton?
+    
+    for (index, button) in apparelButtons.enumerated() {
+      
+      button.tag = index
+      button.addTarget(self, action: #selector(FilterViewController.apparelButtonTapped(sender:)), for: .touchUpInside)
+
+      
+      buttonsLength += button.intrinsicContentSize.width + 25
+      
+      if buttonsLength < screenWidth {
+        
+        if nil == firstApparelButton {
+          previousApparelButton = button
+          firstApparelButton = button
+          apparelButtonsView.addSubview(button)
+          apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: apparelButtonsView, attribute: .top, multiplier: 1.0, constant: 0))
+          
+          apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: apparelButtonsView, attribute: .left, multiplier: 1.0, constant: 5))
+          apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
+          apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+          apparelButtonNumLines += 1
+          
+        } else {
+          apparelButtonsView.addSubview(button)
+          apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: previousApparelButton, attribute: .top, multiplier: 1.0, constant: 0))
+          apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousApparelButton, attribute: .right, multiplier: 1.0, constant: 5))
+          apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
+          apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: previousApparelButton, attribute: .bottom, multiplier: 1.0, constant: 0))
+          
+          previousApparelButton = button
+        }
+        
+      }
+      if buttonsLength > screenWidth {
+        buttonsLength = button.intrinsicContentSize.width + 25
+        
+        apparelButtonsView.addSubview(button)
+        apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: firstApparelButton, attribute: .bottom, multiplier: 1.0, constant: 5))
+        apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: firstApparelButton, attribute: .left, multiplier: 1.0, constant: 0))
+        apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
+        apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+        apparelButtonNumLines += 1
+        
+        previousApparelButton = button
+        firstApparelButton = button
+        
+      }
+    }
+    
+    
+  }
+
+  
+  func addColorButtons() {
+    for button in colorButtons {
+      button.removeFromSuperview()
+    }
+    colorButtons.removeAll()
+    for color in nonRepeatAggregateColorTags {
+      let button = createButton()
+      button.setTitle(color, for: .normal)
+      colorButtons.append(button)
+    }
+  }
+  
+  func addConstraintsForColorButtons() {
+    addColorButtons()
+    var buttonsLength: CGFloat = 0
+    
+    var previousColorButton: UIButton?
+    var firstColorButton: UIButton?
+    
+    for (index, button) in colorButtons.enumerated() {
+      
+      button.tag = index
+      button.addTarget(self, action: #selector(FilterViewController.colorButtonTapped(sender:)), for: .touchUpInside)
+
+      
+      buttonsLength += button.intrinsicContentSize.width + 25
+      
+      if buttonsLength < screenWidth {
+        
+        if nil == firstColorButton {
+          previousColorButton = button
+          firstColorButton = button
+          colorButtonsView.addSubview(button)
+          colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: colorButtonsView, attribute: .top, multiplier: 1.0, constant: 0))
+          
+          colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: colorButtonsView, attribute: .left, multiplier: 1.0, constant: 5))
+          colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
+          colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+          colorButtonNumLines += 1
+          
+        } else {
+          colorButtonsView.addSubview(button)
+          colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: previousColorButton, attribute: .top, multiplier: 1.0, constant: 0))
+          colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousColorButton, attribute: .right, multiplier: 1.0, constant: 5))
+          colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
+          colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: previousColorButton, attribute: .bottom, multiplier: 1.0, constant: 0))
+          
+          previousColorButton = button
+        }
+        
+      }
+      if buttonsLength > screenWidth {
+        buttonsLength = button.intrinsicContentSize.width + 25
+        
+        colorButtonsView.addSubview(button)
+        colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: firstColorButton, attribute: .bottom, multiplier: 1.0, constant: 5))
+        colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: firstColorButton, attribute: .left, multiplier: 1.0, constant: 0))
+        colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
+        colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+        colorButtonNumLines += 1
+        
+        previousColorButton = button
+        firstColorButton = button
+        
+      }
+    }
+    
+    
+  }
+
+
+  func createButton() -> DUButton {
+    let button = DUButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.layer.cornerRadius = 12.5
+    button.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    return button
+  }
+  
+  private dynamic func occasionButtonTapped(sender: UIButton) {
+    for index in 0 ..< nonRepeatAggregateOccasionTags.count {
+      if sender.isSelected {
+        if sender.tag == index {
+          sender.layer.backgroundColor = UIColor.lighterBlue.cgColor
+          occasionTags = occasionTags.filter{ $0 != sender.titleLabel?.text }
+          sender.isSelected = false
+        }
+      }
+      else {
+        if sender.tag == index {
+          sender.layer.backgroundColor = UIColor.royalBlue.cgColor
+          occasionTags = occasionTags.filter{ $0 != sender.titleLabel?.text }
+          occasionTags.append((sender.titleLabel?.text)!)
+          sender.isSelected = true
+        }
+      }
+    }
+  }
+  private dynamic func apparelButtonTapped(sender: UIButton) {
+    for index in 0 ..< nonRepeatAggregateApparelTags.count {
+      if sender.isSelected {
+        if sender.tag == index {
+          sender.layer.backgroundColor = UIColor.lighterBlue.cgColor
+          apparelTags = apparelTags.filter{ $0 != sender.titleLabel?.text }
+          sender.isSelected = false
+        }
+      }
+      else {
+        if sender.tag == index {
+          sender.layer.backgroundColor = UIColor.royalBlue.cgColor
+          apparelTags = apparelTags.filter{ $0 != sender.titleLabel?.text }
+          apparelTags.append((sender.titleLabel?.text)!)
+          sender.isSelected = true
+        }
+      }
+    }
+  }
+  private dynamic func colorButtonTapped(sender: UIButton) {
+    for index in 0 ..< nonRepeatAggregateColorTags.count {
+      if sender.isSelected {
+        if sender.tag == index {
+          sender.layer.backgroundColor = UIColor.lighterBlue.cgColor
+          colorTags = colorTags.filter{ $0 != sender.titleLabel?.text }
+          sender.isSelected = false
+        }
+      }
+      else {
+        if sender.tag == index {
+          sender.layer.backgroundColor = UIColor.royalBlue.cgColor
+          colorTags = colorTags.filter{ $0 != sender.titleLabel?.text }
+          colorTags.append((sender.titleLabel?.text)!)
+          sender.isSelected = true
+        }
+      }
+    }
+  }
+  private dynamic func confirmButtonTapped() {
+    
+    occasion = occasionTags.joined(separator: ", ")
+    apparel = apparelTags.joined(separator: ", ")
+    color = colorTags.joined(separator: ", ")
+    
+    
+    delegate?.filterViewControllerDidFinishFiltering(self, withOccasion: occasion, andApparel: apparel, andColor: color)
+    
+    dismiss(animated: true)
+
+    
   }
   
 }
