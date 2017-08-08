@@ -10,7 +10,6 @@ import UIKit
 
 private let screenWidth = UIScreen.main.bounds.size.width
 
-//HomeViewController 
 final class HomeViewController: DUViewController {
   
   fileprivate var homeController: HomeController = HomeController()
@@ -33,8 +32,6 @@ final class HomeViewController: DUViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Apparel:"
-    
-    
     label.lineBreakMode = .byWordWrapping
     return label
   }()
@@ -92,7 +89,7 @@ final class HomeViewController: DUViewController {
     view.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     
     //randomize button
-    view.addConstraint(NSLayoutConstraint(item: randomizeButton, attribute: .top, relatedBy: .equal, toItem: colorLabel, attribute: .bottom, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: randomizeButton, attribute: .top, relatedBy: .equal, toItem: colorLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
     view.addConstraint(NSLayoutConstraint(item: randomizeButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 200))
     view.addConstraint(NSLayoutConstraint(item: randomizeButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     view.addConstraint(NSLayoutConstraint(item: randomizeButton, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0))

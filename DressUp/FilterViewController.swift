@@ -38,11 +38,20 @@ final class FilterViewController: DUViewController {
   var apparel = ""
   var color = ""
   
+//  fileprivate let backgroundView: UIImageView = {
+//    let view = UIImageView()
+//    view.translatesAutoresizingMaskIntoConstraints = false
+//    view.contentMode = .scaleAspectFill
+//    view.clipsToBounds = true
+//    view.backgroundColor = UIColor.lighterBlack
+//    return view
+//  }()
+  
   fileprivate let overviewScrollView: UIScrollView = {
     let view = UIScrollView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.isScrollEnabled = true
-    
+    view.showsVerticalScrollIndicator = false
     return view
   }()
 
@@ -51,8 +60,6 @@ final class FilterViewController: DUViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Occasion"
-    
-    
     label.lineBreakMode = .byWordWrapping
     return label
   }()
@@ -73,8 +80,6 @@ final class FilterViewController: DUViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Colors"
-    
-    
     label.lineBreakMode = .byWordWrapping
     return label
   }()
@@ -154,11 +159,6 @@ final class FilterViewController: DUViewController {
     self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped(sender:)))
     self.navigationItem.rightBarButtonItem?.tintColor = .white
     navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 17)!], for: .normal)
-    
-    
-//    occasionTextField.delegate = self
-//    apparelTextField.delegate = self
-//    colorTextField.delegate = self
   }
   
   //cancel button
@@ -172,7 +172,7 @@ final class FilterViewController: DUViewController {
     
     if switchOccasion.isOn == true {
       addConstraintsForOccasionButtons()
-      occasionButtonsViewHeightConstraint.constant = CGFloat(occasionButtonsNumLines * 30)
+      occasionButtonsViewHeightConstraint.constant = CGFloat(occasionButtonsNumLines * 30 + 10)
       occasionButtonsNumLines = 1
       occasionButtonsView.alpha = 1
       UIView.animate(
@@ -203,7 +203,7 @@ final class FilterViewController: DUViewController {
     
     if switchApparel.isOn == true {
       addConstraintsForApparelButtons()
-      apparelButtonsViewHeightConstraint.constant = CGFloat(apparelButtonNumLines * 30)
+      apparelButtonsViewHeightConstraint.constant = CGFloat(apparelButtonNumLines * 30 + 10)
       apparelButtonNumLines = 1
       apparelButtonsView.alpha = 1
 
@@ -236,7 +236,7 @@ final class FilterViewController: DUViewController {
     
     if switchColor.isOn == true {
       addConstraintsForColorButtons()
-      colorButtonsViewHeightConstraint.constant = CGFloat(colorButtonNumLines * 30)
+      colorButtonsViewHeightConstraint.constant = CGFloat(colorButtonNumLines * 30 + 10)
       colorButtonNumLines = 1
       colorButtonsView.alpha = 1
 
@@ -269,10 +269,12 @@ final class FilterViewController: DUViewController {
   
   private func initialize() {
     
+    //backgroundView.addToAndConstrain(insideSuper: view)
+    //view.backgroundColor = UIColor.lighterBlack
     
-    //view.addSubview(overviewScrollView)
     view.addSubview(overviewScrollView)
-
+    //view.insertSubview(overviewScrollView, aboveSubview: backgroundView)
+    
     //occasion filter
     overviewScrollView.addSubview(occasionLabel)
     overviewScrollView.addSubview(occasionButtonsView)
@@ -290,8 +292,6 @@ final class FilterViewController: DUViewController {
     
     //confirm button
     overviewScrollView.addSubview(confirmButton)
-    
-    
     
     confirmButton.addTarget(self, action: #selector(FilterViewController.confirmButtonTapped), for: .touchUpInside)
     
@@ -338,14 +338,12 @@ final class FilterViewController: DUViewController {
     apparelButtonsViewHeightConstraint = NSLayoutConstraint(item: apparelButtonsView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0)
     overviewScrollView.addConstraint(apparelButtonsViewHeightConstraint)
     
-    
     //color label
     overviewScrollView.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .top, relatedBy: .equal, toItem: apparelButtonsView, attribute: .bottom, multiplier: 1.0, constant: 0))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .left, relatedBy: .equal, toItem: apparelButtonsView, attribute: .left, multiplier: 1.0, constant: 0))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
 
-    
     //switch color
     overviewScrollView.addConstraint(NSLayoutConstraint(item: switchColor, attribute: .top, relatedBy: .equal, toItem: colorLabel, attribute: .top, multiplier: 1.0, constant: 10))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: switchColor, attribute: .left, relatedBy: .equal, toItem: overviewScrollView, attribute: .left, multiplier: 1.0, constant: screenWidth - 60))
@@ -357,16 +355,13 @@ final class FilterViewController: DUViewController {
     colorButtonsViewHeightConstraint = NSLayoutConstraint(item: colorButtonsView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0)
     overviewScrollView.addConstraint(colorButtonsViewHeightConstraint)
     
-
-    
     //confirm button
     overviewScrollView.addConstraint(NSLayoutConstraint(item: confirmButton, attribute: .top, relatedBy: .equal, toItem: colorButtonsView, attribute: .bottom, multiplier: 1.0, constant: 100))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: confirmButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 200))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: confirmButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: confirmButton, attribute: .centerX, relatedBy: .equal, toItem: overviewScrollView, attribute: .centerX, multiplier: 1.0, constant: 0))
-    overviewScrollView.addConstraint(NSLayoutConstraint(item: confirmButton, attribute: .bottom, relatedBy: .equal, toItem: overviewScrollView, attribute: .bottom, multiplier: 1.0, constant: 0))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: confirmButton, attribute: .bottom, relatedBy: .equal, toItem: overviewScrollView, attribute: .bottom, multiplier: 1.0, constant: -50))
     
-
   }
   
   func addOccasionButtons() {
@@ -658,29 +653,5 @@ final class FilterViewController: DUViewController {
   }
   
 }
-
-extension FilterViewController: UITextFieldDelegate {
-  
-  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    textField.resignFirstResponder()
-    return true
-  }
-  
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

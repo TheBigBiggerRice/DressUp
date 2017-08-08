@@ -23,7 +23,7 @@ final class RandomizePhotoViewController: DUViewController {
     view.translatesAutoresizingMaskIntoConstraints = false
     view.contentMode = .scaleAspectFill
     view.clipsToBounds = true
-    view.image = #imageLiteral(resourceName: "background2")
+    view.image = #imageLiteral(resourceName: "background")
     return view
   }()
   

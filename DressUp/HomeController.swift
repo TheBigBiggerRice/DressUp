@@ -29,7 +29,6 @@ final class HomeController: NSObject {
   var profileHandle: DatabaseHandle = 0
   var profileRef: DatabaseReference?
   
-  //processed photo collection based on table view cell rows
   var topPhotoCollection = [Photos]()
   var pantsPhotoCollection = [Photos]()
   var footwearPhotoCollection = [Photos]()
@@ -38,9 +37,6 @@ final class HomeController: NSObject {
   var filteredPantsPhotoCollection = [Photos]()
   var filteredFootwearPhotoCollection = [Photos]()
 
-
-
-  
   //inputs by the user
   var occasion = [String]()
   var apparel = [String]()
