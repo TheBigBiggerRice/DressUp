@@ -103,7 +103,6 @@ final class CameraViewController: DUViewController {
     return view
   }()
   
-  //occasion label and tags
   fileprivate let occasionLabel: DULabel = {
     let label = DULabel()
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -111,7 +110,6 @@ final class CameraViewController: DUViewController {
     return label
   }()
   
-  //add occasions button
   fileprivate let addOccasionsButton: DUButton = {
     let button = DUButton()
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -185,7 +183,6 @@ final class CameraViewController: DUViewController {
     return button
   }()
   
-  //choose image button on top of the photo
   fileprivate let chooseImageButton: DUButton = {
     let button = DUButton()
     button.translatesAutoresizingMaskIntoConstraints = false
@@ -237,23 +234,19 @@ final class CameraViewController: DUViewController {
     view.insertSubview(chooseImageButton, aboveSubview: imageView)
     view.insertSubview(takePhotoImageButton, aboveSubview: imageView)
     
-    //for categories
     view.addSubview(categoryLabel)
     view.addSubview(topButton)
     view.addSubview(pantsButton)
     view.addSubview(footwearButton)
     
-    //for occasions
     view.addSubview(occasionLabel)
     view.addSubview(occasionScrollView)
     occasionScrollView.addSubview(addOccasionsButton)
     
-    //for apparel(auto generated)
     view.addSubview(apparelLabel)
     view.addSubview(apparelScrollView)
     apparelScrollView.addSubview(addApparelsButton)
     
-    //for color(auto generated)
     view.addSubview(colorLabel)
     view.addSubview(colorScrollView)
     colorScrollView.addSubview(addColorsButton)
@@ -657,7 +650,6 @@ final class CameraViewController: DUViewController {
     }
   }
   
-  
   private dynamic func addApparelsButtonTapped() {
     
     let appearance = SCLAlertView.SCLAppearance(
@@ -739,8 +731,6 @@ final class CameraViewController: DUViewController {
     _ = alertView.showCustom("Add Color", subTitle: "Missing some colors? Add them here!", color: UIColor.royalBlue, icon: alertViewIcon!)
   }
   
-  
-  
   private dynamic func saveButtonTapped() {
     
     var positionTags = ""
@@ -804,7 +794,6 @@ final class CameraViewController: DUViewController {
   }
   
   func createOccasionbutton() -> DUButton {
-    
     let button = DUButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitleColor(.white, for: .normal)
@@ -828,8 +817,8 @@ extension CameraViewController: UIImagePickerControllerDelegate {
       recognizeImage(image: image, modelID: Constants.ModelIDs.categoryID, modelName: Constants.ModelNames.categoryName)
       recognizeImage(image: image, modelID: Constants.ModelIDs.colorID, modelName: Constants.ModelNames.colorName)
       
-      takePhotoImageButton.isEnabled = false
-      chooseImageButton.isEnabled = false
+      //takePhotoImageButton.isEnabled = false
+      //chooseImageButton.isEnabled = false
       saveButton.isEnabled = false
       
       pendingImage = image
@@ -879,13 +868,13 @@ extension CameraViewController: UIImagePickerControllerDelegate {
           
           DispatchQueue.main.async {
             
-            self.takePhotoImageButton.isEnabled = true
-            self.chooseImageButton.isEnabled = true
+            //self.takePhotoImageButton.isEnabled = true
+            //self.chooseImageButton.isEnabled = true
             self.saveButton.isEnabled = true
             self.chooseImageButton.alpha = 1
             self.takePhotoImageButton.alpha = 1
-            
             self.displaySaveButton()
+            
           }
         })
       })

@@ -8,21 +8,17 @@
 
 import UIKit
 
-
-//HomeViewController is the delegate of FilterViewController
 protocol FilterViewControllerDelegete: class {
   func filterViewControllerDidFinishFiltering(_ controller: FilterViewController, withOccasion occasion: String, andApparel apparel: String, andColor color: String)
 }
 
 final class FilterViewController: UIViewController {
   
-  //store the text inputs of the text fields
   var occasionText: String = ""
   var apparelText: String = ""
   var colorText: String = ""
   weak var delegate: FilterViewControllerDelegete?
 
-  //choose which filters to enable
   fileprivate let occasionLabel: DULabel = {
     let label = DULabel()
     label.translatesAutoresizingMaskIntoConstraints = false
