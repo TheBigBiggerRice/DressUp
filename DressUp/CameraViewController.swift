@@ -744,18 +744,16 @@ final class CameraViewController: DUViewController {
       positionTags = "Footwear"
       
     }
-//    for button in apparelButtons {
-//      
-//      button.removeFromSuperview()
-//    }
-//    
-//    apparelButtons.removeAll()
-//    for button in colorButtons {
-//      button.removeFromSuperview()
-//    }
-//    
-//    colorButtons.removeAll()
-//
+    if occasionTags.isEmpty == true {
+      occasionTags.append("Any")
+    }
+    if colorTags.isEmpty == true {
+      colorTags.append("Any")
+    }
+    if apparelTags.isEmpty == true {
+      apparelTags.append("Any")
+    }
+    
     takePhotoImageButton.setImage(#imageLiteral(resourceName: "takePhotoImageButton"), for: .normal)
     chooseImageButton.setImage(#imageLiteral(resourceName: "chooseImageButton"), for: .normal)
     imageView.image = nil

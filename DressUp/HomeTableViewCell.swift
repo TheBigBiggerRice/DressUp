@@ -88,6 +88,7 @@ extension HomeTableViewCell: UICollectionViewDelegate {
   
 }
 
+//add section headers for each collection view. 3 in total.
 extension HomeTableViewCell: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -104,5 +105,10 @@ extension HomeTableViewCell: UICollectionViewDataSource {
     }
     return cell
   }
+
+//CODE HERE
+//  func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//  }
+//  
   
 }

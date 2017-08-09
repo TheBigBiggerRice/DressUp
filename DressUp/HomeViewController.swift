@@ -188,9 +188,15 @@ extension HomeViewController: FilterViewControllerDelegete {
     homeController.apparel = apparel.components(separatedBy: ", ")
     homeController.color = color.components(separatedBy: ", ")
     
+    
     occasionLabel.text = "Occasion: \(occasion)"
+    
+    
     apparelLabel.text = "Apparel: \(apparel)"
+    
+    
     colorLabel.text = "Color: \(color)"
+    
     
     homeTableView.reloadData()
   }

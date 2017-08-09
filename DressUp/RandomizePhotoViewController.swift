@@ -23,7 +23,8 @@ final class RandomizePhotoViewController: DUViewController {
     view.translatesAutoresizingMaskIntoConstraints = false
     view.contentMode = .scaleAspectFill
     view.clipsToBounds = true
-    view.image = #imageLiteral(resourceName: "background")
+    view.backgroundColor = UIColor.lighterBlack
+    //view.image = #imageLiteral(resourceName: "background4")
     return view
   }()
   
@@ -32,9 +33,10 @@ final class RandomizePhotoViewController: DUViewController {
     view.translatesAutoresizingMaskIntoConstraints = false
     view.contentMode = .scaleAspectFill
     view.layer.cornerRadius = 112
-    view.layer.borderWidth = 0.25
+    //view.layer.borderWidth = 0.25
     view.layer.borderColor = UIColor.white.cgColor
     view.clipsToBounds = true
+    
     view.isUserInteractionEnabled = true
     
     return view
@@ -45,7 +47,7 @@ final class RandomizePhotoViewController: DUViewController {
     view.translatesAutoresizingMaskIntoConstraints = false
     view.contentMode = .scaleAspectFill
     view.layer.cornerRadius = 112
-    view.layer.borderWidth = 0.25
+    //view.layer.borderWidth = 0.25
     view.layer.borderColor = UIColor.white.cgColor
     view.clipsToBounds = true
     view.isUserInteractionEnabled = true
@@ -59,12 +61,10 @@ final class RandomizePhotoViewController: DUViewController {
     view.translatesAutoresizingMaskIntoConstraints = false
     view.contentMode = .scaleAspectFill
     view.layer.cornerRadius = 112
-    view.layer.borderWidth = 0.25
+    //view.layer.borderWidth = 0.25
     view.layer.borderColor = UIColor.white.cgColor
     view.clipsToBounds = true
     view.isUserInteractionEnabled = true
-    
-    
     return view
   }()
   
@@ -121,7 +121,7 @@ final class RandomizePhotoViewController: DUViewController {
     
     //top image view
     view.addConstraint(NSLayoutConstraint(item: topImageView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: topImageView, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: topImageView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0))
     view.addConstraint(NSLayoutConstraint(item: topImageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: photoHeight))
     view.addConstraint(NSLayoutConstraint(item: topImageView, attribute: .height, relatedBy: .equal, toItem: topImageView, attribute: .width, multiplier: 1.0, constant: 0))
     
@@ -134,7 +134,7 @@ final class RandomizePhotoViewController: DUViewController {
     //footwear image view
     view.addConstraint(NSLayoutConstraint(item: footwearImageView, attribute: .top, relatedBy: .equal, toItem: pantsImageView, attribute: .bottom, multiplier: 1.0, constant: 0))
     
-    view.addConstraint(NSLayoutConstraint(item: footwearImageView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: footwearImageView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0))
     
     view.addConstraint(NSLayoutConstraint(item: footwearImageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: photoHeight))
     
@@ -165,7 +165,7 @@ final class RandomizePhotoViewController: DUViewController {
       let topRandomIndex = Int(arc4random_uniform(UInt32(topPhotos.count)))
       let topImageURL = URL(string: topPhotos[topRandomIndex].imageURL)
       topImageView.kf.setImage(with: topImageURL)
-      topImageView.transform = CGAffineTransform(scaleX: 0.3, y: 1.5)
+      topImageView.transform = CGAffineTransform(scaleX: 0.5, y: 1.5)
       
       UIView.animate(
         withDuration: 1,
@@ -188,7 +188,7 @@ final class RandomizePhotoViewController: DUViewController {
       let pantsImageURL = URL(string: pantsPhotos[pantsRandomIndex].imageURL)
       pantsImageView.kf.setImage(with: pantsImageURL)
       
-      pantsImageView.transform = CGAffineTransform(scaleX: 0.3, y: 1.5)
+      pantsImageView.transform = CGAffineTransform(scaleX: 0.5, y: 1.5)
       
       UIView.animate(
         withDuration: 1,
@@ -211,7 +211,7 @@ final class RandomizePhotoViewController: DUViewController {
       let footwearImageURL = URL(string: footwearPhotos[footwearRandomIndex ].imageURL)
       footwearImageView.kf.setImage(with: footwearImageURL)
       
-      footwearImageView.transform = CGAffineTransform(scaleX: 0.3, y: 1.5)
+      footwearImageView.transform = CGAffineTransform(scaleX: 0.5, y: 1.5)
       
       UIView.animate(
         withDuration: 1,

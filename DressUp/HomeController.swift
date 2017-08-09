@@ -71,10 +71,15 @@ final class HomeController: NSObject {
       self.photoCollection = photos.sorted(by: {$0.creationDate > $1.creationDate})
       
       for photo in self.photoCollection {
-        self.aggregateOccasionTags += photo.imageOccasion
-        self.aggregateApparelTags += photo.imageApparel
-        self.aggregateColorTags += photo.imageColor
-        
+        if !photo.imageOccasion.contains("Any") {
+          self.aggregateOccasionTags += photo.imageOccasion
+        }
+        if !photo.imageApparel.contains("Any") {
+          self.aggregateApparelTags += photo.imageApparel
+        }
+        if !photo.imageColor.contains("Any") {
+          self.aggregateColorTags += photo.imageColor
+        }
         
         if photo.imagePosition == "Top" {
           self.topPhotoCollection.append(photo)
@@ -109,7 +114,7 @@ extension HomeController: UITableViewDelegate {
         let setPhotoApparel = Set(photo.imageApparel)
         let setPhotoColor = Set(photo.imageColor)
         
-        if setOccasion.intersection(setPhotoOccasion).count > 0 || setApparel.intersection(setPhotoApparel).count > 0 || setColor.intersection(setPhotoColor).count > 0 || (setOccasion.contains("") == true && setApparel.contains("") == true && setColor.contains("") == true) || (setOccasion.isEmpty == true && setApparel.isEmpty == true && setColor.isEmpty == true) { return true }
+        if setOccasion.intersection(setPhotoOccasion).count > 0 || setApparel.intersection(setPhotoApparel).count > 0 || setColor.intersection(setPhotoColor).count > 0 || (setOccasion.contains("") == true && setApparel.contains("") == true && setColor.contains("") == true) || (setOccasion.isEmpty == true && setApparel.isEmpty == true && setColor.isEmpty == true) || !setOccasion.contains("") && photo.imageOccasion.contains("Any") || !setApparel.contains("") && photo.imageApparel.contains("Any") || !setColor.contains("") && photo.imageColor.contains("Any") { return true }
         else { return false }
       }
       return filteredTopPhotoCollection.map { FilteredPhotoCollectionCellViewModel(withPhoto: $0) }
@@ -124,7 +129,7 @@ extension HomeController: UITableViewDelegate {
         let setPhotoApparel = Set(photo.imageApparel)
         let setPhotoColor = Set(photo.imageColor)
         
-        if setOccasion.intersection(setPhotoOccasion).count > 0 || setApparel.intersection(setPhotoApparel).count > 0 || setColor.intersection(setPhotoColor).count > 0 || (setOccasion.contains("") == true && setApparel.contains("") == true && setColor.contains("") == true) || (setOccasion.isEmpty == true && setApparel.isEmpty == true && setColor.isEmpty == true) { return true }
+        if setOccasion.intersection(setPhotoOccasion).count > 0 || setApparel.intersection(setPhotoApparel).count > 0 || setColor.intersection(setPhotoColor).count > 0 || (setOccasion.contains("") == true && setApparel.contains("") == true && setColor.contains("") == true) || (setOccasion.isEmpty == true && setApparel.isEmpty == true && setColor.isEmpty == true) || !setOccasion.contains("") && photo.imageOccasion.contains("Any") || !setApparel.contains("") && photo.imageApparel.contains("Any") || !setColor.contains("") && photo.imageColor.contains("Any") { return true }
         else { return false }
       }
       
@@ -139,7 +144,7 @@ extension HomeController: UITableViewDelegate {
         let setPhotoApparel = Set(photo.imageApparel)
         let setPhotoColor = Set(photo.imageColor)
         
-        if setOccasion.intersection(setPhotoOccasion).count > 0 || setApparel.intersection(setPhotoApparel).count > 0 || setColor.intersection(setPhotoColor).count > 0 || (setOccasion.contains("") == true && setApparel.contains("") == true && setColor.contains("") == true) || (setOccasion.isEmpty == true && setApparel.isEmpty == true && setColor.isEmpty == true) { return true }
+        if setOccasion.intersection(setPhotoOccasion).count > 0 || setApparel.intersection(setPhotoApparel).count > 0 || setColor.intersection(setPhotoColor).count > 0 || (setOccasion.contains("") == true && setApparel.contains("") == true && setColor.contains("") == true) || (setOccasion.isEmpty == true && setApparel.isEmpty == true && setColor.isEmpty == true) || !setOccasion.contains("") && photo.imageOccasion.contains("Any") || !setApparel.contains("") && photo.imageApparel.contains("Any") || !setColor.contains("") && photo.imageColor.contains("Any") { return true }
         else { return false }
       }
       return filteredFootwearPhotoCollection.map { FilteredPhotoCollectionCellViewModel(withPhoto: $0) }

@@ -69,8 +69,6 @@ final class FilterViewController: DUViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Apparel"
-    
-    
     label.lineBreakMode = .byWordWrapping
     return label
   }()
@@ -568,7 +566,6 @@ final class FilterViewController: DUViewController {
         
       }
     }
-    
     
   }
 
