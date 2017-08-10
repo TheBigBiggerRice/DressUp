@@ -553,7 +553,7 @@
 				DEVELOPMENT_TEAM = 6MNS2MMD8U;
 				INFOPLIST_FILE = "$(SRCROOT)/DressUp/Supporting/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.makeschool.DressUp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chenyangzhang.StyleMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -567,7 +567,7 @@
 				DEVELOPMENT_TEAM = 6MNS2MMD8U;
 				INFOPLIST_FILE = "$(SRCROOT)/DressUp/Supporting/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.makeschool.DressUp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chenyangzhang.StyleMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

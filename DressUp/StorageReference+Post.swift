@@ -19,5 +19,6 @@ extension StorageReference {
     let timestamp = dataFormatter.string(from: Date())
     
     return Storage.storage().reference().child("images/photos/\(uid)/\(timestamp).jpg")
+    
   }
 }
