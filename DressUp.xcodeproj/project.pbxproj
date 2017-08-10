@@ -47,6 +47,7 @@
 		999655461F18A1E700A9E1DB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655451F18A1E700A9E1DB /* HomeViewController.swift */; };
 		999655551F193EF800A9E1DB /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655541F193EF800A9E1DB /* StorageService.swift */; };
 		99AC20F21F2D9D340058BD73 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AC20F11F2D9D340058BD73 /* UIColor.swift */; };
+		99C63ABE1F3C6A1C00BE48CD /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C63ABD1F3C6A1C00BE48CD /* CustomView.swift */; };
 		99EA72FD1F2D5D1500B46F5C /* DUViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EA72FC1F2D5D1500B46F5C /* DUViewController.swift */; };
 		99EA73011F2D6F1300B46F5C /* ForceTouchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EA73001F2D6F1300B46F5C /* ForceTouchViewController.swift */; };
 		99FE58041F2881EC0067A6C3 /* DUTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE58031F2881EC0067A6C3 /* DUTextField.swift */; };
@@ -95,6 +96,7 @@
 		999655451F18A1E700A9E1DB /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		999655541F193EF800A9E1DB /* StorageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		99AC20F11F2D9D340058BD73 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		99C63ABD1F3C6A1C00BE48CD /* CustomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		99EA72FC1F2D5D1500B46F5C /* DUViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DUViewController.swift; sourceTree = "<group>"; };
 		99EA73001F2D6F1300B46F5C /* ForceTouchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForceTouchViewController.swift; sourceTree = "<group>"; };
 		99FE58031F2881EC0067A6C3 /* DUTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DUTextField.swift; path = Extensions/DUTextField.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 				9932D4F61F29464B00A433E4 /* HomeTableViewCell.swift */,
 				993623D71F2E6720002CCFDF /* CustomTabBar.swift */,
 				99928F0A1F3BA62C005A56DE /* HeaderView.swift */,
+				99C63ABD1F3C6A1C00BE48CD /* CustomView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -428,6 +431,7 @@
 				9932D4F71F29464B00A433E4 /* HomeTableViewCell.swift in Sources */,
 				9990761F1F2AF12700666EC9 /* HomeController.swift in Sources */,
 				99928F0B1F3BA62C005A56DE /* HeaderView.swift in Sources */,
+				99C63ABE1F3C6A1C00BE48CD /* CustomView.swift in Sources */,
 				9990761D1F2AE9EB00666EC9 /* DUCellViewModels.swift in Sources */,
 				99711BFA1F367FF00097C405 /* RandomizePhotoViewController.swift in Sources */,
 				999655441F18861F00A9E1DB /* Storyboard+Utility.swift in Sources */,
