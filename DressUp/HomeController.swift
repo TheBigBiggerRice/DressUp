@@ -160,6 +160,8 @@ extension HomeController: UITableViewDelegate {
     let cvm = collectionCellViewModel(forRow: indexPath.row)
     
     (cell as? HomeTableViewCell)?.cellViewModel = cvm
+    (cell as? HomeTableViewCell)?.tagCarrier = indexPath.row
+
     return cell
   }
   

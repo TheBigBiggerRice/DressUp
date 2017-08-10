@@ -8,6 +8,8 @@
 import UIKit
 import Clarifai
 import SCLAlertView
+import AVFoundation
+import Photos
 
 final class CameraViewController: DUViewController {
   
@@ -256,14 +258,26 @@ final class CameraViewController: DUViewController {
     takePhotoImageButton.addTarget(self, action: #selector(CameraViewController.takePhotoImageButtonTapped), for: .touchUpInside)
     chooseImageButton.addTarget(self, action: #selector(CameraViewController.chooseImageButtonTapped), for: .touchUpInside)
     
-    topButton.addTarget(self, action: #selector(CameraViewController.topButtonTapped), for: .touchUpInside)
-    pantsButton.addTarget(self, action: #selector(CameraViewController.pantsButtonTapped), for: .touchUpInside)
-    footwearButton.addTarget(self, action: #selector(CameraViewController.footwearButtonTapped), for: .touchUpInside)
+    topButton.addTarget(self, action: #selector(CameraViewController.topButtonTapped), for: .touchDown)
+    topButton.addTarget(self, action: #selector(CameraViewController.topButtonTapped), for: .touchDragExit)
     
-    addOccasionsButton.addTarget(self, action: #selector(CameraViewController.addOccasionsButtonTapped), for: .touchUpInside)
     
-    addApparelsButton.addTarget(self, action: #selector(CameraViewController.addApparelsButtonTapped), for: .touchUpInside)
-    addColorsButton.addTarget(self, action: #selector(CameraViewController.addColorsButtonTapped), for: .touchUpInside)
+    pantsButton.addTarget(self, action: #selector(CameraViewController.pantsButtonTapped), for: .touchDown)
+    pantsButton.addTarget(self, action: #selector(CameraViewController.pantsButtonTapped), for: .touchDragExit)
+    
+    footwearButton.addTarget(self, action: #selector(CameraViewController.footwearButtonTapped), for: .touchDown)
+    footwearButton.addTarget(self, action: #selector(CameraViewController.footwearButtonTapped), for: .touchDragExit)
+    
+    
+    addOccasionsButton.addTarget(self, action: #selector(CameraViewController.addOccasionsButtonTapped), for: .touchDown)
+    addOccasionsButton.addTarget(self, action: #selector(CameraViewController.addOccasionsButtonTapped), for: .touchDragExit)
+    
+    addApparelsButton.addTarget(self, action: #selector(CameraViewController.addApparelsButtonTapped), for: .touchDown)
+    addApparelsButton.addTarget(self, action: #selector(CameraViewController.addApparelsButtonTapped), for: .touchDragExit)
+    
+    addColorsButton.addTarget(self, action: #selector(CameraViewController.addColorsButtonTapped), for: .touchDown)
+    addColorsButton.addTarget(self, action: #selector(CameraViewController.addColorsButtonTapped), for: .touchDragExit)
+    
     
     saveButton.addTarget(self, action: #selector(CameraViewController.saveButtonTapped), for: .touchUpInside)
     
@@ -316,13 +330,13 @@ final class CameraViewController: DUViewController {
     
     //pants button
     view.addConstraint(NSLayoutConstraint(item: pantsButton, attribute: .top, relatedBy: .equal, toItem: topButton, attribute: .top, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: pantsButton, attribute: .left, relatedBy: .equal, toItem: topButton, attribute: .right, multiplier: 1.0, constant: 5))
+    view.addConstraint(NSLayoutConstraint(item: pantsButton, attribute: .left, relatedBy: .equal, toItem: topButton, attribute: .right, multiplier: 1.0, constant: 10))
     view.addConstraint(NSLayoutConstraint(item: pantsButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: pantsButton.intrinsicContentSize.width + 20))
     view.addConstraint(NSLayoutConstraint(item: pantsButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
     
     //footwear button
     view.addConstraint(NSLayoutConstraint(item: footwearButton, attribute: .top, relatedBy: .equal, toItem: pantsButton, attribute: .top, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: footwearButton, attribute: .left, relatedBy: .equal, toItem: pantsButton, attribute: .right, multiplier: 1.0, constant: 5))
+    view.addConstraint(NSLayoutConstraint(item: footwearButton, attribute: .left, relatedBy: .equal, toItem: pantsButton, attribute: .right, multiplier: 1.0, constant: 10))
     view.addConstraint(NSLayoutConstraint(item: footwearButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: footwearButton.intrinsicContentSize.width + 20))
     view.addConstraint(NSLayoutConstraint(item: footwearButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
     
@@ -334,13 +348,13 @@ final class CameraViewController: DUViewController {
     
     //occasion scroll view
     view.addConstraint(NSLayoutConstraint(item: occasionScrollView, attribute: .left, relatedBy: .equal, toItem: occasionLabel, attribute: .right, multiplier: 1.0, constant: 5))
-    view.addConstraint(NSLayoutConstraint(item: occasionScrollView, attribute: .top, relatedBy: .equal, toItem: occasionLabel, attribute: .top, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: occasionScrollView, attribute: .top, relatedBy: .equal, toItem: occasionLabel, attribute: .top, multiplier: 1.0, constant: -5))
     view.addConstraint(NSLayoutConstraint(item: occasionScrollView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: -10))
-    view.addConstraint(NSLayoutConstraint(item: occasionScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 30))
+    view.addConstraint(NSLayoutConstraint(item: occasionScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 40))
     
     //add occasion button
     occasionScrollView.addConstraint(NSLayoutConstraint(item: addOccasionsButton, attribute: .right, relatedBy: .equal, toItem: occasionScrollView, attribute: .right, multiplier: 1.0, constant: 0))
-    occasionScrollView.addConstraint(NSLayoutConstraint(item: addOccasionsButton, attribute: .top, relatedBy: .equal, toItem: occasionScrollView, attribute: .top, multiplier: 1.0, constant: 0))
+    occasionScrollView.addConstraint(NSLayoutConstraint(item: addOccasionsButton, attribute: .top, relatedBy: .equal, toItem: occasionScrollView, attribute: .top, multiplier: 1.0, constant: 5))
     occasionScrollView.addConstraint(NSLayoutConstraint(item: addOccasionsButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
     occasionScrollView.addConstraint(NSLayoutConstraint(item: addOccasionsButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
     
@@ -355,13 +369,13 @@ final class CameraViewController: DUViewController {
     
     //apparel scroll view
     view.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .left, relatedBy: .equal, toItem: apparelLabel, attribute: .right, multiplier: 1.0, constant: 5))
-    view.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .top, relatedBy: .equal, toItem: apparelLabel, attribute: .top, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .top, relatedBy: .equal, toItem: apparelLabel, attribute: .top, multiplier: 1.0, constant: -5))
     view.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: -10))
-    view.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 30))
+    view.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 40))
     
     //add apparel button
     apparelScrollView.addConstraint(NSLayoutConstraint(item: addApparelsButton, attribute: .right, relatedBy: .equal, toItem: apparelScrollView, attribute: .right, multiplier: 1.0, constant: 0))
-    apparelScrollView.addConstraint(NSLayoutConstraint(item: addApparelsButton, attribute: .top, relatedBy: .equal, toItem: apparelScrollView, attribute: .top, multiplier: 1.0, constant: 0))
+    apparelScrollView.addConstraint(NSLayoutConstraint(item: addApparelsButton, attribute: .top, relatedBy: .equal, toItem: apparelScrollView, attribute: .top, multiplier: 1.0, constant: 5))
     apparelScrollView.addConstraint(NSLayoutConstraint(item: addApparelsButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
     apparelScrollView.addConstraint(NSLayoutConstraint(item: addApparelsButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
     
@@ -373,21 +387,21 @@ final class CameraViewController: DUViewController {
     
     //color scroll view
     view.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .left, relatedBy: .equal, toItem: colorLabel, attribute: .right, multiplier: 1.0, constant: 5))
-    view.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .top, relatedBy: .equal, toItem: colorLabel, attribute: .top, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .top, relatedBy: .equal, toItem: colorLabel, attribute: .top, multiplier: 1.0, constant: -5))
     view.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: -10))
-    view.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 30))
+    view.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 40))
     
     //add color button
     colorScrollView.addConstraint(NSLayoutConstraint(item: addColorsButton, attribute: .right, relatedBy: .equal, toItem: colorScrollView, attribute: .right, multiplier: 1.0, constant: 0))
     
-    colorScrollView.addConstraint(NSLayoutConstraint(item: addColorsButton, attribute: .top, relatedBy: .equal, toItem: colorScrollView, attribute: .top, multiplier: 1.0, constant: 0))
+    colorScrollView.addConstraint(NSLayoutConstraint(item: addColorsButton, attribute: .top, relatedBy: .equal, toItem: colorScrollView, attribute: .top, multiplier: 1.0, constant: 5))
     colorScrollView.addConstraint(NSLayoutConstraint(item: addColorsButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
     colorScrollView.addConstraint(NSLayoutConstraint(item: addColorsButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
     
     
     //save button
-    view.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 10))
+    view.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: -10))
     view.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: -50))
     saveButtonHeightConstraint = NSLayoutConstraint(item: saveButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0)
     view.addConstraint(saveButtonHeightConstraint)
@@ -404,19 +418,25 @@ final class CameraViewController: DUViewController {
       let button = createOccasionbutton()
       button.setTitle(occasion, for: .normal)
       
-      if occasionTags.contains(occasion) {
-        button.backgroundColor = UIColor.royalBlue
-      }
-      
       occasionButtons.append(button)
     }
     
     var previousOccasionButton: UIButton?
     
-    for (index, button) in occasionButtons.enumerated() {
+    for button in occasionButtons {
       
-      button.tag = index
-      button.addTarget(self, action: #selector(CameraViewController.occasionButtonTapped(sender:)), for: .touchUpInside)
+      //button.tag = index
+      //button.addTarget(self, action: #selector(CameraViewController.occasionButtonTapped(sender:)), for: .touchUpInside)
+      button.addTarget(self, action: #selector(CameraViewController.occasionButtonCheckTouchDown(sender:)), for: [.touchDown,
+                                                                                                                  .touchDragInside])
+      
+      button.addTarget(self, action: #selector(CameraViewController.occasionButtonCheckTouchUpInside(sender:)), for: .touchUpInside)
+      
+      button.addTarget(self, action: #selector(CameraViewController.occasionButtonCheckTouchUp(sender:)), for: [.touchUpOutside,
+                                                                                                                .touchDragExit,
+                                                                                                                .touchCancel,
+                                                                                                                .touchDragOutside])
+      
       
       if nil == previousOccasionButton {
         
@@ -424,15 +444,15 @@ final class CameraViewController: DUViewController {
         
         occasionScrollView.addSubview(button)
         
-        occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: occasionScrollView, attribute: .top, multiplier: 1.0, constant: 0))
-        occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: occasionScrollView, attribute: .left, multiplier: 1.0, constant: 0))
+        occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: occasionScrollView, attribute: .top, multiplier: 1.0, constant: 5))
+        occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: occasionScrollView, attribute: .left, multiplier: 1.0, constant: 5))
         occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
         occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
       } else {
         occasionScrollView.addSubview(button)
         
         occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: previousOccasionButton, attribute: .top, multiplier: 1.0, constant: 0))
-        occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousOccasionButton, attribute: .right, multiplier: 1.0, constant: 5))
+        occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousOccasionButton, attribute: .right, multiplier: 1.0, constant: 10))
         occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
         occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: previousOccasionButton, attribute: .bottom , multiplier: 1.0, constant: 0))
         
@@ -440,7 +460,7 @@ final class CameraViewController: DUViewController {
         
       }
     }
-    occasionScrollView.addConstraint(NSLayoutConstraint(item: previousOccasionButton!, attribute: .right, relatedBy: .equal, toItem: addOccasionsButton, attribute: .left, multiplier: 1.0, constant: -5))
+    occasionScrollView.addConstraint(NSLayoutConstraint(item: previousOccasionButton!, attribute: .right, relatedBy: .equal, toItem: addOccasionsButton, attribute: .left, multiplier: 1.0, constant: -10))
     
   }
   
@@ -457,42 +477,44 @@ final class CameraViewController: DUViewController {
       let button = self.createButton()
       button.setTitle(apparel, for: .normal)
       
-      if apparelTags.contains(apparel) {
-        button.backgroundColor = UIColor.royalBlue
-      }
-      
-      self.apparelButtons.append(button)
+      apparelButtons.append(button)
     }
     
     var previousButton: UIButton?
     
-    for (index, button) in apparelButtons.enumerated() {
+    for button in apparelButtons {
       
-      button.tag = index
-      button.addTarget(self, action: #selector(CameraViewController.apparelButtonTapped(sender:)), for: .touchUpInside)
+      button.addTarget(self, action: #selector(CameraViewController.apparelButtonCheckTouchDown(sender:)), for: [.touchDown,
+                                                                                                                 .touchDragInside])
       
+      button.addTarget(self, action: #selector(CameraViewController.apparelButtonCheckTouchUpInside(sender:)), for: .touchUpInside)
+      
+      button.addTarget(self, action: #selector(CameraViewController.apparelButtonCheckTouchUp(sender:)), for: [.touchUpOutside,
+                                                                                                               .touchDragExit,
+                                                                                                               .touchCancel,
+                                                                                                               .touchDragOutside])
       if nil == previousButton {
         
         previousButton = button
         
         apparelScrollView.addSubview(button)
         
-        apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: apparelScrollView, attribute: .top, multiplier: 1.0, constant: 0))
-        apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: apparelScrollView, attribute: .left, multiplier: 1.0, constant: 0))
+        apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: apparelScrollView, attribute: .top, multiplier: 1.0, constant: 5))
+        apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: apparelScrollView, attribute: .left, multiplier: 1.0, constant: 5))
         apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
         apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
         
       } else {
         apparelScrollView.addSubview(button)
         apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: previousButton, attribute: .top, multiplier: 1.0, constant: 0))
-        apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousButton, attribute: .right, multiplier: 1.0, constant: 5))
+        apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousButton, attribute: .right, multiplier: 1.0, constant: 10))
         apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
         apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: previousButton, attribute: .bottom , multiplier: 1.0, constant: 0))
         
         previousButton = button
       }
     }
-    self.apparelScrollView.addConstraint(NSLayoutConstraint(item: previousButton!, attribute: .right, relatedBy: .equal, toItem: addApparelsButton, attribute: .left, multiplier: 1.0, constant: -5))
+    self.apparelScrollView.addConstraint(NSLayoutConstraint(item: previousButton!, attribute: .right, relatedBy: .equal, toItem: addApparelsButton, attribute: .left, multiplier: 1.0, constant: -10))
     
   }
   
@@ -507,53 +529,52 @@ final class CameraViewController: DUViewController {
       let button = createButton()
       button.setTitle(color, for: .normal)
       
-      if colorTags.contains(color) {
-        button.backgroundColor = UIColor.royalBlue
-      }
       colorButtons.append(button)
     }
     var previousButton: UIButton?
     
-    for (index, button) in colorButtons.enumerated() {
+    for button in colorButtons {
       
-      button.tag = index
-      button.addTarget(self, action: #selector(CameraViewController.colorButtonTapped(sender:)), for: .touchUpInside)
-
+      button.addTarget(self, action: #selector(CameraViewController.colorButtonCheckTouchDown(sender:)), for: [.touchDown,
+                                                                                                               .touchDragInside])
+      
+      button.addTarget(self, action: #selector(CameraViewController.colorButtonCheckTouchUpInside(sender:)), for: .touchUpInside)
+      
+      button.addTarget(self, action: #selector(CameraViewController.colorButtonCheckTouchUp(sender:)), for: [.touchUpOutside,
+                                                                                                             .touchDragExit,
+                                                                                                             .touchCancel,
+                                                                                                             .touchDragOutside])
       
       if nil == previousButton {
         previousButton = button
         colorScrollView.addSubview(button)
-        colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: colorScrollView, attribute: .top, multiplier: 1.0, constant: 0))
-        colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: colorScrollView, attribute: .left, multiplier: 1.0, constant: 0))
+        colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: colorScrollView, attribute: .top, multiplier: 1.0, constant: 5))
+        colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: colorScrollView, attribute: .left, multiplier: 1.0, constant: 5))
         colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
         colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+        
       } else {
         colorScrollView.addSubview(button)
         colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: previousButton, attribute: .top, multiplier: 1.0, constant: 0))
-        colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousButton, attribute: .right, multiplier: 1.0, constant: 5))
+        colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousButton, attribute: .right, multiplier: 1.0, constant: 10))
         colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
         colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: previousButton, attribute: .bottom , multiplier: 1.0, constant: 0))
         
         previousButton = button
       }
     }
-    colorScrollView.addConstraint(NSLayoutConstraint(item: previousButton!, attribute: .right, relatedBy: .equal, toItem: addColorsButton, attribute: .left, multiplier: 1.0, constant: -5))
+    colorScrollView.addConstraint(NSLayoutConstraint(item: previousButton!, attribute: .right, relatedBy: .equal, toItem: addColorsButton, attribute: .left, multiplier: 1.0, constant: -10))
   }
   
   
   
   private dynamic func takePhotoImageButtonTapped() {
-    picker.allowsEditing = false
-    picker.sourceType = UIImagePickerControllerSourceType.camera
-    picker.delegate = self
-    present(picker, animated: true, completion: nil)
+    
+    checkCameraPermissions()
   }
   
   private dynamic func chooseImageButtonTapped() {
-    picker.allowsEditing = false
-    picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-    picker.delegate = self
-    present(picker, animated: true, completion: nil)
+    checkPhotoLibraryPermissions()
   }
   
   private dynamic func topButtonTapped() {
@@ -562,6 +583,31 @@ final class CameraViewController: DUViewController {
     pantsButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
     footwearButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
     
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.topButton.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1.0)
+    },
+      completion: nil)
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.pantsButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.footwearButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
+    
   }
   
   private dynamic func pantsButtonTapped() {
@@ -569,6 +615,31 @@ final class CameraViewController: DUViewController {
     pantsButton.layer.backgroundColor = UIColor.royalBlue.cgColor
     topButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
     footwearButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.pantsButton.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1.0)
+    },
+      completion: nil)
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.topButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.footwearButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
   }
   
   private dynamic func footwearButtonTapped() {
@@ -576,26 +647,184 @@ final class CameraViewController: DUViewController {
     footwearButton.layer.backgroundColor = UIColor.royalBlue.cgColor
     topButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
     pantsButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.footwearButton.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1.0)
+    },
+      completion: nil)
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.pantsButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.topButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
   }
   
-  private dynamic func occasionButtonTapped(sender: UIButton) {
-    for index in 0 ..< occasionButtonText.count {
-      if sender.isSelected {
-        if sender.tag == index {
-          sender.layer.backgroundColor = UIColor.lighterBlue.cgColor
-          occasionTags = occasionTags.filter{ $0 != sender.titleLabel?.text }
-          sender.isSelected = false
-        }
-      }
-      else {
-        if sender.tag == index {
-          sender.layer.backgroundColor = UIColor.royalBlue.cgColor
-          occasionTags = occasionTags.filter{ $0 != sender.titleLabel?.text }
-          occasionTags.append((sender.titleLabel?.text)!)
-          sender.isSelected = true
-        }
-      }
+  //occasion buttons
+  private dynamic func occasionButtonCheckTouchDown(sender: UIButton) {
+    sender.backgroundColor = UIColor.royalBlue
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        sender.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1.0)
+    },
+      completion: nil)
+    
+  }
+  
+  private dynamic func occasionButtonCheckTouchUpInside(sender: UIButton) {
+    if sender.isSelected {
+      sender.backgroundColor = UIColor.lighterBlue
+      UIView.animate(
+        withDuration: 0.3,
+        delay: 0.0,
+        options: .curveEaseOut,
+        animations: {
+          sender.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+      },
+        completion: nil)
+      sender.isSelected = false
+    } else {
+      sender.backgroundColor = UIColor.royalBlue
+      UIView.animate(
+        withDuration: 0.3,
+        delay: 0.0,
+        options: .curveEaseOut,
+        animations: {
+          sender.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1.0)
+      },
+        completion: nil)
+      sender.isSelected = true
     }
+  }
+  
+  private dynamic func occasionButtonCheckTouchUp(sender: UIButton) {
+    sender.backgroundColor = UIColor.lighterBlue
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        sender.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
+  }
+  
+  //apparel buttons
+  private dynamic func apparelButtonCheckTouchDown(sender: UIButton) {
+    sender.backgroundColor = UIColor.royalBlue
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        sender.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1.0)
+    },
+      completion: nil)
+  }
+  
+  private dynamic func apparelButtonCheckTouchUpInside(sender: UIButton) {
+    if sender.isSelected {
+      sender.backgroundColor = UIColor.lighterBlue
+      UIView.animate(
+        withDuration: 0.3,
+        delay: 0.0,
+        options: .curveEaseOut,
+        animations: {
+          sender.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+      },
+        completion: nil)
+      sender.isSelected = false
+    } else {
+      sender.backgroundColor = UIColor.royalBlue
+      UIView.animate(
+        withDuration: 0.3,
+        delay: 0.0,
+        options: .curveEaseOut,
+        animations: {
+          sender.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1.0)
+      },
+        completion: nil)
+      sender.isSelected = true
+    }
+  }
+  
+  private dynamic func apparelButtonCheckTouchUp(sender: UIButton) {
+    sender.backgroundColor = UIColor.lighterBlue
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        sender.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
+  }
+  
+  //color buttons
+  private dynamic func colorButtonCheckTouchDown(sender: UIButton) {
+    sender.backgroundColor = UIColor.royalBlue
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        sender.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1.0)
+    },
+      completion: nil)
+  }
+  
+  private dynamic func colorButtonCheckTouchUpInside(sender: UIButton) {
+    if sender.isSelected {
+      sender.backgroundColor = UIColor.lighterBlue
+      UIView.animate(
+        withDuration: 0.3,
+        delay: 0.0,
+        options: .curveEaseOut,
+        animations: {
+          sender.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+      },
+        completion: nil)
+      sender.isSelected = false
+    } else {
+      sender.backgroundColor = UIColor.royalBlue
+      UIView.animate(
+        withDuration: 0.3,
+        delay: 0.0,
+        options: .curveEaseOut,
+        animations: {
+          sender.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1.0)
+      },
+        completion: nil)
+      sender.isSelected = true
+    }
+  }
+  
+  private dynamic func colorButtonCheckTouchUp(sender: UIButton) {
+    sender.backgroundColor = UIColor.lighterBlue
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        sender.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
   }
   
   private dynamic func addOccasionsButtonTapped() {
@@ -628,26 +857,6 @@ final class CameraViewController: DUViewController {
     _ = alertView.showCustom("Add Occasion", subTitle: "Want to wear this at another occasion? Customize your own!", color: UIColor.royalBlue, icon: alertViewIcon!)
   }
   
-  private dynamic func apparelButtonTapped(sender: UIButton) {
-    for index in 0 ..< autoGeneratedApparelTags.count {
-      if sender.isSelected {
-        if sender.tag == index {
-          sender.layer.backgroundColor = UIColor.lighterBlue.cgColor
-          apparelTags = apparelTags.filter{ $0 != sender.titleLabel?.text }
-          sender.isSelected = false
-        }
-      }
-      else {
-        if sender.tag == index {
-          sender.layer.backgroundColor = UIColor.royalBlue.cgColor
-          apparelTags = apparelTags.filter{ $0 != sender.titleLabel?.text }
-          apparelTags.append((sender.titleLabel?.text)!)
-          sender.isSelected = true
-        }
-      }
-    }
-  }
-  
   private dynamic func addApparelsButtonTapped() {
     
     let appearance = SCLAlertView.SCLAppearance(
@@ -676,27 +885,6 @@ final class CameraViewController: DUViewController {
     
     let alertViewIcon = UIImage(named: "clothes_white")
     _ = alertView.showCustom("Add Apparel", subTitle: "None of the generated apparels match the photo? Insert your own!", color: UIColor.royalBlue, icon: alertViewIcon!)
-  }
-  
-  
-  private dynamic func colorButtonTapped(sender: UIButton) {
-    for index in 0 ..< autoGeneratedColorTags.count {
-      if sender.isSelected {
-        if sender.tag == index {
-          sender.layer.backgroundColor = UIColor.lighterBlue.cgColor
-          colorTags = colorTags.filter{ $0 != sender.titleLabel?.text }
-          sender.isSelected = false
-        }
-      }
-      else {
-        if sender.tag == index {
-          sender.layer.backgroundColor = UIColor.royalBlue.cgColor
-          colorTags = colorTags.filter{ $0 != sender.titleLabel?.text }
-          colorTags.append((sender.titleLabel?.text)!)
-          sender.isSelected = true
-        }
-      }
-    }
   }
   
   private dynamic func addColorsButtonTapped() {
@@ -744,6 +932,52 @@ final class CameraViewController: DUViewController {
       positionTags = "Footwear"
       
     }
+    for button in occasionButtons {
+      if button.backgroundColor == UIColor.royalBlue {
+        occasionTags.append((button.titleLabel?.text)!)
+        button.backgroundColor = UIColor.lighterBlue
+        UIView.animate(
+          withDuration: 0.3,
+          delay: 0.0,
+          options: .curveEaseOut,
+          animations: {
+            button.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+        },
+          completion: nil)
+        
+      }
+    }
+    
+    for button in apparelButtons {
+      if button.backgroundColor == UIColor.royalBlue {
+        apparelTags.append((button.titleLabel?.text)!)
+        button.backgroundColor = UIColor.lighterBlue
+        UIView.animate(
+          withDuration: 0.3,
+          delay: 0.0,
+          options: .curveEaseOut,
+          animations: {
+            button.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+        },
+          completion: nil)
+      }
+    }
+    
+    for button in colorButtons {
+      if button.backgroundColor == UIColor.royalBlue {
+        colorTags.append((button.titleLabel?.text)!)
+        button.backgroundColor = UIColor.lighterBlue
+        UIView.animate(
+          withDuration: 0.3,
+          delay: 0.0,
+          options: .curveEaseOut,
+          animations: {
+            button.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+        },
+          completion: nil)
+      }
+    }
+    
     if occasionTags.isEmpty == true {
       occasionTags.append("Any")
     }
@@ -771,7 +1005,6 @@ final class CameraViewController: DUViewController {
         }
       )
     }
-
     
   }
   
@@ -783,7 +1016,7 @@ final class CameraViewController: DUViewController {
       options: .curveEaseIn,
       animations: { [weak self] _ in
         self?.saveButton.alpha = 1
-        self?.saveButtonHeightConstraint.constant = 40
+        self?.saveButtonHeightConstraint.constant = 50
         self?.view.layoutIfNeeded()
       }
     )
@@ -810,6 +1043,68 @@ final class CameraViewController: DUViewController {
     return button
     
   }
+  //check if camera access is permitted
+  func checkCameraPermissions() {
+    let authStatus = AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo)
+    
+    switch authStatus {
+    case .authorized:
+      setupCamera()
+    case .denied:
+      alertPromptToAllowCameraAccessViaSetting()
+    default:
+      setupCamera()
+    }
+  }
+  
+  func alertPromptToAllowCameraAccessViaSetting() {
+    let alert = UIAlertController(title: "Error", message: "Camera access required to take photo", preferredStyle: UIAlertControllerStyle.alert)
+    
+    alert.addAction(UIAlertAction(title: "Cancel", style: .default))
+    alert.addAction(UIAlertAction(title: "Settings", style: .cancel) { (alert) -> Void in
+      
+      UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!, options: [:], completionHandler: nil)
+      
+    })
+    
+    present(alert, animated: true)
+  }
+  func setupCamera() {
+    picker.allowsEditing = false
+    picker.sourceType = UIImagePickerControllerSourceType.camera
+    picker.delegate = self
+    present(picker, animated: true, completion: nil)
+  }
+  
+  func checkPhotoLibraryPermissions() {
+    let authStatus = PHPhotoLibrary.authorizationStatus()
+    switch authStatus {
+    case .authorized:
+      setupPhotoLibrary()
+    case .denied:
+      alertPromptToAllowPhotoLibraryAccessViaSetting()
+    default:
+      setupPhotoLibrary()
+    }
+  }
+  
+  func alertPromptToAllowPhotoLibraryAccessViaSetting() {
+    let alert = UIAlertController(title: "Error", message: "Photo Library access required to choose from library", preferredStyle: UIAlertControllerStyle.alert)
+    
+    alert.addAction(UIAlertAction(title: "Cancel", style: .default))
+    alert.addAction(UIAlertAction(title: "Settings", style: .cancel) { (alert) -> Void in
+      UIApplication.shared.open(URL(string: UIApplicationOpenSettingsURLString)!, options: [:], completionHandler: nil)
+    })
+    
+    present(alert, animated: true)
+  }
+  
+  func setupPhotoLibrary() {
+    picker.allowsEditing = false
+    picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+    picker.delegate = self
+    present(picker, animated: true, completion: nil)
+  }
   
 }
 
@@ -826,9 +1121,7 @@ extension CameraViewController: UIImagePickerControllerDelegate {
       recognizeImage(image: image, modelID: Constants.ModelIDs.colorID, modelName: Constants.ModelNames.colorName)
       
       saveButton.isEnabled = false
-      //takePhotoImageButton.isEnabled = false
-      //chooseImageButton.isEnabled = false
-      
+      occasionTags.removeAll()
       apparelTags.removeAll()
       colorTags.removeAll()
       
@@ -879,8 +1172,6 @@ extension CameraViewController: UIImagePickerControllerDelegate {
           
           DispatchQueue.main.async {
             
-            //self.takePhotoImageButton.isEnabled = true
-            //self.chooseImageButton.isEnabled = true
             self.saveButton.isEnabled = true
             self.chooseImageButton.alpha = 1
             self.takePhotoImageButton.alpha = 1

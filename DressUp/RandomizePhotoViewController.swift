@@ -16,15 +16,13 @@ final class RandomizePhotoViewController: DUViewController {
   var pantsPhotos = [Photos]()
   var footwearPhotos = [Photos]()
   
-  let photoHeight = (UIScreen.main.bounds.height - 64)/3
-  
+  let photoHeight = (UIScreen.main.bounds.height - 104)/3
   fileprivate let backgroundView: UIImageView = {
     let view = UIImageView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.contentMode = .scaleAspectFill
     view.clipsToBounds = true
     view.backgroundColor = UIColor.lighterBlack
-    //view.image = #imageLiteral(resourceName: "background4")
     return view
   }()
   
@@ -32,8 +30,7 @@ final class RandomizePhotoViewController: DUViewController {
     let view = UIImageView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.contentMode = .scaleAspectFill
-    view.layer.cornerRadius = 112
-    //view.layer.borderWidth = 0.25
+    view.layer.cornerRadius = (UIScreen.main.bounds.height - 104)/6
     view.layer.borderColor = UIColor.white.cgColor
     view.clipsToBounds = true
     
@@ -46,8 +43,7 @@ final class RandomizePhotoViewController: DUViewController {
     let view = UIImageView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.contentMode = .scaleAspectFill
-    view.layer.cornerRadius = 112
-    //view.layer.borderWidth = 0.25
+    view.layer.cornerRadius = (UIScreen.main.bounds.height - 104)/6
     view.layer.borderColor = UIColor.white.cgColor
     view.clipsToBounds = true
     view.isUserInteractionEnabled = true
@@ -60,8 +56,7 @@ final class RandomizePhotoViewController: DUViewController {
     let view = UIImageView()
     view.translatesAutoresizingMaskIntoConstraints = false
     view.contentMode = .scaleAspectFill
-    view.layer.cornerRadius = 112
-    //view.layer.borderWidth = 0.25
+    view.layer.cornerRadius = (UIScreen.main.bounds.height - 104)/6
     view.layer.borderColor = UIColor.white.cgColor
     view.clipsToBounds = true
     view.isUserInteractionEnabled = true
@@ -90,17 +85,13 @@ final class RandomizePhotoViewController: DUViewController {
     
     let tapFootwearGesture = UITapGestureRecognizer(target: self, action: #selector(footwearImageViewTapped))
     footwearImageView.addGestureRecognizer(tapFootwearGesture)
-    
-    
-    
+  
     randomizeTopImage()
     randomizePantsImage()
     randomizeFootwearImage()
     
   }
-  
-  
-  
+
   //shake to shuffle
   override func motionBegan(_ motion: UIEventSubtype, with event: UIEvent?) {
     randomizeTopImage()
@@ -109,7 +100,6 @@ final class RandomizePhotoViewController: DUViewController {
   }
   
   //tap on one of the image views, and the photo within that image view changes to another random one
-  
   
   private func initialize() {
     
@@ -120,24 +110,21 @@ final class RandomizePhotoViewController: DUViewController {
     view.insertSubview(footwearImageView, aboveSubview: backgroundView)
     
     //top image view
-    view.addConstraint(NSLayoutConstraint(item: topImageView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: topImageView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1.0, constant: 10))
     view.addConstraint(NSLayoutConstraint(item: topImageView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0))
     view.addConstraint(NSLayoutConstraint(item: topImageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: photoHeight))
     view.addConstraint(NSLayoutConstraint(item: topImageView, attribute: .height, relatedBy: .equal, toItem: topImageView, attribute: .width, multiplier: 1.0, constant: 0))
     
     //pants image view
     view.addConstraint(NSLayoutConstraint(item: pantsImageView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: pantsImageView, attribute: .top, relatedBy: .equal, toItem: topImageView, attribute: .bottom, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: pantsImageView, attribute: .top, relatedBy: .equal, toItem: topImageView, attribute: .bottom, multiplier: 1.0, constant: 10))
     view.addConstraint(NSLayoutConstraint(item: pantsImageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: photoHeight))
     view.addConstraint(NSLayoutConstraint(item: pantsImageView, attribute: .height, relatedBy: .equal, toItem: pantsImageView, attribute: .width, multiplier: 1.0, constant: 0))
     
     //footwear image view
-    view.addConstraint(NSLayoutConstraint(item: footwearImageView, attribute: .top, relatedBy: .equal, toItem: pantsImageView, attribute: .bottom, multiplier: 1.0, constant: 0))
-    
+    view.addConstraint(NSLayoutConstraint(item: footwearImageView, attribute: .top, relatedBy: .equal, toItem: pantsImageView, attribute: .bottom, multiplier: 1.0, constant: 10))
     view.addConstraint(NSLayoutConstraint(item: footwearImageView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.0, constant: 0))
-    
     view.addConstraint(NSLayoutConstraint(item: footwearImageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: photoHeight))
-    
     view.addConstraint(NSLayoutConstraint(item: footwearImageView, attribute: .height, relatedBy: .equal, toItem: footwearImageView, attribute: .width, multiplier: 1.0, constant: 0))
   }
   

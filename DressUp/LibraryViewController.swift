@@ -42,9 +42,8 @@ class LibraryViewController: DUViewController {
   
     navigationItem.title = "Library"
     
-    
-    //select button
-    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(LibraryViewController.selectButtonTapped(sender:)))
+    //edit button
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(LibraryViewController.selectButtonTapped(sender:)))
     navigationItem.rightBarButtonItem?.tintColor = .white
     navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 17)!], for: .normal)
 

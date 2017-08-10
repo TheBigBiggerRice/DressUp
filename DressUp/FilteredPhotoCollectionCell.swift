@@ -28,6 +28,16 @@ class FilteredPhotoCollectionCell: UICollectionViewCell {
     view.translatesAutoresizingMaskIntoConstraints = false
     view.contentMode = .scaleAspectFill
     view.clipsToBounds = true
+    view.layer.cornerRadius = 10
+    return view
+  }()
+  
+  let backgroundImageView: UIImageView = {
+    let view = UIImageView()
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.layer.cornerRadius = 10
+    view.clipsToBounds = true
+    view.image = #imageLiteral(resourceName: "DarkWoodenFrame")
     return view
   }()
   
@@ -48,7 +58,14 @@ class FilteredPhotoCollectionCell: UICollectionViewCell {
   }
   
   private func initialize() {
-    filteredImageView.addToAndConstrain(insideSuper: contentView)
+    
+    contentView.addSubview(filteredImageView)
+  
+    contentView.addConstraint(NSLayoutConstraint(item: filteredImageView, attribute: .top, relatedBy: .equal, toItem: contentView, attribute: .top, multiplier: 1.0, constant: 5))
+    contentView.addConstraint(NSLayoutConstraint(item: filteredImageView, attribute: .left, relatedBy: .equal, toItem: contentView, attribute: .left, multiplier: 1.0, constant: 5))
+    contentView.addConstraint(NSLayoutConstraint(item: filteredImageView, attribute: .right, relatedBy: .equal, toItem: contentView, attribute: .right, multiplier: 1.0, constant: -5))
+    contentView.addConstraint(NSLayoutConstraint(item: filteredImageView, attribute: .bottom, relatedBy: .equal, toItem: contentView, attribute: .bottom, multiplier: 1.0, constant: -5))
+
   }
   
 }

@@ -41,8 +41,6 @@ final class HomeViewController: DUViewController {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
     label.text = "Color:"
-    
-    
     label.lineBreakMode = .byWordWrapping
     return label
   }()

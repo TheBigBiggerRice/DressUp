@@ -33,6 +33,7 @@
 		9991BB9E1F22C41A0074A6DC /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9991BB9D1F22C41A0074A6DC /* PhotoViewController.swift */; };
 		9991BBA01F22C4250074A6DC /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9991BB9F1F22C4250074A6DC /* LibraryViewController.swift */; };
 		9991BBA21F22C4320074A6DC /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9991BBA11F22C4320074A6DC /* CameraViewController.swift */; };
+		99928F0B1F3BA62C005A56DE /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99928F0A1F3BA62C005A56DE /* HeaderView.swift */; };
 		999655291F18335000A9E1DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 999655271F18335000A9E1DB /* LaunchScreen.storyboard */; };
 		9996552A1F18335000A9E1DB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 999655281F18335000A9E1DB /* Main.storyboard */; };
 		9996552D1F18335700A9E1DB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9996552B1F18335700A9E1DB /* GoogleService-Info.plist */; };
@@ -79,6 +80,7 @@
 		9991BB9D1F22C41A0074A6DC /* PhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		9991BB9F1F22C4250074A6DC /* LibraryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
 		9991BBA11F22C4320074A6DC /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		99928F0A1F3BA62C005A56DE /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		999655271F18335000A9E1DB /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Storyboards/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		999655281F18335000A9E1DB /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = Storyboards/Main.storyboard; sourceTree = "<group>"; };
 		9996552B1F18335700A9E1DB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Supporting/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				9932E23F1F2A656D00E48F70 /* FilteredPhotoCollectionCell.swift */,
 				9932D4F61F29464B00A433E4 /* HomeTableViewCell.swift */,
 				993623D71F2E6720002CCFDF /* CustomTabBar.swift */,
+				99928F0A1F3BA62C005A56DE /* HeaderView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -424,6 +427,7 @@
 				999655461F18A1E700A9E1DB /* HomeViewController.swift in Sources */,
 				9932D4F71F29464B00A433E4 /* HomeTableViewCell.swift in Sources */,
 				9990761F1F2AF12700666EC9 /* HomeController.swift in Sources */,
+				99928F0B1F3BA62C005A56DE /* HeaderView.swift in Sources */,
 				9990761D1F2AE9EB00666EC9 /* DUCellViewModels.swift in Sources */,
 				99711BFA1F367FF00097C405 /* RandomizePhotoViewController.swift in Sources */,
 				999655441F18861F00A9E1DB /* Storyboard+Utility.swift in Sources */,

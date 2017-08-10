@@ -10,17 +10,25 @@ import UIKit
 import FirebaseDatabase
 import Kingfisher
 
+
+
+
 final class HomeTableViewCell: UITableViewCell {
+  
   
   var cellViewModel: HomeTableViewCellViewModel? {
     didSet {
       guard cellViewModel != nil else {
         return
       }
+//      homeCollectionView.tag = tagCount
+//      tagCount += 1
       homeCollectionView.reloadData()
     }
     
   }
+  
+  var tagCarrier: Int = 0
   
   var user: User!
   var photoCollection = [Photos]()
@@ -40,6 +48,7 @@ final class HomeTableViewCell: UITableViewCell {
     collection.translatesAutoresizingMaskIntoConstraints = false
     collection.showsHorizontalScrollIndicator = false
     collection.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    
     return collection
     
   }()
@@ -74,13 +83,18 @@ final class HomeTableViewCell: UITableViewCell {
     //initialize home collection view 
     
     homeCollectionView.register(FilteredPhotoCollectionCell.self, forCellWithReuseIdentifier: FilteredPhotoCollectionCell.description())
-    
+    homeCollectionView.register(HeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
+
     homeCollectionView.delegate = self
     homeCollectionView.dataSource = self
     
     homeCollectionView.backgroundColor = .white
+//    homeCollectionView.tag = tagCarrier
+//    tagCount += 1
+//    print(tagCount)
     
     homeCollectionView.addToAndConstrain(insideSuper: self)
+
   }
 }
 
@@ -100,15 +114,43 @@ extension HomeTableViewCell: UICollectionViewDataSource {
     
     if let viewModel = cellViewModel?[indexPath.row] {
       (cell as? FilteredPhotoCollectionCell)?.viewModel = viewModel
+      (cell as? FilteredPhotoCollectionCell)?.tag = tagCarrier
+//      tagCount += 1
     } else {
       (cell as? FilteredPhotoCollectionCell)?.viewModel = nil
     }
+    
     return cell
   }
 
-//CODE HERE
-//  func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//  }
-//  
+  func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    
+    switch kind {
+    
+    case UICollectionElementKindSectionHeader:
+      let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "HeaderView", for: indexPath) as! HeaderView
+      
+      switch tagCarrier {
+      case 0:
+        headerView.headerLabel.text = "Top"
+      case 1:
+        headerView.headerLabel.text = "Pants"
+      case 2:
+        headerView.headerLabel.text = "Footwear"
+      default:
+        headerView.headerLabel.text = "Error"
+        
+      }
+      return headerView
+      
+    default:
+      assert(false, "Unexpected element kind")
+    }
+    
+    
+  }
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    return CGSize(width: 100, height: 50)
+  }
   
 }
