@@ -16,12 +16,6 @@ class LoginViewController: UIViewController {
   
   @IBOutlet weak var loginButton: UIButton!
   
-  //    @IBInspectable var borderColor: UIColor? {
-  //      didSet {
-  //      layer.borderColor = borderColor?.CGColor
-  //      layer.borderWidth = 1
-  //    }
-  //  }
   override func viewDidLoad() {
     super.viewDidLoad()
   }

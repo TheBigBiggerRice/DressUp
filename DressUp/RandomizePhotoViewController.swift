@@ -33,9 +33,7 @@ final class RandomizePhotoViewController: DUViewController {
     view.layer.cornerRadius = (UIScreen.main.bounds.height - 104)/6
     view.layer.borderColor = UIColor.white.cgColor
     view.clipsToBounds = true
-    
     view.isUserInteractionEnabled = true
-    
     return view
   }()
   
@@ -47,8 +45,6 @@ final class RandomizePhotoViewController: DUViewController {
     view.layer.borderColor = UIColor.white.cgColor
     view.clipsToBounds = true
     view.isUserInteractionEnabled = true
-    
-    
     return view
   }()
   
@@ -62,8 +58,6 @@ final class RandomizePhotoViewController: DUViewController {
     view.isUserInteractionEnabled = true
     return view
   }()
-  
-  
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -92,14 +86,11 @@ final class RandomizePhotoViewController: DUViewController {
     
   }
 
-  //shake to shuffle
   override func motionBegan(_ motion: UIEventSubtype, with event: UIEvent?) {
     randomizeTopImage()
     randomizePantsImage()
     randomizeFootwearImage()
   }
-  
-  //tap on one of the image views, and the photo within that image view changes to another random one
   
   private func initialize() {
     
@@ -145,8 +136,6 @@ final class RandomizePhotoViewController: DUViewController {
     randomizeFootwearImage()
   }
   
-  
-  
   func randomizeTopImage() {
     if topPhotos.count > 0 {
       let topRandomIndex = Int(arc4random_uniform(UInt32(topPhotos.count)))
@@ -162,12 +151,10 @@ final class RandomizePhotoViewController: DUViewController {
         options: .curveEaseOut,
         animations: {
           self.topImageView.transform = .identity
-          
       }) { (success) in
-        
       }
-      
     }
+    
   }
   func randomizePantsImage() {
     if pantsPhotos.count > 0 {
@@ -212,7 +199,6 @@ final class RandomizePhotoViewController: DUViewController {
       }) { (success) in
         
       }
-      
     }
   }
   

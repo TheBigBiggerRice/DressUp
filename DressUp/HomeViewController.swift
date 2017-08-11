@@ -149,7 +149,13 @@ final class HomeViewController: DUViewController {
     vc.pantsPhotos = homeController.filteredPantsPhotoCollection
     vc.footwearPhotos = homeController.filteredFootwearPhotoCollection
     
-    present(nc, animated: true, completion: nil)
+    UIView.transition(with: randomizeButton, duration: 0.5, options: .transitionFlipFromTop, animations: nil, completion: {_ in
+      self.present(nc, animated: true, completion: nil)
+
+      
+    })
+    
+    
     
     
   }

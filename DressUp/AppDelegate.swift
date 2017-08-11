@@ -29,6 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     UIApplication.shared.statusBarStyle = .lightContent
     
+    UIBarButtonItem.appearance(whenContainedInInstancesOf: [UIImagePickerController.self]).setTitleTextAttributes([NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 17.0)!], for: .normal)
+    
     return true
   }
   

@@ -17,6 +17,8 @@ class CreateUsernameViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    usernameTextField.delegate = self
+
   }
   
   @IBAction func confirmButtonTapped(_ sender: UIButton) {
@@ -34,5 +36,13 @@ class CreateUsernameViewController: UIViewController {
       self.view.window?.rootViewController = initialViewController
       self.view.window?.makeKeyAndVisible()
     }
+  }
+}
+
+extension CreateUsernameViewController: UITextFieldDelegate {
+  
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    return true
   }
 }

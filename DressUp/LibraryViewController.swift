@@ -25,7 +25,6 @@ class LibraryViewController: DUViewController {
   let flowLayout = UICollectionViewFlowLayout()
   var collectionView: UICollectionView!
   
-  //for select and delete photo
   var selectButtonOn = false
   var selectedPhotos = [String]()
   var selectedRows: [Int] = []
@@ -43,16 +42,15 @@ class LibraryViewController: DUViewController {
     navigationItem.title = "Library"
     
     //edit button
-    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(LibraryViewController.selectButtonTapped(sender:)))
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(LibraryViewController.selectButtonTapped))
     navigationItem.rightBarButtonItem?.tintColor = .white
     navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 17)!], for: .normal)
 
     //deletebutton
-    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(LibraryViewController.deleteButtonTapped(sender:)))
+    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(LibraryViewController.deleteButtonTapped))
     navigationItem.leftBarButtonItem?.tintColor = .clear
     navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 17)!], for: .normal)
 
-    
     collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: flowLayout)
     collectionView.register(PhotoCollectionCell.self, forCellWithReuseIdentifier: "PhotoCollectionCell")
     collectionView.delegate = self
@@ -73,7 +71,7 @@ class LibraryViewController: DUViewController {
       }
     }
   }
-  //iphone might not have 3D touch
+  
   func check3DTouch() {
     
     if self.traitCollection.forceTouchCapability == UIForceTouchCapability.available {
@@ -104,21 +102,17 @@ class LibraryViewController: DUViewController {
     return top!
   }
   
-  func cancelButtonTapped(sender: UIBarButtonItem) {
-    dismiss(animated: true, completion: nil)
-  }
-  
   private dynamic func selectButtonTapped(sender: UIBarButtonItem) {
     selectButtonOn = true
     collectionView.allowsMultipleSelection = true
     
-    self.navigationItem.rightBarButtonItem?.tintColor = .clear
-    self.navigationItem.leftBarButtonItem?.tintColor = .white
-    //print("select photos")
+    navigationItem.rightBarButtonItem?.tintColor = .clear
+    navigationItem.leftBarButtonItem?.tintColor = .white
+    
   }
   
   private dynamic func deleteButtonTapped(sender: UIBarButtonItem) {
-    //print(selectedPhotos)
+    
     for imageUID in selectedPhotos {
       PhotoService.delete(deletePhoto: imageUID)
     }
@@ -228,8 +222,7 @@ extension LibraryViewController: UICollectionViewDelegate {
   
   func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
     if selectButtonOn == true {
-      //Deselect code here
-      //print("deselect item")
+      
       let photo = photoCollection[indexPath.row]
       if selectedPhotos.contains(photo.imageUID) {
         selectedPhotos.remove(at: selectedPhotos.index(of: photo.imageUID)!)

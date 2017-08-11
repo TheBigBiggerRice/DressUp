@@ -148,12 +148,14 @@ final class FilterViewController: DUViewController {
 
 
     
-    self.navigationItem.title = "Filter"
-    self.view.backgroundColor = .white
+    navigationItem.title = "Filter"
+    view.backgroundColor = .white
+  
     
-    self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped(sender:)))
-    self.navigationItem.rightBarButtonItem?.tintColor = .white
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped(sender:)))
+    navigationItem.rightBarButtonItem?.tintColor = .white
     navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 17)!], for: .normal)
+  
   }
   
   //cancel button
@@ -782,6 +784,7 @@ final class FilterViewController: DUViewController {
     
   }
   
+
 }
 
 
