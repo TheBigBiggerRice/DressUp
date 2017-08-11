@@ -131,6 +131,7 @@ final class CameraViewController: DUViewController {
     label.numberOfLines = 0
     label.text = "Apparel"
     label.lineBreakMode = .byWordWrapping
+    label.alpha = 0
     return label
   }()
   
@@ -155,7 +156,7 @@ final class CameraViewController: DUViewController {
     label.numberOfLines = 0
     label.text = "Color"
     label.lineBreakMode = .byWordWrapping
-    
+    label.alpha = 0
     return label
   }()
   
@@ -408,6 +409,7 @@ final class CameraViewController: DUViewController {
     saveButtonHeightConstraint = NSLayoutConstraint(item: saveButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 0)
     view.addConstraint(saveButtonHeightConstraint)
   }
+  
   func addConstraintsForOccasionButtons() {
     
     for button in occasionButtons {
@@ -1132,6 +1134,8 @@ extension CameraViewController: UIImagePickerControllerDelegate {
       
       imageView.image = image
       backgroundImageView.image = image
+      apparelLabel.alpha = 1
+      colorLabel.alpha = 1
       
       recognizeImage(image: image, modelID: Constants.ModelIDs.categoryID, modelName: Constants.ModelNames.categoryName)
       recognizeImage(image: image, modelID: Constants.ModelIDs.colorID, modelName: Constants.ModelNames.colorName)
