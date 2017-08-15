@@ -89,9 +89,6 @@ final class HomeTableViewCell: UITableViewCell {
     homeCollectionView.dataSource = self
     
     homeCollectionView.backgroundColor = .white
-//    homeCollectionView.tag = tagCarrier
-//    tagCount += 1
-//    print(tagCount)
     
     homeCollectionView.addToAndConstrain(insideSuper: self)
 
@@ -115,7 +112,7 @@ extension HomeTableViewCell: UICollectionViewDataSource {
     if let viewModel = cellViewModel?[indexPath.row] {
       (cell as? FilteredPhotoCollectionCell)?.viewModel = viewModel
       (cell as? FilteredPhotoCollectionCell)?.tag = tagCarrier
-//      tagCount += 1
+
     } else {
       (cell as? FilteredPhotoCollectionCell)?.viewModel = nil
     }
