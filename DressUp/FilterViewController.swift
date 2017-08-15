@@ -169,7 +169,7 @@ final class FilterViewController: DUViewController {
     
     if switchOccasion.isOn == true {
       addConstraintsForOccasionButtons()
-      occasionButtonsViewHeightConstraint.constant = CGFloat(occasionButtonsNumLines * 30 + 10)
+      occasionButtonsViewHeightConstraint.constant = CGFloat(occasionButtonsNumLines * 35)
       occasionButtonsNumLines = 1
       occasionButtonsView.alpha = 1
       UIView.animate(
@@ -200,7 +200,7 @@ final class FilterViewController: DUViewController {
     
     if switchApparel.isOn == true {
       addConstraintsForApparelButtons()
-      apparelButtonsViewHeightConstraint.constant = CGFloat(apparelButtonNumLines * 30 + 10)
+      apparelButtonsViewHeightConstraint.constant = CGFloat(apparelButtonNumLines * 35)
       apparelButtonNumLines = 1
       apparelButtonsView.alpha = 1
       
@@ -233,7 +233,7 @@ final class FilterViewController: DUViewController {
     
     if switchColor.isOn == true {
       addConstraintsForColorButtons()
-      colorButtonsViewHeightConstraint.constant = CGFloat(colorButtonNumLines * 30 + 10)
+      colorButtonsViewHeightConstraint.constant = CGFloat(colorButtonNumLines * 35)
       colorButtonNumLines = 1
       colorButtonsView.alpha = 1
       
@@ -266,11 +266,7 @@ final class FilterViewController: DUViewController {
   
   private func initialize() {
     
-    //backgroundView.addToAndConstrain(insideSuper: view)
-    //view.backgroundColor = UIColor.lighterBlack
-    
     view.addSubview(overviewScrollView)
-    //view.insertSubview(overviewScrollView, aboveSubview: backgroundView)
     
     //occasion filter
     overviewScrollView.addSubview(occasionLabel)
@@ -392,7 +388,7 @@ final class FilterViewController: DUViewController {
                                                                                                                 .touchDragOutside])
       
       
-      buttonsLength += button.intrinsicContentSize.width + 30
+      buttonsLength += button.intrinsicContentSize.width + 35
       
       if buttonsLength < screenWidth {
         
@@ -404,13 +400,13 @@ final class FilterViewController: DUViewController {
           
           occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: occasionButtonsView, attribute: .left, multiplier: 1.0, constant: 10))
           occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
-          occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+          occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
           occasionButtonsNumLines += 1
           
         } else {
           occasionButtonsView.addSubview(button)
           occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: previousOccasionButton, attribute: .top, multiplier: 1.0, constant: 0))
-          occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousOccasionButton, attribute: .right, multiplier: 1.0, constant: 10))
+          occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousOccasionButton, attribute: .right, multiplier: 1.0, constant: 15))
           occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
           occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: previousOccasionButton, attribute: .bottom, multiplier: 1.0, constant: 0))
           
@@ -419,13 +415,13 @@ final class FilterViewController: DUViewController {
         
       }
       if buttonsLength > screenWidth {
-        buttonsLength = button.intrinsicContentSize.width + 25
+        buttonsLength = button.intrinsicContentSize.width + 30
         
         occasionButtonsView.addSubview(button)
         occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: firstOccasionButton, attribute: .bottom, multiplier: 1.0, constant: 5))
         occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: firstOccasionButton, attribute: .left, multiplier: 1.0, constant: 0))
         occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
-        occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+        occasionButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
         occasionButtonsNumLines += 1
         
         previousOccasionButton = button
@@ -466,7 +462,7 @@ final class FilterViewController: DUViewController {
                                                                                                                 .touchDragExit,
                                                                                                                 .touchCancel,
                                                                                                                 .touchDragOutside])
-      buttonsLength += button.intrinsicContentSize.width + 30
+      buttonsLength += button.intrinsicContentSize.width + 35
       
       if buttonsLength < screenWidth {
         
@@ -478,13 +474,13 @@ final class FilterViewController: DUViewController {
           
           apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: apparelButtonsView, attribute: .left, multiplier: 1.0, constant: 10))
           apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
-          apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+          apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
           apparelButtonNumLines += 1
           
         } else {
           apparelButtonsView.addSubview(button)
           apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: previousApparelButton, attribute: .top, multiplier: 1.0, constant: 0))
-          apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousApparelButton, attribute: .right, multiplier: 1.0, constant: 10))
+          apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousApparelButton, attribute: .right, multiplier: 1.0, constant: 15))
           apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
           apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: previousApparelButton, attribute: .bottom, multiplier: 1.0, constant: 0))
           
@@ -493,13 +489,13 @@ final class FilterViewController: DUViewController {
         
       }
       if buttonsLength > screenWidth {
-        buttonsLength = button.intrinsicContentSize.width + 25
+        buttonsLength = button.intrinsicContentSize.width + 30
         
         apparelButtonsView.addSubview(button)
         apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: firstApparelButton, attribute: .bottom, multiplier: 1.0, constant: 5))
         apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: firstApparelButton, attribute: .left, multiplier: 1.0, constant: 0))
         apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
-        apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+        apparelButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
         apparelButtonNumLines += 1
         
         previousApparelButton = button
@@ -541,7 +537,7 @@ final class FilterViewController: DUViewController {
                                                                                                                 .touchCancel,
                                                                                                                 .touchDragOutside])
     
-      buttonsLength += button.intrinsicContentSize.width + 30
+      buttonsLength += button.intrinsicContentSize.width + 35
       
       if buttonsLength < screenWidth {
         
@@ -553,13 +549,13 @@ final class FilterViewController: DUViewController {
           
           colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: colorButtonsView, attribute: .left, multiplier: 1.0, constant: 10))
           colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
-          colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+          colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
           colorButtonNumLines += 1
           
         } else {
           colorButtonsView.addSubview(button)
           colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: previousColorButton, attribute: .top, multiplier: 1.0, constant: 0))
-          colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousColorButton, attribute: .right, multiplier: 1.0, constant: 10))
+          colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousColorButton, attribute: .right, multiplier: 1.0, constant: 15))
           colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
           colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: previousColorButton, attribute: .bottom, multiplier: 1.0, constant: 0))
           
@@ -568,13 +564,13 @@ final class FilterViewController: DUViewController {
         
       }
       if buttonsLength > screenWidth {
-        buttonsLength = button.intrinsicContentSize.width + 25
+        buttonsLength = button.intrinsicContentSize.width + 30
         
         colorButtonsView.addSubview(button)
         colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: firstColorButton, attribute: .bottom, multiplier: 1.0, constant: 5))
         colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: firstColorButton, attribute: .left, multiplier: 1.0, constant: 0))
         colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
-        colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+        colorButtonsView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
         colorButtonNumLines += 1
         
         previousColorButton = button
@@ -589,7 +585,7 @@ final class FilterViewController: DUViewController {
   func createButton() -> DUButton {
     let button = DUButton()
     button.translatesAutoresizingMaskIntoConstraints = false
-    button.layer.cornerRadius = 12.5
+    button.layer.cornerRadius = 17.5
     button.layer.backgroundColor = UIColor.lighterBlue.cgColor
     return button
   }

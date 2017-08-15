@@ -40,7 +40,6 @@ final class CameraViewController: DUViewController {
     view.translatesAutoresizingMaskIntoConstraints = false
     view.isScrollEnabled = true
     view.showsVerticalScrollIndicator = false
-    //view.isDirectionalLockEnabled = true
     view.contentSize = CGSize(width: UIScreen.main.bounds.width, height: view.contentSize.height)
     
     return view
@@ -91,7 +90,7 @@ final class CameraViewController: DUViewController {
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitleColor(.white, for: .normal)
     button.setTitle("Top", for: .normal)
-    button.layer.cornerRadius = 12.5
+    button.layer.cornerRadius = 17.5
     button.layer.backgroundColor = UIColor.lighterBlue.cgColor
     return button
   }()
@@ -101,7 +100,7 @@ final class CameraViewController: DUViewController {
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitleColor(.white, for: .normal)
     button.setTitle("Pants", for: .normal)
-    button.layer.cornerRadius = 12.5
+    button.layer.cornerRadius = 17.5
     button.layer.backgroundColor = UIColor.lighterBlue.cgColor
     return button
   }()
@@ -111,7 +110,7 @@ final class CameraViewController: DUViewController {
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitleColor(.white, for: .normal)
     button.setTitle("Footwear", for: .normal)
-    button.layer.cornerRadius = 12.5
+    button.layer.cornerRadius = 17.5
     button.layer.backgroundColor = UIColor.lighterBlue.cgColor
     return button
   }()
@@ -351,50 +350,50 @@ final class CameraViewController: DUViewController {
     overviewScrollView.addConstraint(NSLayoutConstraint(item: categoryLabel, attribute: .top, relatedBy: .equal, toItem: imageView, attribute: .bottom, multiplier: 1.0, constant: 10))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: categoryLabel, attribute: .left, relatedBy: .equal, toItem: overviewScrollView, attribute: .left, multiplier: 1.0, constant: 0))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: categoryLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: categoryLabel.intrinsicContentSize.width + 20))
-    overviewScrollView.addConstraint(NSLayoutConstraint(item: categoryLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: categoryLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
     
     //category scroll view
     overviewScrollView.addConstraint(NSLayoutConstraint(item: categoryScrollView, attribute: .left, relatedBy: .equal, toItem: categoryLabel, attribute: .right, multiplier: 1.0, constant: 5))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: categoryScrollView, attribute: .top, relatedBy: .equal, toItem: categoryLabel, attribute: .top, multiplier: 1.0, constant: -5))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: categoryScrollView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth - categoryLabel.intrinsicContentSize.width - 20 - 15))
-    overviewScrollView.addConstraint(NSLayoutConstraint(item: categoryScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 40))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: categoryScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     
     //top button
     categoryScrollView.addConstraint(NSLayoutConstraint(item: topButton, attribute: .top, relatedBy: .equal, toItem: categoryScrollView, attribute: .top, multiplier: 1.0, constant: 5))
-    categoryScrollView.addConstraint(NSLayoutConstraint(item: topButton, attribute: .left, relatedBy: .equal, toItem: categoryScrollView, attribute: .left, multiplier: 1.0, constant: 5))
+    categoryScrollView.addConstraint(NSLayoutConstraint(item: topButton, attribute: .left, relatedBy: .equal, toItem: categoryScrollView, attribute: .left, multiplier: 1.0, constant: 10))
     categoryScrollView.addConstraint(NSLayoutConstraint(item: topButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: topButton.intrinsicContentSize.width + 20))
-    categoryScrollView.addConstraint(NSLayoutConstraint(item: topButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+    categoryScrollView.addConstraint(NSLayoutConstraint(item: topButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
     
     //pants button
     categoryScrollView.addConstraint(NSLayoutConstraint(item: pantsButton, attribute: .top, relatedBy: .equal, toItem: topButton, attribute: .top, multiplier: 1.0, constant: 0))
-    categoryScrollView.addConstraint(NSLayoutConstraint(item: pantsButton, attribute: .left, relatedBy: .equal, toItem: topButton, attribute: .right, multiplier: 1.0, constant: 10))
+    categoryScrollView.addConstraint(NSLayoutConstraint(item: pantsButton, attribute: .left, relatedBy: .equal, toItem: topButton, attribute: .right, multiplier: 1.0, constant: 15))
     categoryScrollView.addConstraint(NSLayoutConstraint(item: pantsButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: pantsButton.intrinsicContentSize.width + 20))
-    categoryScrollView.addConstraint(NSLayoutConstraint(item: pantsButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+    categoryScrollView.addConstraint(NSLayoutConstraint(item: pantsButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
     
     //footwear button
     categoryScrollView.addConstraint(NSLayoutConstraint(item: footwearButton, attribute: .top, relatedBy: .equal, toItem: pantsButton, attribute: .top, multiplier: 1.0, constant: 0))
-    categoryScrollView.addConstraint(NSLayoutConstraint(item: footwearButton, attribute: .left, relatedBy: .equal, toItem: pantsButton, attribute: .right, multiplier: 1.0, constant: 10))
+    categoryScrollView.addConstraint(NSLayoutConstraint(item: footwearButton, attribute: .left, relatedBy: .equal, toItem: pantsButton, attribute: .right, multiplier: 1.0, constant: 15))
     categoryScrollView.addConstraint(NSLayoutConstraint(item: footwearButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: footwearButton.intrinsicContentSize.width + 20))
-    categoryScrollView.addConstraint(NSLayoutConstraint(item: footwearButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+    categoryScrollView.addConstraint(NSLayoutConstraint(item: footwearButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
     categoryScrollView.addConstraint(NSLayoutConstraint(item: footwearButton, attribute: .right, relatedBy: .equal, toItem: categoryScrollView, attribute: .right, multiplier: 1.0, constant: 0))
     
     //occasion label
     overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .top, relatedBy: .equal, toItem: categoryLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .left, relatedBy: .equal, toItem: categoryLabel, attribute: .left, multiplier: 1.0, constant: 0))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: categoryLabel.intrinsicContentSize.width + 20))
-    overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
     
     //occasion scroll view
     overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionScrollView, attribute: .left, relatedBy: .equal, toItem: occasionLabel, attribute: .right, multiplier: 1.0, constant: 5))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionScrollView, attribute: .top, relatedBy: .equal, toItem: occasionLabel, attribute: .top, multiplier: 1.0, constant: -5))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionScrollView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth - categoryLabel.intrinsicContentSize.width - 20 - 15))
-    overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 40))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     
     //add occasion button
     occasionScrollView.addConstraint(NSLayoutConstraint(item: addOccasionsButton, attribute: .right, relatedBy: .equal, toItem: occasionScrollView, attribute: .right, multiplier: 1.0, constant: 0))
     occasionScrollView.addConstraint(NSLayoutConstraint(item: addOccasionsButton, attribute: .top, relatedBy: .equal, toItem: occasionScrollView, attribute: .top, multiplier: 1.0, constant: 5))
-    occasionScrollView.addConstraint(NSLayoutConstraint(item: addOccasionsButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
-    occasionScrollView.addConstraint(NSLayoutConstraint(item: addOccasionsButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+    occasionScrollView.addConstraint(NSLayoutConstraint(item: addOccasionsButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
+    occasionScrollView.addConstraint(NSLayoutConstraint(item: addOccasionsButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
     
     //set the constraints for the occasion buttons
     addConstraintsForOccasionButtons()
@@ -403,38 +402,38 @@ final class CameraViewController: DUViewController {
     overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .top, relatedBy: .equal, toItem: occasionLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .left, relatedBy: .equal, toItem: occasionLabel, attribute: .left, multiplier: 1.0, constant: 0))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: categoryLabel.intrinsicContentSize.width + 20))
-    overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
     
     //apparel scroll view
     overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .left, relatedBy: .equal, toItem: apparelLabel, attribute: .right, multiplier: 1.0, constant: 5))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .top, relatedBy: .equal, toItem: apparelLabel, attribute: .top, multiplier: 1.0, constant: -5))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth - categoryLabel.intrinsicContentSize.width - 20 - 15))
-    overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 40))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     
     //add apparel button
     apparelScrollView.addConstraint(NSLayoutConstraint(item: addApparelsButton, attribute: .right, relatedBy: .equal, toItem: apparelScrollView, attribute: .right, multiplier: 1.0, constant: 0))
     apparelScrollView.addConstraint(NSLayoutConstraint(item: addApparelsButton, attribute: .top, relatedBy: .equal, toItem: apparelScrollView, attribute: .top, multiplier: 1.0, constant: 5))
-    apparelScrollView.addConstraint(NSLayoutConstraint(item: addApparelsButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
-    apparelScrollView.addConstraint(NSLayoutConstraint(item: addApparelsButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+    apparelScrollView.addConstraint(NSLayoutConstraint(item: addApparelsButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
+    apparelScrollView.addConstraint(NSLayoutConstraint(item: addApparelsButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
     
     //color label
     overviewScrollView.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .top, relatedBy: .equal, toItem: apparelLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .left, relatedBy: .equal, toItem: apparelLabel, attribute: .left, multiplier: 1.0, constant: 0))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: categoryLabel.intrinsicContentSize.width + 20))
-    overviewScrollView.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: colorLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
     
     //color scroll view
     overviewScrollView.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .left, relatedBy: .equal, toItem: colorLabel, attribute: .right, multiplier: 1.0, constant: 5))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .top, relatedBy: .equal, toItem: colorLabel, attribute: .top, multiplier: 1.0, constant: -5))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth - categoryLabel.intrinsicContentSize.width - 20 - 15))
-    overviewScrollView.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 40))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     
     //add color button
     colorScrollView.addConstraint(NSLayoutConstraint(item: addColorsButton, attribute: .right, relatedBy: .equal, toItem: colorScrollView, attribute: .right, multiplier: 1.0, constant: 0))
     
     colorScrollView.addConstraint(NSLayoutConstraint(item: addColorsButton, attribute: .top, relatedBy: .equal, toItem: colorScrollView, attribute: .top, multiplier: 1.0, constant: 5))
-    colorScrollView.addConstraint(NSLayoutConstraint(item: addColorsButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
-    colorScrollView.addConstraint(NSLayoutConstraint(item: addColorsButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+    colorScrollView.addConstraint(NSLayoutConstraint(item: addColorsButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
+    colorScrollView.addConstraint(NSLayoutConstraint(item: addColorsButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
     
     
     //save button
@@ -482,9 +481,9 @@ final class CameraViewController: DUViewController {
         occasionScrollView.addSubview(button)
         
         occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: occasionScrollView, attribute: .top, multiplier: 1.0, constant: 5))
-        occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: occasionScrollView, attribute: .left, multiplier: 1.0, constant: 5))
+        occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: occasionScrollView, attribute: .left, multiplier: 1.0, constant: 10))
         occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
-        occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+        occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
         
       } else {
         
@@ -492,7 +491,7 @@ final class CameraViewController: DUViewController {
         occasionScrollView.addSubview(button)
 
         occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: previousOccasionButton, attribute: .top, multiplier: 1.0, constant: 0))
-        occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousOccasionButton, attribute: .right, multiplier: 1.0, constant: 10))
+        occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousOccasionButton, attribute: .right, multiplier: 1.0, constant: 15))
         occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
         occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: previousOccasionButton, attribute: .bottom , multiplier: 1.0, constant: 0))
         
@@ -542,9 +541,9 @@ final class CameraViewController: DUViewController {
         apparelScrollView.addSubview(button)
 
         apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: apparelScrollView, attribute: .top, multiplier: 1.0, constant: 5))
-        apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: apparelScrollView, attribute: .left, multiplier: 1.0, constant: 5))
+        apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: apparelScrollView, attribute: .left, multiplier: 1.0, constant: 10))
         apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
-        apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+        apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
         
         
       } else {
@@ -552,7 +551,7 @@ final class CameraViewController: DUViewController {
         apparelScrollView.addSubview(button)
           
         apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: previousButton, attribute: .top, multiplier: 1.0, constant: 0))
-        apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousButton, attribute: .right, multiplier: 1.0, constant: 10))
+        apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousButton, attribute: .right, multiplier: 1.0, constant: 15))
         apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
         apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: previousButton, attribute: .bottom , multiplier: 1.0, constant: 0))
         
@@ -596,14 +595,14 @@ final class CameraViewController: DUViewController {
         previousButton = button
         colorScrollView.addSubview(button)
         colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: colorScrollView, attribute: .top, multiplier: 1.0, constant: 5))
-        colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: colorScrollView, attribute: .left, multiplier: 1.0, constant: 5))
+        colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: colorScrollView, attribute: .left, multiplier: 1.0, constant: 10))
         colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
-        colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 25))
+        colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
         
       } else {
         colorScrollView.addSubview(button)
         colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: previousButton, attribute: .top, multiplier: 1.0, constant: 0))
-        colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousButton, attribute: .right, multiplier: 1.0, constant: 10))
+        colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousButton, attribute: .right, multiplier: 1.0, constant: 15))
         colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
         colorScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: previousButton, attribute: .bottom , multiplier: 1.0, constant: 0))
         
@@ -1084,7 +1083,7 @@ final class CameraViewController: DUViewController {
   func createButton() -> DUButton {
     let button = DUButton()
     button.translatesAutoresizingMaskIntoConstraints = false
-    button.layer.cornerRadius = 12.5
+    button.layer.cornerRadius = 17.5
     button.setTitleColor(.white, for: .normal)
     button.layer.backgroundColor = UIColor.lighterBlue.cgColor
     return button
@@ -1094,7 +1093,7 @@ final class CameraViewController: DUViewController {
     let button = DUButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setTitleColor(.white, for: .normal)
-    button.layer.cornerRadius = 12.5
+    button.layer.cornerRadius = 17.5
     button.layer.backgroundColor = UIColor.lighterBlue.cgColor
     return button
     
