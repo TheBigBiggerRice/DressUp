@@ -158,6 +158,7 @@ final class CameraViewController: DUViewController {
     let button = DUButton()
     button.translatesAutoresizingMaskIntoConstraints = false
     button.setImage(#imageLiteral(resourceName: "betterLookingAdd"), for: .normal)
+    
     return button
   }()
   
@@ -228,6 +229,7 @@ final class CameraViewController: DUViewController {
     
     app = ClarifaiApp(apiKey: "eeace7a446b74adda719b9b8cd62b7a1")
     initialize()
+    
     navigationItem.title = "Camera"
   
   }
@@ -355,7 +357,7 @@ final class CameraViewController: DUViewController {
     //category scroll view
     overviewScrollView.addConstraint(NSLayoutConstraint(item: categoryScrollView, attribute: .left, relatedBy: .equal, toItem: categoryLabel, attribute: .right, multiplier: 1.0, constant: 5))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: categoryScrollView, attribute: .top, relatedBy: .equal, toItem: categoryLabel, attribute: .top, multiplier: 1.0, constant: -5))
-    overviewScrollView.addConstraint(NSLayoutConstraint(item: categoryScrollView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth - categoryLabel.intrinsicContentSize.width - 20 - 15))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: categoryScrollView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth - categoryLabel.intrinsicContentSize.width - 20 - 5))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: categoryScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     
     //top button
@@ -386,7 +388,7 @@ final class CameraViewController: DUViewController {
     //occasion scroll view
     overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionScrollView, attribute: .left, relatedBy: .equal, toItem: occasionLabel, attribute: .right, multiplier: 1.0, constant: 5))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionScrollView, attribute: .top, relatedBy: .equal, toItem: occasionLabel, attribute: .top, multiplier: 1.0, constant: -5))
-    overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionScrollView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth - categoryLabel.intrinsicContentSize.width - 20 - 15))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionScrollView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth - categoryLabel.intrinsicContentSize.width - 20 - 5))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     
     //add occasion button
@@ -407,7 +409,7 @@ final class CameraViewController: DUViewController {
     //apparel scroll view
     overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .left, relatedBy: .equal, toItem: apparelLabel, attribute: .right, multiplier: 1.0, constant: 5))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .top, relatedBy: .equal, toItem: apparelLabel, attribute: .top, multiplier: 1.0, constant: -5))
-    overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth - categoryLabel.intrinsicContentSize.width - 20 - 15))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth - categoryLabel.intrinsicContentSize.width - 20 - 5))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     
     //add apparel button
@@ -425,7 +427,7 @@ final class CameraViewController: DUViewController {
     //color scroll view
     overviewScrollView.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .left, relatedBy: .equal, toItem: colorLabel, attribute: .right, multiplier: 1.0, constant: 5))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .top, relatedBy: .equal, toItem: colorLabel, attribute: .top, multiplier: 1.0, constant: -5))
-    overviewScrollView.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth - categoryLabel.intrinsicContentSize.width - 20 - 15))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth - categoryLabel.intrinsicContentSize.width - 20 - 5))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     
     //add color button
@@ -487,21 +489,29 @@ final class CameraViewController: DUViewController {
         
       } else {
         
-        
         occasionScrollView.addSubview(button)
 
         occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: previousOccasionButton, attribute: .top, multiplier: 1.0, constant: 0))
         occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .left, relatedBy: .equal, toItem: previousOccasionButton, attribute: .right, multiplier: 1.0, constant: 15))
         occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: button.intrinsicContentSize.width + 20))
         occasionScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .bottom, relatedBy: .equal, toItem: previousOccasionButton, attribute: .bottom , multiplier: 1.0, constant: 0))
-        
-        
+      
         previousOccasionButton = button
         
       }
     }
     occasionScrollView.addConstraint(NSLayoutConstraint(item: previousOccasionButton!, attribute: .right, relatedBy: .equal, toItem: addOccasionsButton, attribute: .left, multiplier: 1.0, constant: -10))
     
+    //animations
+    var occasionDelay = 0.3
+
+    for button in occasionButtons {
+      UIView.animate(withDuration: 0.3, delay: TimeInterval(occasionDelay), options: .curveEaseOut, animations: {
+        button.alpha = 1
+        occasionDelay += 0.3
+      }
+        , completion: nil)
+    }
   }
   
   func addConstraintsForApparelButtons() {
@@ -537,7 +547,6 @@ final class CameraViewController: DUViewController {
         
         previousButton = button
         
-        
         apparelScrollView.addSubview(button)
 
         apparelScrollView.addConstraint(NSLayoutConstraint(item: button, attribute: .top, relatedBy: .equal, toItem: apparelScrollView, attribute: .top, multiplier: 1.0, constant: 5))
@@ -563,6 +572,15 @@ final class CameraViewController: DUViewController {
     
     apparelScrollView.addConstraint(NSLayoutConstraint(item: previousButton!, attribute: .right, relatedBy: .equal, toItem: addApparelsButton, attribute: .left, multiplier: 1.0, constant: -10))
     
+    //animations
+    var apparelDelay = 0.3
+    for button in apparelButtons {
+      UIView.animate(withDuration: 0.3, delay: TimeInterval(apparelDelay), options: .curveEaseOut, animations: {
+        button.alpha = 1
+        apparelDelay += 0.3
+      }
+        , completion: nil)
+    }
   }
   
   func addConstraintsForColorButtons() {
@@ -610,6 +628,16 @@ final class CameraViewController: DUViewController {
       }
     }
     colorScrollView.addConstraint(NSLayoutConstraint(item: previousButton!, attribute: .right, relatedBy: .equal, toItem: addColorsButton, attribute: .left, multiplier: 1.0, constant: -10))
+    
+    //animations
+    var colorDelay = 0.3
+    for button in colorButtons {
+      UIView.animate(withDuration: 0.3, delay: TimeInterval(colorDelay), options: .curveEaseOut, animations: {
+        button.alpha = 1
+        colorDelay += 0.3
+      }
+        , completion: nil)
+    }
   }
   
   
@@ -928,9 +956,8 @@ final class CameraViewController: DUViewController {
       
       if apparelTextField.text != "" {
         self.autoGeneratedApparelTags.append(apparelTextField.text!)
-        
         self.addConstraintsForApparelButtons()
-        
+      
       }
     }
     
@@ -961,10 +988,7 @@ final class CameraViewController: DUViewController {
       
       if colorTextField.text != "" {
         self.autoGeneratedColorTags.append(colorTextField.text!)
-        
         self.addConstraintsForColorButtons()
-        
-        
         
       }
     }
@@ -1054,7 +1078,7 @@ final class CameraViewController: DUViewController {
       UIView.animate(
         withDuration: 0.4,
         delay: 0,
-        options: .curveEaseIn,
+        options: .curveEaseOut,
         animations: { [weak self] _ in
           self?.saveButton.alpha = 0
           self?.view.layoutIfNeeded()
@@ -1069,12 +1093,13 @@ final class CameraViewController: DUViewController {
     UIView.animate(
       withDuration: 0.4,
       delay: 0,
-      options: .curveEaseIn,
+      options: .curveEaseOut,
       animations: { [weak self] _ in
         self?.saveButton.alpha = 1
         self?.view.layoutIfNeeded()
       }
     )
+    
     takePhotoImageButton.setImage(nil, for: .normal)
     chooseImageButton.setImage(nil, for: .normal)
     
@@ -1086,6 +1111,7 @@ final class CameraViewController: DUViewController {
     button.layer.cornerRadius = 17.5
     button.setTitleColor(.white, for: .normal)
     button.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    button.alpha = 0
     return button
   }
   
@@ -1095,6 +1121,7 @@ final class CameraViewController: DUViewController {
     button.setTitleColor(.white, for: .normal)
     button.layer.cornerRadius = 17.5
     button.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    button.alpha = 0
     return button
     
   }
@@ -1220,7 +1247,7 @@ extension CameraViewController: UIImagePickerControllerDelegate {
                   }
                 }
                 self.addConstraintsForApparelButtons()
-
+              
               }
               
               if modelName == Constants.ModelNames.colorName {
@@ -1232,6 +1259,7 @@ extension CameraViewController: UIImagePickerControllerDelegate {
                   }
                 }
                 self.addConstraintsForColorButtons()
+              
               }
             }
           }
