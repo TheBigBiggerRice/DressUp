@@ -10,9 +10,6 @@ import UIKit
 import FirebaseDatabase
 import Kingfisher
 
-
-
-
 final class HomeTableViewCell: UITableViewCell {
   
   
@@ -21,8 +18,7 @@ final class HomeTableViewCell: UITableViewCell {
       guard cellViewModel != nil else {
         return
       }
-//      homeCollectionView.tag = tagCount
-//      tagCount += 1
+      
       homeCollectionView.reloadData()
     }
     
@@ -35,7 +31,6 @@ final class HomeTableViewCell: UITableViewCell {
   var profileHandle: DatabaseHandle = 0
   var profileRef: DatabaseReference?
   
-  //initialize a collection view within the table view cell
   fileprivate let homeCollectionView: UICollectionView = {
     
     let layout = UICollectionViewFlowLayout()
@@ -75,12 +70,10 @@ final class HomeTableViewCell: UITableViewCell {
     initialize()
   }
   
-  deinit { // remove button targets and notification center listening in deinits for views, cells, etc
+  deinit {
   }
   
   private func initialize() {
-
-    //initialize home collection view 
     
     homeCollectionView.register(FilteredPhotoCollectionCell.self, forCellWithReuseIdentifier: FilteredPhotoCollectionCell.description())
     homeCollectionView.register(HeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: "HeaderView")
@@ -99,7 +92,6 @@ extension HomeTableViewCell: UICollectionViewDelegate {
   
 }
 
-//add section headers for each collection view. 3 in total.
 extension HomeTableViewCell: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -134,6 +126,10 @@ extension HomeTableViewCell: UICollectionViewDataSource {
         headerView.headerLabel.text = "Pants"
       case 2:
         headerView.headerLabel.text = "Footwear"
+      case 3:
+        headerView.headerLabel.text = "Accessory"
+      case 4:
+        headerView.headerLabel.text = "Carry-On"
       default:
         headerView.headerLabel.text = "Error"
         

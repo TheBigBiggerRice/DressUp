@@ -35,7 +35,7 @@ class LibraryViewController: DUViewController {
     navigationItem.title = "Library"
     
     //edit button
-    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(LibraryViewController.selectButtonTapped))
+    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(LibraryViewController.editButtonTapped))
     navigationItem.rightBarButtonItem?.tintColor = .white
     navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 17)!], for: .normal)
 
@@ -65,10 +65,10 @@ class LibraryViewController: DUViewController {
     }
   }
   
-  private dynamic func selectButtonTapped(sender: UIBarButtonItem) {
+  private dynamic func editButtonTapped(sender: UIBarButtonItem) {
     selectButtonOn = true
     collectionView.allowsMultipleSelection = true
-    
+  
     navigationItem.rightBarButtonItem?.tintColor = .clear
     navigationItem.leftBarButtonItem?.tintColor = .white
     

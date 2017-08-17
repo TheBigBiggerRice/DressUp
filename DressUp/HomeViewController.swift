@@ -85,7 +85,7 @@ final class HomeViewController: DUViewController {
     view.addConstraint(NSLayoutConstraint(item: overviewScrollView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: -50))
     
     //occasion label
-    overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .top, relatedBy: .equal, toItem: overviewScrollView, attribute: .top, multiplier: 1.0, constant: 400))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .top, relatedBy: .equal, toItem: overviewScrollView, attribute: .top, multiplier: 1.0, constant: 650))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .left, relatedBy: .equal, toItem: overviewScrollView, attribute: .left, multiplier: 1.0, constant: 0))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth))
     
@@ -125,7 +125,7 @@ final class HomeViewController: DUViewController {
     
     navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 17)!], for: .normal)
     
-    homeTableView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: 375)
+    homeTableView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: 625)
     homeTableView.delegate = self
     homeTableView.dataSource = self
     homeTableView.register(HomeTableViewCell.self, forCellReuseIdentifier: "HomeTableViewCell")
@@ -162,15 +162,13 @@ final class HomeViewController: DUViewController {
     vc.topPhotos = homeController.filteredTopPhotoCollection
     vc.pantsPhotos = homeController.filteredPantsPhotoCollection
     vc.footwearPhotos = homeController.filteredFootwearPhotoCollection
+    vc.accessoryPhotos = homeController.filteredAccessoryPhotoCollection
+    vc.carryOnPhotos = homeController.filteredCarryOnPhotoCollection
     
     UIView.transition(with: randomizeButton, duration: 0.5, options: .transitionFlipFromTop, animations: nil, completion: {_ in
       self.present(nc, animated: true, completion: nil)
 
-      
     })
-    
-    
-    
     
   }
   
@@ -206,15 +204,11 @@ extension HomeViewController: FilterViewControllerDelegete {
     homeController.apparel = apparel.components(separatedBy: ", ")
     homeController.color = color.components(separatedBy: ", ")
     
-    
     occasionLabel.text = "Occasion: \(occasion)"
     
-    
     apparelLabel.text = "Apparel: \(apparel)"
-    
-    
+  
     colorLabel.text = "Color: \(color)"
-    
     
     homeTableView.reloadData()
   }

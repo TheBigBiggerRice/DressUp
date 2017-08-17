@@ -32,11 +32,15 @@ final class HomeController: NSObject {
   var topPhotoCollection = [Photos]()
   var pantsPhotoCollection = [Photos]()
   var footwearPhotoCollection = [Photos]()
+  var accessoryPhotoCollection = [Photos]()
+  var carryOnPhotoCollection = [Photos]()
   
   var filteredTopPhotoCollection = [Photos]()
   var filteredPantsPhotoCollection = [Photos]()
   var filteredFootwearPhotoCollection = [Photos]()
-
+  var filteredAccessoryPhotoCollection = [Photos]()
+  var filteredCarryOnPhotoCollection = [Photos]()
+  
   //inputs by the user
   var occasion = [String]()
   var apparel = [String]()
@@ -59,6 +63,8 @@ final class HomeController: NSObject {
     topPhotoCollection.removeAll()
     pantsPhotoCollection.removeAll()
     footwearPhotoCollection.removeAll()
+    accessoryPhotoCollection.removeAll()
+    carryOnPhotoCollection.removeAll()
    
     aggregateOccasionTags.removeAll()
     aggregateApparelTags.removeAll()
@@ -89,6 +95,12 @@ final class HomeController: NSObject {
         }
         if photo.imagePosition == "Footwear" {
           self.footwearPhotoCollection.append(photo)
+        }
+        if photo.imagePosition == "Accessory" {
+          self.accessoryPhotoCollection.append(photo)
+        }
+        if photo.imagePosition == "Carry-On" {
+          self.carryOnPhotoCollection.append(photo)
         }
       }
     }
@@ -149,9 +161,40 @@ extension HomeController: UITableViewDelegate {
       }
       return filteredFootwearPhotoCollection.map { FilteredPhotoCollectionCellViewModel(withPhoto: $0) }
     }
+    else if 3 == row {
+      
+      
+      filteredAccessoryPhotoCollection = accessoryPhotoCollection.filter { photo in
+        
+        let setPhotoOccasion = Set(photo.imageOccasion)
+        let setPhotoApparel = Set(photo.imageApparel)
+        let setPhotoColor = Set(photo.imageColor)
+        
+        if setOccasion.intersection(setPhotoOccasion).count > 0 || setApparel.intersection(setPhotoApparel).count > 0 || setColor.intersection(setPhotoColor).count > 0 || (setOccasion.contains("") == true && setApparel.contains("") == true && setColor.contains("") == true) || (setOccasion.isEmpty == true && setApparel.isEmpty == true && setColor.isEmpty == true) || !setOccasion.contains("") && photo.imageOccasion.contains("Any") || !setApparel.contains("") && photo.imageApparel.contains("Any") || !setColor.contains("") && photo.imageColor.contains("Any") { return true }
+        else { return false }
+      }
+      return filteredAccessoryPhotoCollection.map { FilteredPhotoCollectionCellViewModel(withPhoto: $0) }
+    }
+    else if 4 == row {
+      
+      
+      filteredCarryOnPhotoCollection = carryOnPhotoCollection.filter { photo in
+        
+        let setPhotoOccasion = Set(photo.imageOccasion)
+        let setPhotoApparel = Set(photo.imageApparel)
+        let setPhotoColor = Set(photo.imageColor)
+        
+        if setOccasion.intersection(setPhotoOccasion).count > 0 || setApparel.intersection(setPhotoApparel).count > 0 || setColor.intersection(setPhotoColor).count > 0 || (setOccasion.contains("") == true && setApparel.contains("") == true && setColor.contains("") == true) || (setOccasion.isEmpty == true && setApparel.isEmpty == true && setColor.isEmpty == true) || !setOccasion.contains("") && photo.imageOccasion.contains("Any") || !setApparel.contains("") && photo.imageApparel.contains("Any") || !setColor.contains("") && photo.imageColor.contains("Any") { return true }
+        else { return false }
+      }
+      return filteredCarryOnPhotoCollection.map { FilteredPhotoCollectionCellViewModel(withPhoto: $0) }
+    }
+
+      
     else {
       return []
     }
+    
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -170,7 +213,7 @@ extension HomeController: UITableViewDelegate {
 extension HomeController: UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 3
+    return 5
   }
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

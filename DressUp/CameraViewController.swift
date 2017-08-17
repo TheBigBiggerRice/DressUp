@@ -114,6 +114,26 @@ final class CameraViewController: DUViewController {
     return button
   }()
   
+  fileprivate let accessoryButton: DUButton = {
+    let button = DUButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.setTitleColor(.white, for: .normal)
+    button.setTitle("Accessory", for: .normal)
+    button.layer.cornerRadius = 17.5
+    button.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    return button
+  }()
+  
+  fileprivate let carryOnButton: DUButton = {
+    let button = DUButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.setTitleColor(.white, for: .normal)
+    button.setTitle("Carry-On", for: .normal)
+    button.layer.cornerRadius = 17.5
+    button.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    return button
+  }()
+
   fileprivate let occasionScrollView: UIScrollView = {
     let view = UIScrollView()
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -240,7 +260,9 @@ final class CameraViewController: DUViewController {
     topButton.removeTarget(self, action: nil, for: .allEvents)
     pantsButton.removeTarget(self, action: nil, for: .allEvents)
     footwearButton.removeTarget(self, action: nil, for: .allEvents)
-    
+    accessoryButton.removeTarget(self, action: nil, for: .allEvents)
+    carryOnButton.removeTarget(self, action: nil, for: .allEvents)
+
     addOccasionsButton.removeTarget(self, action: nil, for: .allEvents)
     addApparelsButton.removeTarget(self, action: nil, for: .allEvents)
     addColorsButton.removeTarget(self, action: nil, for: .allEvents)
@@ -263,6 +285,8 @@ final class CameraViewController: DUViewController {
     categoryScrollView.addSubview(topButton)
     categoryScrollView.addSubview(pantsButton)
     categoryScrollView.addSubview(footwearButton)
+    categoryScrollView.addSubview(accessoryButton)
+    categoryScrollView.addSubview(carryOnButton)
     
     overviewScrollView.addSubview(occasionLabel)
     overviewScrollView.addSubview(occasionScrollView)
@@ -293,6 +317,11 @@ final class CameraViewController: DUViewController {
     footwearButton.addTarget(self, action: #selector(CameraViewController.footwearButtonTapped), for: .touchDown)
     footwearButton.addTarget(self, action: #selector(CameraViewController.footwearButtonTapped), for: .touchDragExit)
     
+    accessoryButton.addTarget(self, action: #selector(CameraViewController.accessoryButtonTapped), for: .touchDown)
+    accessoryButton.addTarget(self, action: #selector(CameraViewController.accessoryButtonTapped), for: .touchDragExit)
+    
+    carryOnButton.addTarget(self, action: #selector(CameraViewController.carryOnButtonTapped), for: .touchDown)
+    carryOnButton.addTarget(self, action: #selector(CameraViewController.carryOnButtonTapped), for: .touchDragExit)
     
     addOccasionsButton.addTarget(self, action: #selector(CameraViewController.addOccasionsButtonTapped), for: .touchDown)
     addOccasionsButton.addTarget(self, action: #selector(CameraViewController.addOccasionsButtonTapped), for: .touchDragExit)
@@ -376,8 +405,20 @@ final class CameraViewController: DUViewController {
     categoryScrollView.addConstraint(NSLayoutConstraint(item: footwearButton, attribute: .left, relatedBy: .equal, toItem: pantsButton, attribute: .right, multiplier: 1.0, constant: 15))
     categoryScrollView.addConstraint(NSLayoutConstraint(item: footwearButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: footwearButton.intrinsicContentSize.width + 20))
     categoryScrollView.addConstraint(NSLayoutConstraint(item: footwearButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
-    categoryScrollView.addConstraint(NSLayoutConstraint(item: footwearButton, attribute: .right, relatedBy: .equal, toItem: categoryScrollView, attribute: .right, multiplier: 1.0, constant: 0))
     
+    //accessory button
+    categoryScrollView.addConstraint(NSLayoutConstraint(item: accessoryButton, attribute: .top, relatedBy: .equal, toItem: footwearButton, attribute: .top, multiplier: 1.0, constant: 0))
+    categoryScrollView.addConstraint(NSLayoutConstraint(item: accessoryButton, attribute: .left, relatedBy: .equal, toItem: footwearButton, attribute: .right, multiplier: 1.0, constant: 15))
+    categoryScrollView.addConstraint(NSLayoutConstraint(item: accessoryButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: accessoryButton.intrinsicContentSize.width + 20))
+    categoryScrollView.addConstraint(NSLayoutConstraint(item: accessoryButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
+    
+    //carry on button
+    categoryScrollView.addConstraint(NSLayoutConstraint(item: carryOnButton, attribute: .top, relatedBy: .equal, toItem: accessoryButton, attribute: .top, multiplier: 1.0, constant: 0))
+    categoryScrollView.addConstraint(NSLayoutConstraint(item: carryOnButton, attribute: .left, relatedBy: .equal, toItem: accessoryButton, attribute: .right, multiplier: 1.0, constant: 15))
+    categoryScrollView.addConstraint(NSLayoutConstraint(item: carryOnButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: carryOnButton.intrinsicContentSize.width + 20))
+    categoryScrollView.addConstraint(NSLayoutConstraint(item: carryOnButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
+    categoryScrollView.addConstraint(NSLayoutConstraint(item: carryOnButton, attribute: .right, relatedBy: .equal, toItem: categoryScrollView, attribute: .right, multiplier: 1.0, constant: -10))
+
     //occasion label
     overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .top, relatedBy: .equal, toItem: categoryLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionLabel, attribute: .left, relatedBy: .equal, toItem: categoryLabel, attribute: .left, multiplier: 1.0, constant: 0))
@@ -391,7 +432,7 @@ final class CameraViewController: DUViewController {
     overviewScrollView.addConstraint(NSLayoutConstraint(item: occasionScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     
     //add occasion button
-    occasionScrollView.addConstraint(NSLayoutConstraint(item: addOccasionsButton, attribute: .right, relatedBy: .equal, toItem: occasionScrollView, attribute: .right, multiplier: 1.0, constant: 0))
+    occasionScrollView.addConstraint(NSLayoutConstraint(item: addOccasionsButton, attribute: .right, relatedBy: .equal, toItem: occasionScrollView, attribute: .right, multiplier: 1.0, constant: -10))
     occasionScrollView.addConstraint(NSLayoutConstraint(item: addOccasionsButton, attribute: .top, relatedBy: .equal, toItem: occasionScrollView, attribute: .top, multiplier: 1.0, constant: 5))
     occasionScrollView.addConstraint(NSLayoutConstraint(item: addOccasionsButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
     occasionScrollView.addConstraint(NSLayoutConstraint(item: addOccasionsButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
@@ -412,7 +453,7 @@ final class CameraViewController: DUViewController {
     overviewScrollView.addConstraint(NSLayoutConstraint(item: apparelScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     
     //add apparel button
-    apparelScrollView.addConstraint(NSLayoutConstraint(item: addApparelsButton, attribute: .right, relatedBy: .equal, toItem: apparelScrollView, attribute: .right, multiplier: 1.0, constant: 0))
+    apparelScrollView.addConstraint(NSLayoutConstraint(item: addApparelsButton, attribute: .right, relatedBy: .equal, toItem: apparelScrollView, attribute: .right, multiplier: 1.0, constant: -10))
     apparelScrollView.addConstraint(NSLayoutConstraint(item: addApparelsButton, attribute: .top, relatedBy: .equal, toItem: apparelScrollView, attribute: .top, multiplier: 1.0, constant: 5))
     apparelScrollView.addConstraint(NSLayoutConstraint(item: addApparelsButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
     apparelScrollView.addConstraint(NSLayoutConstraint(item: addApparelsButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
@@ -430,8 +471,7 @@ final class CameraViewController: DUViewController {
     overviewScrollView.addConstraint(NSLayoutConstraint(item: colorScrollView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     
     //add color button
-    colorScrollView.addConstraint(NSLayoutConstraint(item: addColorsButton, attribute: .right, relatedBy: .equal, toItem: colorScrollView, attribute: .right, multiplier: 1.0, constant: 0))
-    
+    colorScrollView.addConstraint(NSLayoutConstraint(item: addColorsButton, attribute: .right, relatedBy: .equal, toItem: colorScrollView, attribute: .right, multiplier: 1.0, constant: -10))
     colorScrollView.addConstraint(NSLayoutConstraint(item: addColorsButton, attribute: .top, relatedBy: .equal, toItem: colorScrollView, attribute: .top, multiplier: 1.0, constant: 5))
     colorScrollView.addConstraint(NSLayoutConstraint(item: addColorsButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
     colorScrollView.addConstraint(NSLayoutConstraint(item: addColorsButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
@@ -654,6 +694,9 @@ final class CameraViewController: DUViewController {
     topButton.layer.backgroundColor = UIColor.royalBlue.cgColor
     pantsButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
     footwearButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    accessoryButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    carryOnButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
+
     
     UIView.animate(
       withDuration: 0.3,
@@ -679,7 +722,23 @@ final class CameraViewController: DUViewController {
         self.footwearButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
     },
       completion: nil)
-    
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.accessoryButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.carryOnButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
+
   }
   
   private dynamic func pantsButtonTapped() {
@@ -687,6 +746,8 @@ final class CameraViewController: DUViewController {
     pantsButton.layer.backgroundColor = UIColor.royalBlue.cgColor
     topButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
     footwearButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    accessoryButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    carryOnButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
     
     UIView.animate(
       withDuration: 0.3,
@@ -712,6 +773,23 @@ final class CameraViewController: DUViewController {
         self.footwearButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
     },
       completion: nil)
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.accessoryButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.carryOnButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
+
   }
   
   private dynamic func footwearButtonTapped() {
@@ -719,6 +797,9 @@ final class CameraViewController: DUViewController {
     footwearButton.layer.backgroundColor = UIColor.royalBlue.cgColor
     topButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
     pantsButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    accessoryButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    carryOnButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    
     UIView.animate(
       withDuration: 0.3,
       delay: 0.0,
@@ -743,7 +824,127 @@ final class CameraViewController: DUViewController {
         self.topButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
     },
       completion: nil)
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.accessoryButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.carryOnButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
+
   }
+  
+  private dynamic func accessoryButtonTapped() {
+    categoryButtonIndex = 3
+    accessoryButton.layer.backgroundColor = UIColor.royalBlue.cgColor
+    topButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    pantsButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    footwearButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    carryOnButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
+
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.accessoryButton.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1.0)
+    },
+      completion: nil)
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.footwearButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.pantsButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.topButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.carryOnButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
+
+  }
+  
+  private dynamic func carryOnButtonTapped() {
+    categoryButtonIndex = 4
+    carryOnButton.layer.backgroundColor = UIColor.royalBlue.cgColor
+    topButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    pantsButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    footwearButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    accessoryButton.layer.backgroundColor = UIColor.lighterBlue.cgColor
+    
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.carryOnButton.layer.transform = CATransform3DMakeScale(1.1, 1.1, 1.0)
+    },
+      completion: nil)
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.accessoryButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.footwearButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.pantsButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
+    UIView.animate(
+      withDuration: 0.3,
+      delay: 0.0,
+      options: .curveEaseOut,
+      animations: {
+        self.topButton.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+    },
+      completion: nil)
+
+  }
+
   
   //occasion buttons
   private dynamic func occasionButtonCheckTouchDown(sender: UIButton) {
@@ -1000,16 +1201,20 @@ final class CameraViewController: DUViewController {
     var positionTags = ""
     if categoryButtonIndex == 0 {
       positionTags = "Top"
-      
     }
     else if categoryButtonIndex == 1 {
       positionTags = "Pants"
-      
     }
     else if categoryButtonIndex == 2 {
       positionTags = "Footwear"
-      
     }
+    else if categoryButtonIndex == 3 {
+      positionTags = "Accessory"
+    }
+    else if categoryButtonIndex == 4 {
+      positionTags = "Carry-On"
+    }
+    
     for button in occasionButtons {
       if button.backgroundColor == UIColor.royalBlue {
         occasionTags.append((button.titleLabel?.text)!)
@@ -1072,7 +1277,6 @@ final class CameraViewController: DUViewController {
     backgroundImageView.image = nil
     if let image = pendingImage {
       PhotoService.create(for: image, imageApparel: apparelTags, imageColor: colorTags, imageOccasion: occasionTags, imagePosition: positionTags)
-      //saveButtonHeightConstraint.constant = 0
       UIView.animate(
         withDuration: 0.4,
         delay: 0,

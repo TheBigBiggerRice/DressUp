@@ -32,16 +32,6 @@ class FilteredPhotoCollectionCell: UICollectionViewCell {
     return view
   }()
   
-  let backgroundImageView: UIImageView = {
-    let view = UIImageView()
-    view.translatesAutoresizingMaskIntoConstraints = false
-    view.layer.cornerRadius = 10
-    view.clipsToBounds = true
-    
-    return view
-  }()
-  
-  
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
     initialize()
