@@ -34,7 +34,7 @@ class PhotoCollectionCell: UICollectionViewCell {
     initialize()
   }
   
-  init() { // You need these things here for every custom view
+  init() {
     super.init(frame: .zero)
     initialize()
   }

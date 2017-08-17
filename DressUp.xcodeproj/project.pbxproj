@@ -22,6 +22,7 @@
 		994E30B31F1D287400F0C53A /* PhotoCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994E30B21F1D287400F0C53A /* PhotoCollectionCell.swift */; };
 		994E30B71F1D6CAD00F0C53A /* DatabaseReference+Extenstion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994E30B61F1D6CAD00F0C53A /* DatabaseReference+Extenstion.swift */; };
 		995035481F19A7E7009453E1 /* PhotoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995035471F19A7E7009453E1 /* PhotoService.swift */; };
+		9952719D1F43E200003EA861 /* CustomPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9952719C1F43E200003EA861 /* CustomPhotoView.swift */; };
 		9958169F1F27D83900DD4D02 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9958169E1F27D83900DD4D02 /* FilterViewController.swift */; };
 		995E5D161F32FEE6005DA1BE /* gotham_rounded_light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 995E5D151F32FEE6005DA1BE /* gotham_rounded_light.otf */; };
 		995E5D181F3303CB005DA1BE /* DUButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995E5D171F3303CB005DA1BE /* DUButton.swift */; };
@@ -69,6 +70,7 @@
 		994E30B21F1D287400F0C53A /* PhotoCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionCell.swift; sourceTree = "<group>"; };
 		994E30B61F1D6CAD00F0C53A /* DatabaseReference+Extenstion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DatabaseReference+Extenstion.swift"; sourceTree = "<group>"; };
 		995035471F19A7E7009453E1 /* PhotoService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoService.swift; sourceTree = "<group>"; };
+		9952719C1F43E200003EA861 /* CustomPhotoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPhotoView.swift; sourceTree = "<group>"; };
 		9958169E1F27D83900DD4D02 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		995E5D151F32FEE6005DA1BE /* gotham_rounded_light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = gotham_rounded_light.otf; sourceTree = "<group>"; };
 		995E5D171F3303CB005DA1BE /* DUButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DUButton.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				993623D71F2E6720002CCFDF /* CustomTabBar.swift */,
 				99928F0A1F3BA62C005A56DE /* HeaderView.swift */,
 				99C63ABD1F3C6A1C00BE48CD /* CustomView.swift */,
+				9952719C1F43E200003EA861 /* CustomPhotoView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				995E5D181F3303CB005DA1BE /* DUButton.swift in Sources */,
+				9952719D1F43E200003EA861 /* CustomPhotoView.swift in Sources */,
 				994E30AC1F1BE64500F0C53A /* UIImage+Size.swift in Sources */,
 				9932E23C1F2A5A7D00E48F70 /* DULabel.swift in Sources */,
 				99EA72FD1F2D5D1500B46F5C /* DUViewController.swift in Sources */,

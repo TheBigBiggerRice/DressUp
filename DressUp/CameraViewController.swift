@@ -437,7 +437,6 @@ final class CameraViewController: DUViewController {
     colorScrollView.addConstraint(NSLayoutConstraint(item: addColorsButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
     colorScrollView.addConstraint(NSLayoutConstraint(item: addColorsButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 35))
     
-    
     //save button
     overviewScrollView.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .centerX, relatedBy: .equal, toItem: overviewScrollView, attribute: .centerX, multiplier: 1.0, constant: 0))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: saveButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth - 20))
@@ -1231,6 +1230,7 @@ extension CameraViewController: UIImagePickerControllerDelegate {
     if app != nil {
       app?.getModelByID(modelID, completion: { (model, error) in
         let caiImage = ClarifaiImage(image: image)!
+        
         model?.predict(on: [caiImage], completion: { (outputs, error) in
           guard let caiOutputs = outputs
             else { return }

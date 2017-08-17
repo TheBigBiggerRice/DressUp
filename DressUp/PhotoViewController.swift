@@ -7,10 +7,14 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class PhotoViewController: DUViewController {
   
   var currentURL: URL?
+  
+  let screenWidth = UIScreen.main.bounds.width
+  let screenHeight = UIScreen.main.bounds.height - 64
   
   var photoURLs: [String] = []
   var photoCategories: [String] = []
@@ -20,111 +24,39 @@ final class PhotoViewController: DUViewController {
   var photoUIDs: [String] = []
   
   var imageIndex = 0
-  var numImages = 0
+  
   var imageUID: String = ""
   
-  
-  fileprivate let blurView: UIVisualEffectView = {
-    let view = UIVisualEffectView()
+  fileprivate let photoScrollView: UIScrollView = {
+    let view = UIScrollView()
     view.translatesAutoresizingMaskIntoConstraints = false
-    let effect = UIBlurEffect(style: UIBlurEffectStyle.light)
-    view.effect = effect
+    view.showsHorizontalScrollIndicator = false
+    view.isScrollEnabled = true
+    view.isPagingEnabled = true
+
     return view
-  }()
-  
-  let backgroundImageView: UIImageView = {
-    let view = UIImageView()
-    view.translatesAutoresizingMaskIntoConstraints = false
-    view.contentMode = .scaleAspectFill
-    view.clipsToBounds = true
-    return view
-  }()
-  
-  //set image view
-  let photoImageView: UIImageView = {
-    let view = UIImageView()
-    view.translatesAutoresizingMaskIntoConstraints = false
-    view.contentMode = .scaleAspectFit
-    
-    return view
-  }()
-  
-  fileprivate let alphaView: UIView = {
-    let view = UIView()
-    view.translatesAutoresizingMaskIntoConstraints = false
-    view.alpha = 0
-    view.backgroundColor = .black
-    view.isUserInteractionEnabled = false
-    return view
-  }()
-  
-  let categoryAlphaLabel: DULabel = {
-    let label = DULabel()
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.numberOfLines = 0
-    label.lineBreakMode = .byWordWrapping
-    label.textColor = .white
-    label.alpha = 0
-    return label
-  }()
-  
-  let occasionAlphaLabel: DULabel = {
-    let label = DULabel()
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.numberOfLines = 0
-    label.lineBreakMode = .byWordWrapping
-    label.textColor = .white
-    label.alpha = 0
-    return label
-  }()
-  
-  let apparelAlphaLabel: DULabel = {
-    let label = DULabel()
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.numberOfLines = 0
-    label.lineBreakMode = .byWordWrapping
-    label.textColor = .white
-    label.alpha = 0
-    return label
-  }()
-  
-  let colorAlphaLabel: DULabel = {
-    let label = DULabel()
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.numberOfLines = 0
-    label.lineBreakMode = .byWordWrapping
-    label.textColor = .white
-    label.alpha = 0
-    return label
   }()
   
   override func viewDidLoad() {
     
     super.viewDidLoad()
+
     initialize()
     
     self.navigationItem.title = "Photo"
+    
     self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonTapped(sender:)))
+    
     self.navigationItem.rightBarButtonItem?.tintColor = .white
+    
     navigationItem.rightBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 17)!], for: .normal)
 
     self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Delete", style: .plain, target: self, action: #selector(deleteButtonTapped(sender:)))
+    
     self.navigationItem.leftBarButtonItem?.tintColor = .white
+    
     navigationItem.leftBarButtonItem?.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "GothamRounded-Light", size: 17)!], for: .normal)
-    
-    //swiping between photos
-    let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-    swipeLeft.direction = .left
-    self.view.addGestureRecognizer(swipeLeft)
-    
-    let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-    swipeRight.direction = .right
-    self.view.addGestureRecognizer(swipeRight)
-    
-    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageViewTapped))
-    self.view.addGestureRecognizer(tapGesture)
-    
-    
+        
   }
   
   func cancelButtonTapped(sender: UIBarButtonItem) {
@@ -137,133 +69,60 @@ final class PhotoViewController: DUViewController {
     
   }
   
-  //handle swipe right and left
-  func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
-    for url in photoURLs {
-      if URL(string: url) == self.currentURL {
-        imageIndex = photoURLs.index(of: url)!
-      }
-    }
-    switch gesture.direction {
-    case UISwipeGestureRecognizerDirection.right:
-      imageIndex -= 1
-      if imageIndex < 0 {
-        imageIndex = numImages - 1
-      }
-      currentURL = URL(string: photoURLs[imageIndex])
-      photoImageView.kf.setImage(with: currentURL)
-      backgroundImageView.kf.setImage(with: currentURL)
-      
-      
-      categoryAlphaLabel.text = "Category: \(photoCategories[imageIndex])"
-      occasionAlphaLabel.text = "Occasion: \(photoOccasions[imageIndex].joined(separator: ", "))"
-      apparelAlphaLabel.text = "Apparel: \(photoApparels[imageIndex].joined(separator: ", "))"
-      colorAlphaLabel.text = "Color: \(photoColors[imageIndex].joined(separator: ", "))"
-
-      imageUID = photoUIDs[imageIndex]
-
-    case UISwipeGestureRecognizerDirection.left:
-      imageIndex += 1
-      if imageIndex > (numImages - 1) {
-        imageIndex = 0
-      }
-      currentURL = URL(string: photoURLs[imageIndex])
-      photoImageView.kf.setImage(with: currentURL)
-      backgroundImageView.kf.setImage(with: currentURL)
-      
-      categoryAlphaLabel.text = "Category: \(photoCategories[imageIndex])"
-      occasionAlphaLabel.text = "Occasion: \(photoOccasions[imageIndex].joined(separator: ", "))"
-      apparelAlphaLabel.text = "Apparel: \(photoApparels[imageIndex].joined(separator: ", "))"
-      colorAlphaLabel.text = "Color: \(photoColors[imageIndex].joined(separator: ", "))"
-      
-      imageUID = photoUIDs[imageIndex]
-
-    default:
-      break
-    }
-    
-  }
-  
-  func imageViewTapped(sender: UITapGestureRecognizer) {
-    if alphaView.alpha == 0 {
-      fadeInAlphaView()
-    } else {
-      fadeOutAlphaView()
-    }
-    
-  }
-  
   private func initialize() {
   
-    view.insertSubview(blurView, aboveSubview: backgroundImageView)
-    view.insertSubview(photoImageView, aboveSubview: blurView)
-    view.insertSubview(alphaView, aboveSubview: photoImageView)
-
-    //background image view
-    backgroundImageView.addToAndConstrain(insideSuper: view)
+    photoScrollView.addToAndConstrain(insideSuper: view)
     
-    //blur image view
-    blurView.addToAndConstrain(insideSuper: view)
+    view.backgroundColor = .white
+    var previousView: UIView?
     
-    //image view
-    photoImageView.addToAndConstrain(insideSuper: view)
-    
-    //alpha view
-    alphaView.addToAndConstrain(insideSuper: view)
-    
-    view.insertSubview(categoryAlphaLabel, aboveSubview: alphaView)
-    view.insertSubview(occasionAlphaLabel, aboveSubview: alphaView)
-    view.insertSubview(apparelAlphaLabel, aboveSubview: alphaView)
-    view.insertSubview(colorAlphaLabel, aboveSubview: alphaView)
-
-    //category alpha label
-    view.addConstraint(NSLayoutConstraint(item: categoryAlphaLabel, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1.0, constant: -50))
-    view.addConstraint(NSLayoutConstraint(item: categoryAlphaLabel, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: categoryAlphaLabel, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 0))
-    
-    //occasion alpha label
-    view.addConstraint(NSLayoutConstraint(item: occasionAlphaLabel, attribute: .top, relatedBy: .equal, toItem: categoryAlphaLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
-    view.addConstraint(NSLayoutConstraint(item: occasionAlphaLabel, attribute: .left, relatedBy: .equal, toItem: categoryAlphaLabel, attribute: .left, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: occasionAlphaLabel, attribute: .right, relatedBy: .equal, toItem: categoryAlphaLabel, attribute: .right, multiplier: 1.0, constant: 0))
-    
-    //apparel alpha label
-    view.addConstraint(NSLayoutConstraint(item: apparelAlphaLabel, attribute: .top, relatedBy: .equal, toItem: occasionAlphaLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
-    view.addConstraint(NSLayoutConstraint(item: apparelAlphaLabel, attribute: .left, relatedBy: .equal, toItem: occasionAlphaLabel, attribute: .left, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: apparelAlphaLabel, attribute: .right, relatedBy: .equal, toItem: occasionAlphaLabel, attribute: .right, multiplier: 1.0, constant: 0))
-    
-    //color alpha label
-    view.addConstraint(NSLayoutConstraint(item: colorAlphaLabel, attribute: .top, relatedBy: .equal, toItem: apparelAlphaLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
-    view.addConstraint(NSLayoutConstraint(item: colorAlphaLabel, attribute: .left, relatedBy: .equal, toItem: apparelAlphaLabel, attribute: .left, multiplier: 1.0, constant: 0))
-    view.addConstraint(NSLayoutConstraint(item: colorAlphaLabel, attribute: .right, relatedBy: .equal, toItem: apparelAlphaLabel, attribute: .right, multiplier: 1.0, constant: 0))
-    
-  }
+    for (index,url) in photoURLs.enumerated() {
+      
+      
+      let imageURL = URL(string: url)
+      
+      let customView = CustomPhotoView()
+      customView.translatesAutoresizingMaskIntoConstraints = false
+      
+      customView.backgroundView.kf.setImage(with: imageURL)
+      customView.imageView.kf.setImage(with: imageURL)
+      customView.categoryAlphaLabel.text = "Category: \(photoCategories[index])"
+      customView.occasionAlphaLabel.text = "Occasions: \(photoOccasions[index].joined(separator: ", "))"
+      customView.apparelAlphaLabel.text = "Apparel: \(photoApparels[index].joined(separator: ", "))"
+      customView.colorAlphaLabel.text = "Color: \(photoColors[index].joined(separator: ", "))"
   
-  func fadeInAlphaView() {
-    UIView.animate(
-      withDuration: 0.3,
-      animations: { [weak self] _ in
-        self?.alphaView.alpha = 0.8
-        self?.categoryAlphaLabel.alpha = 1
-        self?.occasionAlphaLabel.alpha = 1
-        self?.apparelAlphaLabel.alpha = 1
-        self?.colorAlphaLabel.alpha = 1
+      photoScrollView.addSubview(customView)
+
+      photoScrollView.addConstraint(NSLayoutConstraint(item: customView, attribute: .top, relatedBy: .equal, toItem: photoScrollView, attribute: .top, multiplier: 1.0, constant: 0))
+      photoScrollView.addConstraint(NSLayoutConstraint(item: customView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenHeight))
+      photoScrollView.addConstraint(NSLayoutConstraint(item: customView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: screenWidth))
+      
+      if previousView == nil {
+        
+        photoScrollView.addConstraint(NSLayoutConstraint(item: customView, attribute: .left, relatedBy: .equal, toItem: photoScrollView, attribute: .left, multiplier: 1.0, constant: 0))
+        
+        previousView = customView
+        
+      } else {
+        photoScrollView.addConstraint(NSLayoutConstraint(item: customView, attribute: .left, relatedBy: .equal, toItem: previousView, attribute: .right, multiplier: 1.0, constant: 0))
+        
+        previousView = customView
+        
       }
-    )
+      
+    }
+    photoScrollView.addConstraint(NSLayoutConstraint(item: previousView!, attribute: .right, relatedBy: .equal, toItem: photoScrollView, attribute: .right,  multiplier: 1.0, constant: 0))
     
-  }
-  
-  func fadeOutAlphaView() {
-    UIView.animate(
-      withDuration: 0.3,
-      animations: { [weak self] _ in
-        self?.alphaView.alpha = 0
-        self?.categoryAlphaLabel.alpha = 0
-        self?.occasionAlphaLabel.alpha = 0
-        self?.apparelAlphaLabel.alpha = 0
-        self?.colorAlphaLabel.alpha = 0
+    view.setNeedsLayout()
+    view.layoutIfNeeded()
+    
+    for url in photoURLs {
+      if URL(string: url) == currentURL {
+        imageIndex = photoURLs.index(of: url)!
+        photoScrollView.contentOffset = CGPoint(x: CGFloat(imageIndex) * screenWidth, y: 0)
+        
       }
-    )
-    
+    }
   }
   
 }

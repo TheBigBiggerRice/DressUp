@@ -18,8 +18,6 @@ class LibraryViewController: DUViewController {
   
   var forceTouchIndexPath: IndexPath?
   
-  var photoCollectionSorted = [Photos]()
-  
   var profileHandle: DatabaseHandle = 0
   var profileRef: DatabaseReference?
   let flowLayout = UICollectionViewFlowLayout()
@@ -29,11 +27,6 @@ class LibraryViewController: DUViewController {
   var selectedPhotos = [String]()
   var selectedRows: [Int] = []
   
-  lazy var longPress: UILongPressGestureRecognizer = {
-    let temp = UILongPressGestureRecognizer.init(target: self, action: #selector(LibraryViewController.showPeek))
-    
-    return temp
-  }()
   
   override func viewDidLoad() {
     
@@ -70,36 +63,6 @@ class LibraryViewController: DUViewController {
         self.collectionView.reloadData()
       }
     }
-  }
-  
-  func check3DTouch() {
-    
-    if self.traitCollection.forceTouchCapability == UIForceTouchCapability.available {
-      self.registerForPreviewing(with: self, sourceView: self.collectionView)
-      self.longPress.isEnabled = false
-    }
-    else {
-      self.longPress.isEnabled = true
-    }
-  }
-  
-  func showPeek() {
-    self.longPress.isEnabled = false
-    
-    let previewView = ForceTouchViewController()
-    
-    let presenter = self.grabTopViewController()
-    
-    presenter.show(previewView, sender: self)
-  }
-  
-  func grabTopViewController() -> UIViewController {
-    
-    var top = UIApplication.shared.keyWindow?.rootViewController
-    while((top?.presentedViewController) != nil) {
-      top = top?.presentedViewController
-    }
-    return top!
   }
   
   private dynamic func selectButtonTapped(sender: UIBarButtonItem) {
@@ -144,7 +107,6 @@ class LibraryViewController: DUViewController {
   override func viewWillAppear(_ animated: Bool) {
     UserService.photos(for: user) { (Photos) in
       self.photoCollection = Photos.sorted(by: {$0.creationDate > $1.creationDate})
-      self.photoCollectionSorted = self.photoCollection
       self.collectionView.reloadData()
     }
   }
@@ -167,16 +129,6 @@ extension LibraryViewController: UICollectionViewDelegate {
       
       let vc = PhotoViewController()
       
-      let imageURL = URL(string: photo.imageURL)
-      vc.photoImageView.kf.setImage(with: imageURL)
-      vc.backgroundImageView.kf.setImage(with: imageURL)
-      
-      vc.categoryAlphaLabel.text = "Category: \(photo.imagePosition)"
-      vc.occasionAlphaLabel.text = "Occasion: \(photo.imageOccasion.joined(separator: ", "))"
-      vc.apparelAlphaLabel.text = "Apparel: \(photo.imageApparel.joined(separator: ", "))"
-      vc.colorAlphaLabel.text = "Color: \(photo.imageColor.joined(separator: ", "))"
-      
-      
       
       let nc = UINavigationController(rootViewController: vc)
       
@@ -187,6 +139,7 @@ extension LibraryViewController: UICollectionViewDelegate {
       let photoColors: [[String]] = photoCollection.map {$0.imageColor}
       let photoUIDs: [String] = photoCollection.map {$0.imageUID}
 
+      let imageURL = URL(string: photo.imageURL)
       vc.currentURL = imageURL
       
       vc.photoURLs = photoURLs
@@ -196,14 +149,10 @@ extension LibraryViewController: UICollectionViewDelegate {
       vc.photoColors = photoColors
       vc.photoUIDs = photoUIDs
       
-      vc.numImages = self.photoCollection.count
-    
       vc.imageUID = photo.imageUID
       present(nc, animated: true, completion: nil)
       
-    }
-      
-    else{
+    } else{
       
       //print("select item")
       let indexPaths = self.collectionView.indexPathsForSelectedItems
@@ -273,81 +222,6 @@ extension LibraryViewController: UICollectionViewDelegateFlowLayout {
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
     return 1.5
-  }
-}
-
-extension LibraryViewController: UIViewControllerPreviewingDelegate {
-  
-  func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
-    
-    guard let indexPath = collectionView.indexPathForItem(at: location) else { return nil }
-    
-    guard let cell = collectionView.cellForItem(at: indexPath) else { return nil }
-    
-    forceTouchIndexPath = indexPath
-    
-    let vc = ForceTouchViewController()
-    
-    let photo = photoCollection[indexPath.row]
-    
-    let imageURL = URL(string: photo.imageURL)
-    
-    vc.imageView.kf.setImage(with: imageURL)
-    
-    vc.preferredContentSize = CGSize(width: 0.0, height: 300.0)
-    
-    previewingContext.sourceRect = cell.frame
-    
-    return vc
-  }
-
-  func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
-    
-  
-    let photo = photoCollection[(forceTouchIndexPath?.row)!]
-    
-    let vc = PhotoViewController()
-    
-    let imageURL = URL(string: photo.imageURL)
-    
-    vc.photoImageView.kf.setImage(with: imageURL)
-    
-    vc.backgroundImageView.kf.setImage(with: imageURL)
-    
-    vc.categoryAlphaLabel.text = "Category: \(photo.imagePosition)"
-    vc.occasionAlphaLabel.text = "Occasion: \(photo.imageOccasion.joined(separator: ", "))"
-    vc.apparelAlphaLabel.text = "Apparel: \(photo.imageApparel.joined(separator: ", "))"
-    vc.colorAlphaLabel.text = "Color: \(photo.imageColor.joined(separator: ", "))"
-
-    
-    
-    let nc = UINavigationController(rootViewController: vc)
-    
-    let photoURLs: [String]  = photoCollection.map {$0.imageURL}
-    let photoCategories: [String] = photoCollection.map {$0.imagePosition}
-    let photoOccasions: [[String]] = photoCollection.map {$0.imageOccasion}
-    let photoApparels: [[String]] = photoCollection.map {$0.imageApparel}
-    let photoColors: [[String]] = photoCollection.map {$0.imageColor}
-    let photoUIDs: [String] = photoCollection.map {$0.imageUID}
-    
-    vc.currentURL = imageURL
-
-    vc.photoURLs = photoURLs
-    vc.photoCategories = photoCategories
-    vc.photoOccasions = photoOccasions
-    vc.photoApparels = photoApparels
-    vc.photoColors = photoColors
-    vc.photoUIDs = photoUIDs
-
-    vc.numImages = self.photoCollection.count
-    
-    vc.imageUID = photo.imageUID
-
-    show(nc, sender: self)
-  }
-  
-  override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-    self.check3DTouch()
   }
 }
 
