@@ -41,7 +41,6 @@ final class CameraViewController: DUViewController {
     view.isScrollEnabled = true
     view.showsVerticalScrollIndicator = false
     view.contentSize = CGSize(width: UIScreen.main.bounds.width, height: view.contentSize.height)
-    
     return view
   }()
   
