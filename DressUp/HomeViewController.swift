@@ -112,14 +112,13 @@ final class HomeViewController: DUViewController {
     
     super.viewDidLoad()
     
-    view.backgroundColor = .yellow
     initialize()
     
     homeController.delegate = self
 
     homeTableView.isScrollEnabled = false
     
-    navigationItem.title = "Home"
+    navigationItem.title = "Style Me"
     
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(filterButtonTapped(sender:)))
     

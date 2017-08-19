@@ -32,7 +32,7 @@ class LibraryViewController: DUViewController {
     
     super.viewDidLoad()
   
-    navigationItem.title = "Library"
+    navigationItem.title = "Closet"
     
     //edit button
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(LibraryViewController.editButtonTapped))
@@ -66,6 +66,7 @@ class LibraryViewController: DUViewController {
   }
   
   private dynamic func editButtonTapped(sender: UIBarButtonItem) {
+    
     selectButtonOn = true
     collectionView.allowsMultipleSelection = true
   
