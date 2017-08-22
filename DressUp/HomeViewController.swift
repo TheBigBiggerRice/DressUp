@@ -104,7 +104,7 @@ final class HomeViewController: DUViewController {
     overviewScrollView.addConstraint(NSLayoutConstraint(item: randomizeButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 200))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: randomizeButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50))
     overviewScrollView.addConstraint(NSLayoutConstraint(item: randomizeButton, attribute: .centerX, relatedBy: .equal, toItem: overviewScrollView, attribute: .centerX, multiplier: 1.0, constant: 0))
-    overviewScrollView.addConstraint(NSLayoutConstraint(item: randomizeButton, attribute: .bottom, relatedBy: .equal, toItem: overviewScrollView, attribute: .bottom, multiplier: 1.0, constant: 0))
+    overviewScrollView.addConstraint(NSLayoutConstraint(item: randomizeButton, attribute: .bottom, relatedBy: .equal, toItem: overviewScrollView, attribute: .bottom, multiplier: 1.0, constant: -30))
     
   }
   

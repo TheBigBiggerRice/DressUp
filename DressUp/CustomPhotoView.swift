@@ -44,6 +44,17 @@ class CustomPhotoView: UIView {
     return view
   }()
   
+  let nameAlphaLabel: DULabel = {
+    let label = DULabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.numberOfLines = 0
+    label.lineBreakMode = .byWordWrapping
+    label.textAlignment = .center
+    label.textColor = .white
+    label.alpha = 0
+    return label
+  }()
+  
   let categoryAlphaLabel: DULabel = {
     let label = DULabel()
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -114,10 +125,18 @@ class CustomPhotoView: UIView {
     
     alphaView.addToAndConstrain(insideSuper: self)
     
+    insertSubview(nameAlphaLabel, aboveSubview: alphaView)
     insertSubview(categoryAlphaLabel, aboveSubview: alphaView)
     insertSubview(occasionAlphaLabel, aboveSubview: alphaView)
     insertSubview(apparelAlphaLabel, aboveSubview: alphaView)
     insertSubview(colorAlphaLabel, aboveSubview: alphaView)
+    
+    //name alpha label
+    addConstraint(NSLayoutConstraint(item: nameAlphaLabel, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1.0, constant: 0))
+    
+    addConstraint(NSLayoutConstraint(item: nameAlphaLabel, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1.0, constant: 0))
+    
+    
     
     //category alpha label
     addConstraint(NSLayoutConstraint(item: categoryAlphaLabel, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1.0, constant: -50))
@@ -159,6 +178,7 @@ class CustomPhotoView: UIView {
           self?.occasionAlphaLabel.alpha = 1
           self?.apparelAlphaLabel.alpha = 1
           self?.colorAlphaLabel.alpha = 1
+          self?.nameAlphaLabel.alpha = 1
         }
       )
   
@@ -173,6 +193,7 @@ class CustomPhotoView: UIView {
           self?.occasionAlphaLabel.alpha = 0
           self?.apparelAlphaLabel.alpha = 0
           self?.colorAlphaLabel.alpha = 0
+          self?.nameAlphaLabel.alpha = 0
         }
       )
       

@@ -8,6 +8,8 @@
 import UIKit
 import FirebaseDatabase
 import Kingfisher
+import FirebaseStorage
+
 
 class LibraryViewController: DUViewController {
   
@@ -58,6 +60,12 @@ class LibraryViewController: DUViewController {
       self.profileRef = ref
       self.user = user
       self.photoCollection = photos.sorted(by: {$0.creationDate > $1.creationDate})
+
+//      for photo in self.photoCollection {
+//        if photo.imageName.isEmpty == true {
+//          Database.database().reference().child("photos").child(user.uid).child(photo.key).
+//        }
+//      }
       
       DispatchQueue.main.async {
         self.collectionView.reloadData()
