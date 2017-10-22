@@ -25,7 +25,7 @@ class Photos: DUKeyed {
   let imageColor: [String]
   let imageOccasion: [String]
   let imagePosition: String
-  //let imageName: String
+  let imageName: String
 
   var dictValue: [String : Any] {
     let createdAgo = creationDate.timeIntervalSince1970
@@ -40,7 +40,7 @@ class Photos: DUKeyed {
             "image_color": imageColor,
             "image_occasion": imageOccasion,
             "image_position": imagePosition,
-            //"image_name": imageName,
+            "image_name": imageName,
             "poster" : userDict]
   }
   
@@ -55,7 +55,7 @@ class Photos: DUKeyed {
       let imageColor = dict["image_color"] as? [String],
       let imageOccasion = dict["image_occasion"] as? [String],
       let imagePosition = dict["image_position"] as? String,
-      //let imageName = dict["image_name"] as? String,
+      let imageName = dict["image_name"] as? String,
       
     
       let userDict = dict["poster"] as? [String : Any],
@@ -74,11 +74,11 @@ class Photos: DUKeyed {
     self.imageColor = imageColor
     self.imageOccasion = imageOccasion
     self.imagePosition = imagePosition
-    //self.imageName = imageName
+    self.imageName = imageName
     
   }
   
-  init(imageURL: String, imageHeight: CGFloat, imageUID: String, imageApparel: [String], imageColor: [String], imageOccasion: [String], imagePosition: String) {
+  init(imageURL: String, imageHeight: CGFloat, imageUID: String, imageApparel: [String], imageColor: [String], imageOccasion: [String], imagePosition: String, imageName: String) {
     
     self.imageURL = imageURL
     self.imageHeight = imageHeight
@@ -88,7 +88,7 @@ class Photos: DUKeyed {
     self.imageColor = imageColor
     self.imageOccasion = imageOccasion
     self.imagePosition = imagePosition
-    //self.imageName = imageName
+    self.imageName = imageName
     
     self.poster = User.current
   }

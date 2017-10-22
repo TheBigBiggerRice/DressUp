@@ -13,7 +13,7 @@ import FirebaseDatabase
 
 struct PhotoService {
   
-  static func create(for image: UIImage, imageApparel: [String], imageColor: [String], imageOccasion: [String], imagePosition: String) {
+  static func create(for image: UIImage, imageApparel: [String], imageColor: [String], imageOccasion: [String], imagePosition: String, imageName: String) {
     DispatchQueue.main.async {
       let imageRef = StorageReference.newPhotoImageReference()
       StorageService.uploadImage(image, at: imageRef) { (downloadURL) in
@@ -23,18 +23,18 @@ struct PhotoService {
         
         let urlString = downloadURL.absoluteString
         let aspectHeight = image.aspectHeight
-        create(forURLString: urlString, aspectHeight: aspectHeight, imageApparel: imageApparel, imageColor: imageColor, imageOccasion: imageOccasion, imagePosition: imagePosition)
+        create(forURLString: urlString, aspectHeight: aspectHeight, imageApparel: imageApparel, imageColor: imageColor, imageOccasion: imageOccasion, imagePosition: imagePosition, imageName: imageName)
       }
     }
     
   }
   
-  private static func create(forURLString urlString: String, aspectHeight: CGFloat, imageApparel: [String], imageColor: [String], imageOccasion: [String], imagePosition: String) {
+  private static func create(forURLString urlString: String, aspectHeight: CGFloat, imageApparel: [String], imageColor: [String], imageOccasion: [String], imagePosition: String, imageName: String) {
     
     let currentUser = User.current
     let photoRef = Database.database().reference().child("photos").child(currentUser.uid).childByAutoId()
     let uidValue = photoRef.key
-    let photo = Photos(imageURL: urlString, imageHeight: aspectHeight, imageUID: uidValue, imageApparel: imageApparel, imageColor: imageColor, imageOccasion: imageOccasion, imagePosition: imagePosition)
+    let photo = Photos(imageURL: urlString, imageHeight: aspectHeight, imageUID: uidValue, imageApparel: imageApparel, imageColor: imageColor, imageOccasion: imageOccasion, imagePosition: imagePosition, imageName: imageName)
     let dict = photo.dictValue
     
     photoRef.updateChildValues(dict)

@@ -60,13 +60,7 @@ class LibraryViewController: DUViewController {
       self.profileRef = ref
       self.user = user
       self.photoCollection = photos.sorted(by: {$0.creationDate > $1.creationDate})
-
-//      for photo in self.photoCollection {
-//        if photo.imageName.isEmpty == true {
-//          Database.database().reference().child("photos").child(user.uid).child(photo.key).
-//        }
-//      }
-      
+    
       DispatchQueue.main.async {
         self.collectionView.reloadData()
       }
@@ -142,6 +136,7 @@ extension LibraryViewController: UICollectionViewDelegate {
       let nc = UINavigationController(rootViewController: vc)
       
       let photoURLs: [String]  = photoCollection.map {$0.imageURL}
+      let photoNames: [String] = photoCollection.map {$0.imageName}
       let photoCategories: [String] = photoCollection.map {$0.imagePosition}
       let photoOccasions: [[String]] = photoCollection.map {$0.imageOccasion}
       let photoApparels: [[String]] = photoCollection.map {$0.imageApparel}
@@ -151,6 +146,7 @@ extension LibraryViewController: UICollectionViewDelegate {
       let imageURL = URL(string: photo.imageURL)
       vc.currentURL = imageURL
       
+      vc.photoNames = photoNames
       vc.photoURLs = photoURLs
       vc.photoCategories = photoCategories
       vc.photoOccasions = photoOccasions

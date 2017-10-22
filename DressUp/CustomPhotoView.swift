@@ -52,6 +52,7 @@ class CustomPhotoView: UIView {
     label.textAlignment = .center
     label.textColor = .white
     label.alpha = 0
+    label.font = UIFont(name: "GothamRounded-Light", size: 24)
     return label
   }()
   
@@ -125,17 +126,12 @@ class CustomPhotoView: UIView {
     
     alphaView.addToAndConstrain(insideSuper: self)
     
-    insertSubview(nameAlphaLabel, aboveSubview: alphaView)
     insertSubview(categoryAlphaLabel, aboveSubview: alphaView)
     insertSubview(occasionAlphaLabel, aboveSubview: alphaView)
     insertSubview(apparelAlphaLabel, aboveSubview: alphaView)
     insertSubview(colorAlphaLabel, aboveSubview: alphaView)
-    
-    //name alpha label
-    addConstraint(NSLayoutConstraint(item: nameAlphaLabel, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1.0, constant: 0))
-    
-    addConstraint(NSLayoutConstraint(item: nameAlphaLabel, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1.0, constant: 0))
-    
+    insertSubview(nameAlphaLabel, aboveSubview: alphaView)
+
     
     
     //category alpha label
@@ -157,6 +153,12 @@ class CustomPhotoView: UIView {
     addConstraint(NSLayoutConstraint(item: colorAlphaLabel, attribute: .top, relatedBy: .equal, toItem: apparelAlphaLabel, attribute: .bottom, multiplier: 1.0, constant: 10))
     addConstraint(NSLayoutConstraint(item: colorAlphaLabel, attribute: .left, relatedBy: .equal, toItem: apparelAlphaLabel, attribute: .left, multiplier: 1.0, constant: 0))
     addConstraint(NSLayoutConstraint(item: colorAlphaLabel, attribute: .right, relatedBy: .equal, toItem: apparelAlphaLabel, attribute: .right, multiplier: 1.0, constant: 0))
+    
+    //name alpha label
+    addConstraint(NSLayoutConstraint(item: nameAlphaLabel, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1.0, constant: 0))
+    
+    addConstraint(NSLayoutConstraint(item: nameAlphaLabel, attribute: .bottom, relatedBy: .equal, toItem: categoryAlphaLabel, attribute: .top, multiplier: 1.0, constant: -50))
+    addConstraint(NSLayoutConstraint(item: nameAlphaLabel, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: UIScreen.main.bounds.width))
     
     
   }

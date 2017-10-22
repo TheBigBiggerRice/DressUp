@@ -22,6 +22,7 @@ final class PhotoViewController: DUViewController {
   var photoApparels: [[String]] = [[]]
   var photoColors: [[String]] = [[]]
   var photoUIDs: [String] = []
+  var photoNames: [String] = []
   
   var imageIndex = 0
   
@@ -86,6 +87,7 @@ final class PhotoViewController: DUViewController {
       
       customView.backgroundView.kf.setImage(with: imageURL)
       customView.imageView.kf.setImage(with: imageURL)
+      customView.nameAlphaLabel.text = photoNames[index]
       customView.categoryAlphaLabel.text = "Category: \(photoCategories[index])"
       customView.occasionAlphaLabel.text = "Occasions: \(photoOccasions[index].joined(separator: ", "))"
       customView.apparelAlphaLabel.text = "Apparel: \(photoApparels[index].joined(separator: ", "))"

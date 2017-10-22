@@ -132,9 +132,6 @@ extension HomeController: UITableViewDelegate {
       return filteredTopPhotoCollection.map { FilteredPhotoCollectionCellViewModel(withPhoto: $0) }
     }
     else if 1 == row {
-      
-      
-      
       filteredPantsPhotoCollection = pantsPhotoCollection.filter { photo in
         
         let setPhotoOccasion = Set(photo.imageOccasion)

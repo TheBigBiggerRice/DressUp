@@ -1336,7 +1336,7 @@ final class CameraViewController: DUViewController {
     imageView.image = nil
     backgroundImageView.image = nil
     if let image = pendingImage {
-      PhotoService.create(for: image, imageApparel: apparelTags, imageColor: colorTags, imageOccasion: occasionTags, imagePosition: positionTags)
+      PhotoService.create(for: image, imageApparel: apparelTags, imageColor: colorTags, imageOccasion: occasionTags, imagePosition: positionTags, imageName: nameTag)
       UIView.animate(
         withDuration: 0.4,
         delay: 0,
