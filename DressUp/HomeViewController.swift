@@ -147,6 +147,12 @@ final class HomeViewController: DUViewController {
     vc.nonRepeatAggregateOccasionTags = Set(homeController.aggregateOccasionTags)
     vc.nonRepeatAggregateApparelTags = Set(homeController.aggregateApparelTags)
     vc.nonRepeatAggregateColorTags = Set(homeController.aggregateColorTags)
+    //nc.pushViewController(vc, animated: true)
+    //let transition = CATransition()
+    //transition.duration = 0.3
+    //transition.type = kCATransitionPush
+    //transition.subtype = kCATransitionFromRight
+    //view.window?.layer.add(transition, forKey: kCATransition)
     
     present(nc, animated: true, completion: nil)
     

@@ -48,12 +48,29 @@
 		999655461F18A1E700A9E1DB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655451F18A1E700A9E1DB /* HomeViewController.swift */; };
 		999655551F193EF800A9E1DB /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999655541F193EF800A9E1DB /* StorageService.swift */; };
 		99A54ADA1FA2B83A00EE8102 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A54AD91FA2B83A00EE8102 /* OnboardingViewController.swift */; };
+		99A54AEA1FA2BBB700EE8102 /* paper_onboarding.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99A54AE91FA2BBB700EE8102 /* paper_onboarding.framework */; };
+		99A54AEB1FA2BBB700EE8102 /* paper_onboarding.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 99A54AE91FA2BBB700EE8102 /* paper_onboarding.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		99A54AEF1FA2C82500EE8102 /* CheckForOnboarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A54AEE1FA2C82500EE8102 /* CheckForOnboarding.swift */; };
 		99AC20F21F2D9D340058BD73 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AC20F11F2D9D340058BD73 /* UIColor.swift */; };
 		99C63ABE1F3C6A1C00BE48CD /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C63ABD1F3C6A1C00BE48CD /* CustomView.swift */; };
 		99EA72FD1F2D5D1500B46F5C /* DUViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EA72FC1F2D5D1500B46F5C /* DUViewController.swift */; };
 		99EA73011F2D6F1300B46F5C /* ForceTouchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99EA73001F2D6F1300B46F5C /* ForceTouchViewController.swift */; };
 		99FE58041F2881EC0067A6C3 /* DUTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FE58031F2881EC0067A6C3 /* DUTextField.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		99A54AE21FA2B9EF00EE8102 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				99A54AEB1FA2BBB700EE8102 /* paper_onboarding.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		6952B97E4EAD711A4164BB61 /* Pods-DressUp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DressUp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DressUp/Pods-DressUp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -99,6 +116,8 @@
 		999655451F18A1E700A9E1DB /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		999655541F193EF800A9E1DB /* StorageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		99A54AD91FA2B83A00EE8102 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		99A54AE91FA2BBB700EE8102 /* paper_onboarding.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = paper_onboarding.framework; path = "../../../../../../../../../Library/Developer/Xcode/DerivedData/DressUp-bjkfcsmqwkbcynfmzwwavmwiknjg/Build/Products/Debug-iphoneos/paper-onboarding/paper_onboarding.framework"; sourceTree = SDKROOT; };
+		99A54AEE1FA2C82500EE8102 /* CheckForOnboarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckForOnboarding.swift; sourceTree = "<group>"; };
 		99AC20F11F2D9D340058BD73 /* UIColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		99C63ABD1F3C6A1C00BE48CD /* CustomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
 		99EA72FC1F2D5D1500B46F5C /* DUViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DUViewController.swift; sourceTree = "<group>"; };
@@ -113,6 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99A54AEA1FA2BBB700EE8102 /* paper_onboarding.framework in Frameworks */,
 				08A702FC580823E4F3EBD20B /* Pods_DressUp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -181,6 +201,7 @@
 		996B75881F182D6000E835AA = {
 			isa = PBXGroup;
 			children = (
+				99A54AE91FA2BBB700EE8102 /* paper_onboarding.framework */,
 				996B75931F182D6000E835AA /* DressUp */,
 				996B75921F182D6000E835AA /* Products */,
 				60AC3527C57CECB45F304E82 /* Pods */,
@@ -284,6 +305,7 @@
 				99EA72FC1F2D5D1500B46F5C /* DUViewController.swift */,
 				99AC20F11F2D9D340058BD73 /* UIColor.swift */,
 				995E5D171F3303CB005DA1BE /* DUButton.swift */,
+				99A54AEE1FA2C82500EE8102 /* CheckForOnboarding.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -301,6 +323,7 @@
 				996B758F1F182D6000E835AA /* Resources */,
 				F439BBA4BC1F1B95343D86F5 /* [CP] Embed Pods Frameworks */,
 				13FFE5443B617CE9B700D9BD /* [CP] Copy Pods Resources */,
+				99A54AE21FA2B9EF00EE8102 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -480,6 +503,7 @@
 				99A54ADA1FA2B83A00EE8102 /* OnboardingViewController.swift in Sources */,
 				9990761D1F2AE9EB00666EC9 /* DUCellViewModels.swift in Sources */,
 				99711BFA1F367FF00097C405 /* RandomizePhotoViewController.swift in Sources */,
+				99A54AEF1FA2C82500EE8102 /* CheckForOnboarding.swift in Sources */,
 				999655441F18861F00A9E1DB /* Storyboard+Utility.swift in Sources */,
 				995035481F19A7E7009453E1 /* PhotoService.swift in Sources */,
 				9932E2421F2A773C00E48F70 /* UIView+DressUp.swift in Sources */,

@@ -20,8 +20,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     FirebaseApp.configure()
     
-    configureInitialRootViewController(for: window)
     
+    
+    let userDefaults = UserDefaults.standard
+    if userDefaults.bool(forKey: "onboardingComplete") {
+      configureInitialRootViewController(for: window)
+    } else {
+      window?.rootViewController = OnboardingViewController()
+      window?.makeKeyAndVisible()
+    }
     UINavigationBar.appearance().barTintColor = UIColor.onyxBlack
     
     UINavigationBar.appearance().tintColor = .white
@@ -80,8 +87,10 @@ extension AppDelegate {
       
       initialViewController = UIStoryboard.initialViewController(for: .main)
     } else {
+      
       initialViewController = UIStoryboard.initialViewController(for: .login)
     }
+    
     window?.rootViewController = initialViewController
     window?.makeKeyAndVisible()
   }

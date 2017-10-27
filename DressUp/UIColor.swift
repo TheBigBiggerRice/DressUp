@@ -24,4 +24,13 @@ extension UIColor {
   class var lighterBlue: UIColor {
     return UIColor(red: 151/255, green: 187/255, blue: 233/255, alpha: 1.0)
   }
+  class var onboardingOne: UIColor {
+    return UIColor(red: 217/255, green: 72/255, blue: 89/255, alpha: 1.0)
+  }
+  class var onboardingTwo: UIColor {
+    return UIColor(red: 106/255, green: 166/255, blue: 211/255, alpha: 1.0)
+  }
+  class var onboardingThree: UIColor {
+    return UIColor(red: 168/255, green: 200/255, blue: 78/255, alpha: 1.0)
+  }
 }
