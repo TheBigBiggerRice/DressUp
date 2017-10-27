@@ -14,8 +14,26 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - Bolts (1.8.4):
+    - Bolts/AppLinks (= 1.8.4)
+    - Bolts/Tasks (= 1.8.4)
+  - Bolts/AppLinks (1.8.4):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.8.4)
   - Clarifai (2.3.2):
     - AFNetworking (~> 3.1)
+  - FacebookCore (0.3.0):
+    - Bolts (~> 1.8)
+    - FBSDKCoreKit (~> 4.27)
+  - FacebookLogin (0.3.0):
+    - Bolts (~> 1.8)
+    - FacebookCore (~> 0.3)
+    - FBSDKCoreKit (~> 4.27)
+    - FBSDKLoginKit (~> 4.27)
+  - FBSDKCoreKit (4.27.1):
+    - Bolts (~> 1.7)
+  - FBSDKLoginKit (4.27.1):
+    - FBSDKCoreKit
   - Firebase/Auth (4.0.3):
     - Firebase/Core
     - FirebaseAuth (= 4.0.0)
@@ -48,6 +66,17 @@ PODS:
     - GTMSessionFetcher/Core (~> 1.1)
   - FirebaseUI/Auth (4.1.1):
     - Firebase/Auth
+  - FirebaseUI/Facebook (4.1.1):
+    - FBSDKLoginKit (~> 4.0)
+    - FirebaseUI/Auth
+  - FirebaseUI/Google (4.1.1):
+    - FirebaseUI/Auth
+    - GoogleSignIn (~> 4.0)
+  - GoogleSignIn (4.1.1):
+    - GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)
+    - GoogleToolboxForMac/NSString+URLArguments (~> 2.1)
+    - GTMOAuth2 (~> 1.0)
+    - GTMSessionFetcher/Core (~> 1.1)
   - GoogleToolboxForMac/DebugUtils (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/Defines (2.1.1)
@@ -58,25 +87,42 @@ PODS:
     - GoogleToolboxForMac/Defines (= 2.1.1)
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
+  - GTMOAuth2 (1.1.5):
+    - GTMSessionFetcher (~> 1.1)
+  - GTMSessionFetcher (1.1.10):
+    - GTMSessionFetcher/Full (= 1.1.10)
   - GTMSessionFetcher/Core (1.1.10)
+  - GTMSessionFetcher/Full (1.1.10):
+    - GTMSessionFetcher/Core (= 1.1.10)
   - Kingfisher (3.10.3)
+  - paper-onboarding (2.2)
   - RBBAnimation (0.4.0)
   - SCLAlertView (0.7.0)
 
 DEPENDENCIES:
   - Clarifai
+  - FacebookCore
+  - FacebookLogin
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
   - Firebase/Storage
   - FirebaseUI/Auth
+  - FirebaseUI/Facebook
+  - FirebaseUI/Google
   - Kingfisher
+  - paper-onboarding
   - RBBAnimation (= 0.4.0)
   - SCLAlertView
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  Clarifai: 522c9c403bd13914c120cdb0bc7f342ec279eb74
+  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  Clarifai: 6d6cce2b31aefcf33893f2c3a18588b266771d11
+  FacebookCore: 3ffa190a3f1f96cec0e44d3fc221bc322c595ffa
+  FacebookLogin: 0af839ea858faef99550d16596b87b4a8e8906e6
+  FBSDKCoreKit: 03365dad5d790249196ffad8be4f6d8a2d98f932
+  FBSDKLoginKit: 66ff53b73cffd967ab773e32fac39e90a60e6d46
   Firebase: 9e33fdfbca37cab635c693883caa90a4475b842b
   FirebaseAnalytics: ad41720e3e67fc63fbe3d2948d3e26932a8de311
   FirebaseAuth: ebb6abcbabae00fc47446d690c19ce68d8484fde
@@ -85,12 +131,15 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: 9fbf536668f4d3f0880e7438456dabd1376e294b
   FirebaseStorage: 8110a1ed2034c8fbfd83890d2acc9cdbbd99afec
   FirebaseUI: 5ebebe2c096c71f20abd1d43d0388958373bdaa0
+  GoogleSignIn: 3fdaa34a2ba04dbd7a25d7db39aecb0da98d5bdc
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
+  GTMOAuth2: be83fd28d63ae3087e7d351b1f39c1a7e24ab6e7
   GTMSessionFetcher: 30d874b96d0d76028f61fbd122801e3f030d47db
   Kingfisher: a0ac82dc5bcf0388dd74b294cf2cc13730c63436
+  paper-onboarding: 7fcb8f2737edb32bd345d6e890578fff1a073fef
   RBBAnimation: 4b2d66f6d993febce63cd564da934985313b9c59
   SCLAlertView: 8a14ffc40590c619e183eed2298b854385f30be1
 
-PODFILE CHECKSUM: 5a2fb44ff847053a64f0e5550f58737fddb6c6a2
+PODFILE CHECKSUM: e2799d8fb3a955cb27cb3d2db58ffc4caa83444c
 
-COCOAPODS: 1.2.1
+COCOAPODS: 1.3.1

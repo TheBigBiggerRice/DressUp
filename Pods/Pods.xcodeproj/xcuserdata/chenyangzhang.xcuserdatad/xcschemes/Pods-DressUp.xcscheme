@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3D0C5AD6364F201304651C1E27E16A50"
+               BlueprintIdentifier = "13806F9214D4ABA04AAA17A9470A04C8"
                BuildableName = "Pods_DressUp.framework"
                BlueprintName = "Pods-DressUp"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -26,6 +26,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
@@ -36,6 +37,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -45,7 +47,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3D0C5AD6364F201304651C1E27E16A50"
+            BlueprintIdentifier = "13806F9214D4ABA04AAA17A9470A04C8"
             BuildableName = "Pods_DressUp.framework"
             BlueprintName = "Pods-DressUp"
             ReferencedContainer = "container:Pods.xcodeproj">

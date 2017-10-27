@@ -15,5 +15,10 @@ target 'DressUp' do
   pod 'Kingfisher'
   pod "SCLAlertView"
   pod 'RBBAnimation', '0.4.0'
+  pod 'FacebookCore'
+  pod 'FacebookLogin'
+  pod 'FirebaseUI/Facebook'
+  pod 'FirebaseUI/Google'
+  pod 'paper-onboarding'
 
 end
